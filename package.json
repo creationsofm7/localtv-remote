@@ -1,0 +1,36 @@
+{
+  "name": "localtv-remote",
+  "version": "0.1.0",
+  "description": "Lightweight, open-source phone-as-remote-mouse/keyboard daemon for Windows. No Chromium, no DRM.",
+  "license": "MIT",
+  "private": false,
+  "main": "dist/daemon/index.js",
+  "bin": {
+    "localtv-remote": "dist/daemon/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/daemon/index.js",
+    "dev": "tsx src/daemon/index.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "koffi": "^2.15.2",
+    "qrcode": "^1.5.4",
+    "ws": "^8.18.3"
+  },
+  "optionalDependencies": {
+    "node-audio-volume-mixer": "^1.0.3",
+    "systray2": "^2.1.0",
+    "webview-nodejs": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.14.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.5"
+  }
+}
