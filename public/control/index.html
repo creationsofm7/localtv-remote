@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <title>LocalTV Remote</title>
+    <meta name="description" content="Control your LocalTV from your phone — trackpad, volume, media controls, and keyboard." />
+
+    <!-- ── PWA: Web App Manifest ── -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ── PWA: Theme & Status Bar ── -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- ── Apple PWA (iOS) ── -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LTV Remote" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <!-- Apple splash screens / startup images are optional but recommended -->
+    <link rel="apple-touch-startup-image" href="/icons/icon-512.png" />
+
+    <!-- ── Android PWA: maskable icon for adaptive icon rendering ── -->
+    <!-- (Handled by manifest.json icons with purpose: maskable) -->
+
+    <!-- ── Favicons ── -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+
+    <!-- ── Fonts ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- ── Styles ── -->
+    <link rel="stylesheet" href="/controller.css" />
+  </head>
+  <body>
+    <main class="app" id="app">
+
+      <!-- ════════════════════════════════════
+           PAIR SCREEN  (visible when offline)
+           ════════════════════════════════════ -->
+      <div class="screen screen--pair" id="pair-screen">
+        <div class="pair">
+          <div class="pair__logo">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="10" width="40" height="28" rx="4" />
+              <polyline points="34 38 24 32 14 38" />
+            </svg>
+          </div>
+          <h1 class="pair__title">LocalTV Remote</h1>
+          <p class="pair__subtitle">Enter the pairing code shown on your TV</p>
+          <form class="pair__form" id="pair-form" autocomplete="on">
+            <input class="pair__input" id="pair-code"
+                   name="pair-code"
+                   aria-label="LocalTV pairing code"
+                   inputmode="numeric"
+                   maxlength="6"
+                   placeholder="000000"
+                   autocomplete="one-time-code" />
+            <button class="pair__btn" id="connect-btn" type="submit">Connect</button>
+          </form>
+          <div class="pair__status" id="pair-status">
+            <span class="pair__status-dot" id="conn-dot"></span>
+            <span class="pair__status-label" id="conn-label">Waiting for code</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════
+           REMOTE SCREEN  (visible when connected)
+           ════════════════════════════════════ -->
+      <div class="screen screen--remote" id="remote-screen" hidden>
+
+        <!-- ── Header ── -->
+        <header class="header">
+          <button class="header__btn" id="mute-toggle" type="button" aria-label="Toggle mute">
+            <span class="icon-slot" data-hgi="volumeMute"></span>
+          </button>
+          <div class="header__device">
+            <span class="header__conn-dot" id="header-dot"></span>
+            <span class="header__device-name">LocalTV</span>
+          </div>
+          <div class="header__actions">
+            <button class="header__btn" id="settings-btn" type="button" aria-label="Remote settings">
+              <span class="icon-slot" data-hgi="settings"></span>
+            </button>
+            <button class="header__btn" id="power-btn" type="button" aria-label="Power options">
+              <span class="icon-slot" data-hgi="power"></span>
+            </button>
+          </div>
+        </header>
+        <aside class="settings" id="settings-panel" hidden>
+          <span class="section-label">Remote Settings</span>
+          <label class="settings__row" for="pointer-speed">
+            <span>Pointer speed</span>
+            <input class="settings__range" id="pointer-speed" type="range" min="1" max="3.2" step="0.1" value="1.8" />
+            <strong id="pointer-speed-value">1.8x</strong>
+          </label>
+          <label class="settings__row" for="cursor-visibility">
+            <span>Show remote cursor</span>
+            <input id="cursor-visibility" type="checkbox" checked />
+          </label>
+          <label class="settings__row" for="power-action">
+            <span>Power button action</span>
+            <select class="settings__select" id="power-action">
+              <option value="sleep">Sleep</option>
+              <option value="shutdown">Shutdown</option>
+            </select>
+          </label>
+        </aside>
+
+        <!-- ── Panel container ── -->
+        <div class="panels" id="panels">
+
+          <!-- ─── Panel: Remote ─── -->
+          <section class="panel" id="panel-remote" data-panel="remote">
+            <div class="trackpad-wrap">
+              <div class="trackpad" id="trackpad">
+                <span class="trackpad__hint">Swipe to move cursor</span>
+              </div>
+            </div>
+            <div class="ctrl-row">
+              <button class="ctrl-btn" id="btn-back" type="button" aria-label="Back">
+                <span class="icon-slot" data-hgi="left"></span>
+              </button>
+              <button class="ctrl-btn ctrl-btn--primary" id="btn-home" type="button" aria-label="Home">
+                <span class="icon-slot icon-slot--lg" data-hgi="home"></span>
+              </button>
+              <button class="ctrl-btn" id="btn-playpause" type="button" aria-label="Play / Pause">
+                <span class="icon-slot" data-hgi="pause"></span>
+              </button>
+            </div>
+            <div class="vol-row">
+              <button class="vol-btn" id="vol-down" type="button" aria-label="Volume down">
+                <span class="icon-slot" data-hgi="volumeDown"></span>
+              </button>
+              <div class="vol-display">
+                <div class="vol-track"><div class="vol-fill" id="volume-fill"></div></div>
+                <span class="vol-label" id="volume-value">--</span>
+              </div>
+              <button class="vol-btn" id="vol-up" type="button" aria-label="Volume up">
+                <span class="icon-slot" data-hgi="volumeUp"></span>
+              </button>
+            </div>
+            <span class="section-label" style="margin-top:14px">Keyboard</span>
+            <div class="input-row">
+              <input class="input" id="kb-input" placeholder="Type here…" autocomplete="off" autocorrect="off" spellcheck="false" />
+              <button class="input-clear" id="kb-clear" type="button" aria-label="Clear">
+                <span class="icon-slot" data-hgi="cancel"></span>
+              </button>
+            </div>
+          </section>
+
+          <!-- ─── Panel: Media ─── -->
+          <section class="panel" id="panel-media" data-panel="media" hidden>
+            <span class="section-label">Playback</span>
+            <div class="grid grid--3">
+              <button class="tile" type="button" data-shortcut="seek_back">
+                <span class="icon-slot" data-hgi="replay" data-hgi-rotate="180"></span>
+                <span>-10s</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="fullscreen">
+                <span class="icon-slot" data-hgi="fullscreen"></span>
+                <span>Fullscreen</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="seek_forward">
+                <span class="icon-slot" data-hgi="replay"></span>
+                <span>+10s</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="captions">
+                <span class="icon-slot" data-hgi="captions"></span>
+                <span>Captions</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="speed_down">
+                <span class="tile__char">&lt;</span>
+                <span>Slower</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="speed_up">
+                <span class="tile__char">&gt;</span>
+                <span>Faster</span>
+              </button>
+            </div>
+            <span class="section-label" style="margin-top:16px">Browser</span>
+            <div class="grid grid--4">
+              <button class="tile" type="button" data-shortcut="go_home">
+                <span class="icon-slot" data-hgi="home"></span>
+                <span>Home</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="go_back">
+                <span class="icon-slot" data-hgi="left"></span>
+                <span>Back</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="go_forward">
+                <span class="icon-slot" data-hgi="right"></span>
+                <span>Forward</span>
+              </button>
+              <button class="tile" type="button" data-shortcut="reload">
+                <span class="icon-slot" data-hgi="reload"></span>
+                <span>Reload</span>
+              </button>
+            </div>
+            <span class="section-label" style="margin-top:16px">Navigate <span class="pro-badge">PRO</span></span>
+            <div class="nav-row pro-locked">
+              <input class="input" id="url-input" placeholder="https://youtube.com" autocomplete="off" disabled />
+              <button class="nav-go" id="nav-btn" type="button" disabled>Go</button>
+            </div>
+            <p class="pro-note">Open any site on the TV — available in LocalTV Pro</p>
+          </section>
+
+          <!-- ─── Panel: Input ─── -->
+          <section class="panel" id="panel-input" data-panel="input" hidden>
+            <span class="section-label">Keys</span>
+            <div class="grid grid--3">
+              <button class="tile tile--sm" data-key="Enter" type="button">Enter</button>
+              <button class="tile tile--sm" data-key="Backspace" type="button">Delete</button>
+              <button class="tile tile--sm" data-key="Space" type="button">Space</button>
+              <button class="tile tile--sm" data-key="Tab" type="button">Tab</button>
+              <button class="tile tile--sm" data-key="Escape" type="button">Esc</button>
+              <button class="tile tile--sm" data-key="Home" type="button">Home</button>
+            </div>
+
+            <span class="section-label" style="margin-top:20px">D-Pad</span>
+            <div class="dpad">
+              <button class="dpad__btn dpad__btn--up" data-key="ArrowUp" type="button" aria-label="Up">
+                <span class="icon-slot" data-hgi="up"></span>
+              </button>
+              <button class="dpad__btn dpad__btn--left" data-key="ArrowLeft" type="button" aria-label="Left">
+                <span class="icon-slot" data-hgi="left"></span>
+              </button>
+              <button class="dpad__btn dpad__btn--ok" id="dpad-ok" type="button" aria-label="OK / Enter">OK</button>
+              <button class="dpad__btn dpad__btn--right" data-key="ArrowRight" type="button" aria-label="Right">
+                <span class="icon-slot" data-hgi="right"></span>
+              </button>
+              <button class="dpad__btn dpad__btn--down" data-key="ArrowDown" type="button" aria-label="Down">
+                <span class="icon-slot" data-hgi="down"></span>
+              </button>
+            </div>
+            <button class="mode-switch-btn pro-locked" id="switch-tv-mode" type="button" disabled>
+              <span>Switch to TV Mode</span>
+              <span class="pro-badge">PRO</span>
+            </button>
+            <p class="pro-note">Full-screen streaming launcher — available in LocalTV Pro</p>
+          </section>
+
+        </div>
+
+        <!-- ── Tab Bar ── -->
+        <nav class="tab-bar" id="tab-bar">
+          <button class="tab tab--active" data-tab="remote" type="button">
+            <span class="icon-slot tab__icon" data-hgi="tv"></span>
+            <span>Remote</span>
+          </button>
+          <button class="tab" data-tab="media" type="button">
+            <span class="icon-slot tab__icon" data-hgi="play"></span>
+            <span>Media</span>
+          </button>
+          <button class="tab" data-tab="input" type="button">
+            <span class="icon-slot tab__icon" data-hgi="keyboard"></span>
+            <span>Input</span>
+          </button>
+        </nav>
+      </div>
+
+    </main>
+    <script src="/controller.js" defer></script>
+    <script>
+      // Register the PWA service worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then((reg) => console.log('[LocalTV] SW registered, scope:', reg.scope))
+            .catch((err) => console.warn('[LocalTV] SW registration failed:', err));
+        });
+      }
+    </script>
+  </body>
+</html>
