@@ -162,7 +162,7 @@ const searchParams = new URLSearchParams(window.location.search);
 
 /* ── Constants ── */
 
-let mouseDeltaSensitivity = 1.8;
+let mouseDeltaSensitivity = 1.0;
 const TAP_TIME_MS = 320;
 const TAP_MOVE_PX = 14;
 const TWO_FINGER_TAP_TIME_MS = 380;

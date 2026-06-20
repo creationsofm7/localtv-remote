@@ -4,7 +4,7 @@
    Bump CACHE_VERSION to invalidate all cached assets.
    ═══════════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'localtv-remote-v1';
+const CACHE_VERSION = 'localtv-remote-v2';
 
 /**
  * Static assets to pre-cache on install.

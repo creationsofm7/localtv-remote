@@ -328,6 +328,33 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 
 .panel[hidden] { display: none; }
 
+/* Remote panel fits one screen: trackpad flexes to fill the leftover space so
+   the control row, volume, and keyboard are always visible without scrolling. */
+#panel-remote {
+  height: 100%;
+  gap: 8px;
+  padding: 6px 0 8px;
+}
+
+#panel-remote .trackpad-wrap {
+  flex: 1 1 auto;
+  min-height: 110px;
+  display: flex;
+}
+
+#panel-remote .trackpad {
+  aspect-ratio: auto;
+  flex: 1;
+  height: 100%;
+}
+
+#panel-remote .ctrl-btn { height: 48px; }
+#panel-remote .vol-row { padding: 10px 14px; }
+#panel-remote .vol-btn { width: 42px; height: 42px; }
+#panel-remote .input,
+#panel-remote .input-clear { height: 44px; }
+#panel-remote .input-clear { width: 44px; }
+
 
 /* ────────────────────────────────────────
    Tab Bar
