@@ -1,0 +1,16 @@
+PackageIdentifier: LocalTV.Remote
+PackageVersion: 0.1.0
+InstallerLocale: en-US
+InstallerType: inno
+Scope: user
+InstallModes:
+  - interactive
+  - silent
+UpgradeBehavior: install
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.0/LocalTVRemote-Setup-0.1.0.exe
+    InstallerSha256: 1E6CDEA551254ACB31D75FEA6AD17E1000EE0F372299C5390428726D561BF0D5
+    ProductCode: '{A3B7C2D1-E4F5-6789-ABCD-EF0123456789}_is1'
+ManifestType: installer
+ManifestVersion: 1.6.0
