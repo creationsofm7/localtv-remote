@@ -7,7 +7,11 @@
  * This module is Windows-only and will throw at import time on other platforms.
  */
 
-import koffi from 'koffi/indirect';
+import { nativeRequire } from '../../native-require';
+
+// Loaded at runtime (not bundled) so the SEA build can ship koffi's native
+// binary on disk next to the exe.
+const koffi: typeof import('koffi/indirect').default = nativeRequire('koffi/indirect');
 
 if (process.platform !== 'win32') {
   throw new Error('win32/input-injector is only available on Windows.');

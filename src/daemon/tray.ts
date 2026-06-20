@@ -1,5 +1,7 @@
 import { readFileSync } from 'node:fs';
 
+import { nativeRequire } from '../core/main/native-require';
+
 export type TrayHandlers = {
   onShow: () => void;
   onToggleStartup: (enabled: boolean) => Promise<boolean> | boolean;
@@ -18,7 +20,7 @@ export type TrayHandle = { kill: () => void } | null;
  */
 export async function startTray(handlers: TrayHandlers): Promise<TrayHandle> {
   try {
-    const mod: any = await import('systray2');
+    const mod: any = nativeRequire('systray2');
     const SysTray = mod.default ?? mod;
 
     let iconBase64 = '';

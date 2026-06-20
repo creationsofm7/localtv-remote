@@ -12,7 +12,12 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "start": "node dist/daemon/index.js",
-    "dev": "tsx src/daemon/index.ts"
+    "dev": "tsx src/daemon/index.ts",
+    "bundle": "node scripts/bundle.mjs",
+    "build:sea": "node scripts/build-sea.mjs",
+    "payload": "node scripts/assemble-payload.mjs",
+    "dist": "npm run typecheck && npm run bundle && npm run build:sea && npm run payload",
+    "installer": "node scripts/build-installer.mjs"
   },
   "dependencies": {
     "express": "^4.21.2",
@@ -30,6 +35,9 @@
     "@types/node": "^20.14.0",
     "@types/qrcode": "^1.5.6",
     "@types/ws": "^8.18.1",
+    "esbuild": "^0.28.1",
+    "postject": "^1.0.0-alpha.6",
+    "rcedit": "^5.0.2",
     "tsx": "^4.19.0",
     "typescript": "^5.4.5"
   }
