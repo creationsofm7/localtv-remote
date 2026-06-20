@@ -88,8 +88,26 @@ Filename: "{app}\{#AppExeName}"; \
   Flags: nowait postinstall skipifsilent
 
 [UninstallRun]
+; Kill any running instance before files are removed
+Filename: "taskkill.exe"; \
+  Parameters: "/F /IM {#AppExeName}"; \
+  RunOnceId: "KillApp"; \
+  Flags: runhidden; StatusMsg: "Stopping {#AppName}..."
+
 ; Remove the firewall rule on uninstall
 Filename: "netsh"; \
   Parameters: "advfirewall firewall delete rule name=""LocalTV Remote"""; \
   RunOnceId: "RemoveFirewallRule"; \
   Flags: runhidden
+
+[Code]
+{ Extra safety: kill the process in Pascal before Inno touches any files.
+  UninstallRun runs after file deletion begins; this fires before it. }
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  ResultCode: Integer;
+begin
+  if CurUninstallStep = usUninstall then
+    Exec('taskkill.exe', '/F /IM {#AppExeName}', '', SW_HIDE,
+         ewWaitUntilTerminated, ResultCode);
+end;
