@@ -1,5 +1,5 @@
 PackageIdentifier: LocalTV.Remote
-PackageVersion: 0.1.0
+PackageVersion: 0.1.1
 PackageLocale: en-US
 Publisher: LocalTV
 PublisherUrl: https://github.com/creationsofm7/localtv-remote
@@ -23,6 +23,6 @@ Tags:
   - phone
   - control
   - tray
-ReleaseNotesUrl: https://github.com/creationsofm7/localtv-remote/releases/tag/v0.1.0
+ReleaseNotesUrl: https://github.com/creationsofm7/localtv-remote/releases/tag/v0.1.1
 ManifestType: defaultLocale
 ManifestVersion: 1.6.0
