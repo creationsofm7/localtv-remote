@@ -47,7 +47,7 @@ execFileSync(rceditBin, [
   '--set-version-string', 'ProductName', 'LocalTV Remote',
   '--set-version-string', 'FileDescription', 'LocalTV Remote - phone-as-remote daemon',
   '--set-version-string', 'CompanyName', 'LocalTV',
-  '--set-version-string', 'LegalCopyright', 'MIT License',
+  '--set-version-string', 'LegalCopyright', 'Copyright 2026 Mudit Pandey. Apache License 2.0',
   '--set-version-string', 'OriginalFilename', 'LocalTVRemote.exe',
 ], { stdio: 'inherit' });
 console.log('rcedit: icon + version applied');

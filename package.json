@@ -2,7 +2,7 @@
   "name": "localtv-remote",
   "version": "0.1.0",
   "description": "Lightweight, open-source phone-as-remote-mouse/keyboard daemon for Windows. No Chromium, no DRM.",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "private": false,
   "main": "dist/daemon/index.js",
   "bin": {
