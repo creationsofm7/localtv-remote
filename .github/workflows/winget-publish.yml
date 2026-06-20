@@ -1,0 +1,28 @@
+name: Publish to winget
+
+# Auto-submits a winget-pkgs PR whenever a GitHub Release is published.
+# Requires a repo secret WINGET_TOKEN: a classic PAT (scope: public_repo)
+# belonging to an account that has a fork of microsoft/winget-pkgs.
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish (e.g. v0.1.1)'
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit LocalTV.Remote to winget
+        uses: vedantmgoyal9/winget-releaser@main
+        with:
+          identifier: LocalTV.Remote
+          # Match the setup exe asset, ignore any other release files
+          installers-regex: 'Setup-.*\.exe$'
+          # Use the dispatch input tag when run manually, else the release tag
+          release-tag: ${{ github.event.inputs.tag || github.event.release.tag_name }}
+          token: ${{ secrets.WINGET_TOKEN }}
