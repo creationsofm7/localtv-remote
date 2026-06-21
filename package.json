@@ -20,7 +20,7 @@
     "installer": "node scripts/build-installer.mjs"
   },
   "dependencies": {
-    "express": "^4.21.2",
+    "express": "^5.2.1",
     "koffi": "^2.15.2",
     "qrcode": "^1.5.4",
     "ws": "^8.18.3"
