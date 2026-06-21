@@ -85,7 +85,7 @@ The setup wizard will:
 
 > First run shows a Windows SmartScreen "unknown publisher" notice (the installer isn't code-signed yet). Click **More info → Run anyway** to continue.
 
-### Option 2 — winget *(coming soon)*
+### Option 2 — winget
 
 ```
 winget install LocalTV.Remote

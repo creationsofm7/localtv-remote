@@ -174,7 +174,7 @@
     .links{font-size:13px;display:flex;gap:18px;flex-wrap:wrap;}
     .links a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--line);padding-bottom:2px;transition:border-color .15s;}
     .links a:hover{border-color:var(--ink);}
-    .links .soon{color:var(--muted);border:none;}
+    .links .wg{font-family:"Courier Prime",monospace;font-size:12px;background:#f5f5f2;border:1px solid var(--line);border-radius:2px;padding:3px 9px;color:var(--ink);}
 
     /* ── quiet FAQ (keeps FAQPage data legitimate) ── */
     .faq{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;}
@@ -211,7 +211,7 @@
     <section class="letter" aria-label="A note from the maker">
       <p class="salute">Dear whoever keeps getting up to hit&nbsp;pause,</p>
       <p>I made LocalTV Remote so your phone is the mouse, keyboard, and volume for your PC. Over Wi-Fi. On your network, nobody&nbsp;else's.</p>
-      <p>You install it <span class="mark d2">once<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span> — on the PC. Your phone just opens a web page: no app store, no account, <span class="mark d3">no cloud<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>. Scan a QR and you're in. Pass the link to a friend and they get their own remote too, their own&nbsp;PIN.</p>
+      <p>You install it on <span class="mark d2">the PC, once<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span> — and on nothing else. Your phone just opens a web page: no app store, no account, <span class="mark d3">no cloud<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>. Scan a QR and you're in. Pass the link to a friend and they get their own remote too, their own&nbsp;PIN.</p>
       <p><span class="mark d4">Free<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>. Open source. About 27&nbsp;MB. That's the whole&nbsp;pitch.</p>
       <p class="sign">— Mudit, <span class="name">maker of LocalTV</span></p>
     </section>
@@ -226,7 +226,7 @@
     <nav class="links">
       <a href="https://github.com/creationsofm7/localtv-remote">Read the source on GitHub</a>
       <a href="https://github.com/creationsofm7/localtv-remote/releases/latest">All releases</a>
-      <span class="soon">winget — coming soon</span>
+      <code class="wg">winget install LocalTV.Remote</code>
     </nav>
 
     <section class="faq" aria-label="Frequently asked questions">

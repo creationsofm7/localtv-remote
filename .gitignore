@@ -9,3 +9,6 @@ release/
 # Agent skills (installed locally via `skills add`)
 .agents/
 skills-lock.json
+
+# Private GTM working doc (local only)
+GTM-STRATEGY.md
