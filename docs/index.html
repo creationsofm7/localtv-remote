@@ -109,14 +109,29 @@
 
     main{
       width:100%;
-      max-width:var(--maxw);
-      display:flex;
-      flex-direction:column;
-      gap:clamp(16px,2.6vh,26px);
+      max-width:1060px;
+      display:grid;
+      grid-template-columns:1.3fr .85fr;
+      column-gap:clamp(30px,5vw,68px);
+      row-gap:clamp(16px,2.6vh,26px);
+      align-items:start;
+    }
+    .hero{display:flex;flex-direction:column;gap:clamp(16px,2.6vh,26px);min-width:0;}
+    .aside{
+      align-self:stretch;min-width:0;
+      border-left:1px solid var(--line);
+      padding-left:clamp(20px,2.6vw,40px);
+      display:flex;flex-direction:column;justify-content:center;
+    }
+    .aside__title{
+      font-family:"Courier Prime",monospace;font-weight:700;
+      font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+      color:var(--muted);margin:0 0 10px;
     }
 
     /* ── letterhead ── */
     .head{
+      grid-column:1 / -1;
       display:flex;align-items:baseline;justify-content:space-between;
       border-bottom:1.5px solid var(--ink);
       padding-bottom:10px;
@@ -188,8 +203,13 @@
     .faq details[open] summary::after{content:"–";}
     .faq p{margin:0 0 12px;font-size:13px;line-height:1.6;color:#333;}
 
-    /* never clip content on phones / short screens */
-    @media (max-width:640px), (max-height:680px){
+    /* stack to one column on narrow screens */
+    @media (max-width:860px){
+      main{grid-template-columns:1fr;}
+      .aside{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:16px;justify-content:flex-start;}
+    }
+    /* allow scrolling when it can't fit one screen */
+    @media (max-width:860px), (max-height:760px){
       body{overflow:auto;place-items:start center;}
     }
 
@@ -206,6 +226,7 @@
       <span>Windows&nbsp;· free&nbsp;· open&nbsp;source</span>
     </header>
 
+    <div class="hero">
     <h1>Control your Windows&nbsp;PC <span class="mark d1">from your phone.<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span></h1>
 
     <section class="letter" aria-label="A note from the maker">
@@ -228,8 +249,11 @@
       <a href="https://github.com/creationsofm7/localtv-remote/releases/latest">All releases</a>
       <code class="wg">winget install LocalTV.Remote</code>
     </nav>
+    </div>
 
-    <section class="faq" aria-label="Frequently asked questions">
+    <aside class="aside">
+      <h2 class="aside__title">Good to know</h2>
+      <section class="faq" aria-label="Frequently asked questions">
       <details>
         <summary>Do I need to install an app on my phone?</summary>
         <p>No. You only install LocalTV Remote on the Windows PC. Your phone scans a QR code and opens a controller page in the browser — a trackpad, keyboard and volume remote. No app store, no account.</p>
@@ -242,7 +266,8 @@
         <summary>Is it a free alternative to Unified Remote / Remote Mouse?</summary>
         <p>It is — free, Apache-2.0 open-source, no companion app on the phone, no paid tier, and LAN-only with no cloud relay or account.</p>
       </details>
-    </section>
+      </section>
+    </aside>
   </main>
 
 </body>
