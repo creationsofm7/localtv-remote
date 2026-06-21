@@ -1,0 +1,6 @@
+# robots.txt — LocalTV Remote
+# Allow all crawlers full access.
+User-agent: *
+Allow: /
+
+Sitemap: https://creationsofm7.github.io/localtv-remote/sitemap.xml
