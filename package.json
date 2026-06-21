@@ -1,7 +1,7 @@
 {
   "name": "localtv-remote",
   "version": "0.1.1",
-  "description": "Lightweight, open-source phone-as-remote-mouse/keyboard daemon for Windows. No Chromium, no DRM.",
+  "description": "Control your Windows PC from your phone — free, open-source wireless mouse, keyboard & volume remote over Wi-Fi. No app to install on the phone, multi-user, LAN-only.",
   "license": "Apache-2.0",
   "private": false,
   "main": "dist/daemon/index.js",

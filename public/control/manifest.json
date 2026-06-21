@@ -1,14 +1,14 @@
 {
   "name": "LocalTV Remote",
   "short_name": "LTV Remote",
-  "description": "Control your LocalTV from your phone — trackpad, volume, media controls, and keyboard.",
+  "description": "Control your Windows PC from your phone — trackpad, keyboard, and volume remote over Wi-Fi.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#000000",
   "background_color": "#000000",
-  "categories": ["utilities", "entertainment"],
+  "categories": ["utilities", "productivity"],
   "lang": "en",
   "dir": "ltr",
   "icons": [

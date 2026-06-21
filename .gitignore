@@ -5,3 +5,7 @@ release/
 *.log
 .DS_Store
 .env
+
+# Agent skills (installed locally via `skills add`)
+.agents/
+skills-lock.json

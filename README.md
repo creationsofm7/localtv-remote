@@ -19,11 +19,36 @@
 
 ---
 
-## What is this?
+# Control your Windows PC from your phone — LocalTV Remote
 
-**LocalTV Remote** is a lightweight Windows daemon that turns your phone into a wireless remote — mouse, keyboard, scroll wheel, and volume control — over your local Wi-Fi. Your phone opens a PWA in the browser (no app store install). The PC runs a single Node process at ~25–40 MB RAM.
+**LocalTV Remote** is a **free, open-source** app that turns your phone into a **wireless mouse, keyboard, and volume remote** for any **Windows 10/11 PC or laptop** — over your local Wi-Fi.
 
-> This is the **open-source, remote-only** sibling of LocalTV. It contains no Chromium, no DRM, and no TV/streaming mode — just the remote control daemon.
+**You only install it on the PC.** Your phone just opens a web page (a PWA in the browser), so there's **nothing to install on the phone — or on any other device** you use to control the PC. No app store, no second download.
+
+**Multiple people can control one PC at the same time**, each paired securely with a QR code and a 6-digit PIN — no shared "remote," no shared password. It's **LAN-only**: no cloud relay, no accounts, and your data never leaves your network. The PC runs a single Node process at ~25–40 MB RAM with **no bundled Chromium**.
+
+> LocalTV Remote is the **open-source, remote-only** companion to **LocalTV**. It contains no Chromium, no DRM, and no TV/streaming mode — just the remote-control daemon.
+
+<!-- TODO: add a real demo at docs/demo.gif (phone moving the PC cursor over Wi-Fi) and uncomment below -->
+<!-- ![Controlling a Windows PC from a phone over Wi-Fi, with no app to install on the phone](docs/demo.gif) -->
+
+---
+
+## Why LocalTV Remote?
+
+Looking for a **free, open-source alternative to Unified Remote or Remote Mouse**? Most phone-as-remote apps make you install a companion app on *both* your phone and your PC, lock features behind a paid tier, or route input through their cloud. LocalTV Remote doesn't.
+
+| | **LocalTV Remote** | Typical alternatives* |
+|---|---|---|
+| Price | ✅ Free & open-source (Apache 2.0) | 💰 Freemium / paid Pro |
+| App to install on your phone | ✅ None — opens in the browser (PWA) | 📲 Companion app required |
+| Control one PC from several phones at once | ✅ Yes | ⚠️ Usually one device / limited |
+| Secure pairing built in (QR + PIN) | ✅ Yes | ⚠️ Varies |
+| Cloud / account required | ✅ No — LAN-only, private | ☁️ Often cloud-assisted |
+| Footprint on the PC | ✅ ~27 MB, no Chromium | 📦 Often heavier |
+| Source code you can audit | ✅ Yes | ❌ Closed-source |
+
+<sub>*Reflects common free tiers of popular alternatives; their features may change. Compare for yourself.</sub>
 
 ---
 
@@ -31,12 +56,13 @@
 
 | | |
 |---|---|
-| 🖱️ **Mouse control** | Move, click, right-click, scroll — with DPI-aware scaling |
-| ⌨️ **Keyboard input** | Type text and send key combos from your phone |
-| 🔊 **Volume control** | Accurate system volume via Windows Core Audio (COM) |
-| 📱 **PWA — no install** | Phone opens a web page, installs as a home-screen app |
-| 🔗 **QR pairing** | Scan once, token is remembered for future sessions |
-| 🔒 **LAN-only** | No cloud relay, no accounts, no data leaves your network |
+| 🖱️ **Phone as a wireless mouse** | Move, click, right-click, scroll — a phone trackpad with DPI-aware scaling |
+| ⌨️ **Phone as a keyboard** | Type text and send key combos to your PC from your phone |
+| 🔊 **Volume remote** | Control Windows system volume from your phone via Core Audio (COM) |
+| 📱 **No app to install** | Phone opens a web page (PWA), installs as a home-screen app — no app store |
+| 👥 **Multi-user control** | Several phones can control one PC at once, each paired separately |
+| 🔗 **QR + PIN pairing** | Scan once, token is remembered for future sessions |
+| 🔒 **LAN-only & private** | No cloud relay, no accounts, no data leaves your network |
 | 🪶 **Tiny footprint** | ~27 MB installer, ~25–40 MB RAM at idle, no Chromium |
 | 🖥️ **System tray** | Sits in the tray; optional start-on-login toggle |
 | 🔌 **Auto port** | Free-port fallback if 3000 is occupied — QR auto-updates |
@@ -47,13 +73,17 @@
 
 ### Option 1 — Installer (recommended)
 
-Download **[LocalTVRemote-Setup-0.1.0.exe](https://github.com/creationsofm7/localtv-remote/releases/latest)** from the latest release and run it.
+### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe)
+
+Latest release: **[v0.1.1](https://github.com/creationsofm7/localtv-remote/releases/latest)** · Windows 10/11 · ~27 MB. Download the installer, run it, and you're paired in under a minute. Already installed? Grab the link above to **update to the latest version**.
 
 The setup wizard will:
 - Install to `%ProgramFiles%\LocalTV Remote`
 - Create a Start Menu shortcut
 - Add a Windows Firewall inbound rule (so your phone can reach the daemon without a popup)
 - Optionally create a desktop shortcut and enable start-on-login
+
+> First run shows a Windows SmartScreen "unknown publisher" notice (the installer isn't code-signed yet). Click **More info → Run anyway** to continue.
 
 ### Option 2 — winget *(coming soon)*
 
@@ -173,6 +203,30 @@ Windows is the only supported target today. The input layer is abstracted behind
 2. `npm install && npm run dev`
 3. Make changes, run `npm run typecheck` to verify
 4. Open a PR — CI will typecheck on push
+
+---
+
+## FAQ
+
+### How do I control my laptop from my phone without installing an app?
+
+Install LocalTV Remote on your **Windows PC** (it's the only device that needs anything installed). Launch it, scan the QR code with your phone's camera, and your phone's browser opens a controller page — a trackpad, keyboard, and volume remote. Nothing to install on the phone, no app store, no account.
+
+### Can multiple people control one PC at the same time?
+
+Yes. LocalTV Remote accepts several connected phones at once, and each one pairs independently with its own QR code and 6-digit PIN. There's no single shared "remote" to hand around — handy for a shared screen, a meeting room, or a media PC.
+
+### Is there a free, open-source alternative to Unified Remote or Remote Mouse?
+
+LocalTV Remote is exactly that: free, Apache-2.0 open-source, with no companion app required on the phone and no paid tier. See the [comparison above](#why-localtv-remote).
+
+### Is controlling my PC from my phone over Wi-Fi safe?
+
+It's **LAN-only** — input never leaves your local network and there's no cloud relay or account. Pairing requires a 6-digit PIN derived from machine identity, WebSocket connections are origin-checked, traffic is rate-limited, and the pairing PIN is only served to the PC itself, never to other devices. See [Security](#security).
+
+### Does it work in games and full-screen apps?
+
+Yes. Input is injected OS-wide via Win32 `SendInput`, so it works in any app, including games and full-screen windows.
 
 ---
 
