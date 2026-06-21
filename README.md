@@ -25,7 +25,7 @@
 
 **You only install it on the PC.** Your phone just opens a web page (a PWA in the browser), so there's **nothing to install on the phone — or on any other device** you use to control the PC. No app store, no second download.
 
-**Multiple people can control one PC at the same time**, each paired securely with a QR code and a 6-digit PIN — no shared "remote," no shared password. It's **LAN-only**: no cloud relay, no accounts, and your data never leaves your network. The PC runs a single Node process at ~25–40 MB RAM with **no bundled Chromium**.
+**Multiple people can control one PC at the same time** — everyone uses their **own phone as their own remote**, so there's no single remote to pass around the room. It's **LAN-only**: no cloud relay, no accounts, and your data never leaves your network. The PC runs a single Node process at ~25–40 MB RAM with **no bundled Chromium**.
 
 > LocalTV Remote is the **open-source, remote-only** companion to **LocalTV**. It contains no Chromium, no DRM, and no TV/streaming mode — just the remote-control daemon.
 
@@ -85,7 +85,9 @@ The setup wizard will:
 
 > First run shows a Windows SmartScreen "unknown publisher" notice (the installer isn't code-signed yet). Click **More info → Run anyway** to continue.
 
-### Option 2 — winget
+### Option 2 — winget ✅ Live
+
+Now available on the Windows Package Manager — installs without the SmartScreen prompt:
 
 ```
 winget install LocalTV.Remote
@@ -214,7 +216,7 @@ Install LocalTV Remote on your **Windows PC** (it's the only device that needs a
 
 ### Can multiple people control one PC at the same time?
 
-Yes. LocalTV Remote accepts several connected phones at once, and each one pairs independently with its own QR code and 6-digit PIN. There's no single shared "remote" to hand around — handy for a shared screen, a meeting room, or a media PC.
+Yes. Several phones can connect at once, and everyone uses their own phone as their own remote — so there's no single remote to toss around the room. Each phone pairs independently and securely. Handy for a shared screen, a meeting room, or a media PC.
 
 ### Is there a free, open-source alternative to Unified Remote or Remote Mouse?
 
