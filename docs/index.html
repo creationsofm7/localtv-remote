@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ── Primary SEO ───────────────────────────────────────────── -->
+  <title>Control Your PC From Your Phone — LocalTV Remote (Free)</title>
+  <meta name="description" content="LocalTV Remote turns your phone into a wireless mouse, keyboard and volume control for any Windows 10/11 PC over Wi-Fi. Free, open-source, no app to install on your phone." />
+  <!-- TODO: swap this for your custom domain once Pages is wired (e.g. https://localtvremote.com/) -->
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="author" content="Mudit Pandey" />
+
+  <!-- ── Open Graph / Twitter ──────────────────────────────────── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="Control your Windows PC from your phone — LocalTV Remote" />
+  <meta property="og:description" content="A free, open-source wireless mouse, keyboard & volume remote for Windows. Install on the PC only — your phone just opens a web page. LAN-only, no account." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/" />
+  <!-- TODO: replace with a purpose-made 1200×630 social card -->
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Control your Windows PC from your phone — LocalTV Remote" />
+  <meta name="twitter:description" content="Free, open-source phone-as-remote for Windows. Wireless mouse, keyboard & volume over Wi-Fi. No app to install on your phone." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+
+  <!-- ── Favicon (inline, no extra request) — a blinking-cursor mark ─ -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Crect x='9' y='6' width='5' height='20' fill='%23111'/%3E%3Crect x='17' y='15' width='9' height='6' fill='%23ccff00'/%3E%3C/svg%3E" />
+
+  <!-- ── Fonts: distinctive serif display + true typewriter body ──── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+
+  <!-- ── Structured data: app + FAQ ────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "LocalTV Remote",
+    "operatingSystem": "Windows 10, Windows 11",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "Turn your phone into a wireless mouse, keyboard and volume remote for any Windows PC over Wi-Fi. Install on the PC only; the phone opens a web page (PWA). LAN-only, no account, open-source.",
+    "softwareVersion": "0.1.1",
+    "fileSize": "27 MB",
+    "url": "https://creationsofm7.github.io/localtv-remote/",
+    "downloadUrl": "https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe",
+    "softwareHelp": "https://github.com/creationsofm7/localtv-remote",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "author": { "@type": "Person", "name": "Mudit Pandey" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I control my laptop from my phone without installing an app?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Install LocalTV Remote on your Windows PC — it's the only device that needs anything installed. Scan the QR code with your phone's camera and your browser opens a trackpad, keyboard and volume remote. Nothing to install on the phone, no app store, no account." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can multiple people control one PC at the same time?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Several phones can connect at once, each paired independently with its own QR code and 6-digit PIN — no single shared remote to hand around." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a free, open-source alternative to Unified Remote or Remote Mouse?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LocalTV Remote is free, Apache-2.0 open-source, needs no companion app on the phone, and has no paid tier. It runs LAN-only with no cloud relay or account." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root{
+      --ink:#111111;
+      --paper:#ffffff;
+      --muted:#6b6b6b;
+      --line:#e6e6e6;
+      --neon:#ccff00;        /* highlighter */
+      --neon-2:#9bff3d;      /* second accent */
+      --maxw:660px;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:"Courier Prime", ui-monospace, "Cascadia Mono", monospace;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      overflow:hidden;                 /* no-scroll */
+      display:grid;
+      place-items:center;
+      padding:clamp(18px,4vw,40px);
+    }
+    /* faint paper grain — craft, not colour */
+    body::after{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.035;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    main{
+      width:100%;
+      max-width:var(--maxw);
+      display:flex;
+      flex-direction:column;
+      gap:clamp(16px,2.6vh,26px);
+    }
+
+    /* ── letterhead ── */
+    .head{
+      display:flex;align-items:baseline;justify-content:space-between;
+      border-bottom:1.5px solid var(--ink);
+      padding-bottom:10px;
+      font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    }
+    .head b{font-weight:700;}
+    .head span{color:var(--muted);letter-spacing:.18em;}
+
+    /* ── headline ── */
+    h1{
+      font-family:"Fraunces", Georgia, serif;
+      font-weight:500;
+      font-size:clamp(2.1rem,6.2vw,3.5rem);
+      line-height:1.04;
+      letter-spacing:-0.015em;
+      margin:0;
+    }
+
+    /* ── highlighter mark (SVG behind text) ── */
+    .mark{position:relative;white-space:nowrap;}
+    .mark > svg{
+      position:absolute;left:-4px;right:-4px;bottom:.02em;
+      width:calc(100% + 8px);height:.78em;z-index:-1;
+      mix-blend-mode:multiply;
+      transform:scaleX(0) rotate(-.5deg);transform-origin:left center;
+      animation:swipe .7s cubic-bezier(.6,.02,.2,1) forwards;
+    }
+    .mark.m2 > svg{animation-delay:1.0s;}
+    @keyframes swipe{to{transform:scaleX(1) rotate(-.5deg);}}
+
+    /* ── the typed letter ── */
+    .letter{font-size:clamp(.92rem,1.05rem + .2vw,1.06rem);line-height:1.72;}
+    .letter p{margin:0 0 .82em;}
+    .letter .salute{color:var(--muted);}
+    .sign{margin-top:.4em;}
+    .sign .name{border-bottom:2px solid var(--neon-2);padding-bottom:1px;}
+    /* typewriter caret */
+    .caret::after{
+      content:"";display:inline-block;width:.6ch;height:1.05em;
+      background:var(--ink);margin-left:2px;transform:translateY(.16em);
+      animation:blink 1s steps(1) infinite;
+    }
+    @keyframes blink{50%{opacity:0;}}
+
+    /* ── call to action ── */
+    .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;}
+    .cta{
+      --b:#111;
+      font-family:"Courier Prime",monospace;font-weight:700;font-size:1rem;
+      letter-spacing:.02em;text-decoration:none;color:#fff;background:var(--b);
+      padding:14px 22px;border:1.5px solid var(--ink);
+      box-shadow:5px 5px 0 var(--neon);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--neon);background:#000;}
+    .cta:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--neon);}
+    .meta{font-size:12.5px;color:var(--muted);letter-spacing:.02em;}
+    .meta b{color:var(--ink);font-weight:700;}
+
+    .links{font-size:13px;display:flex;gap:18px;flex-wrap:wrap;}
+    .links a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--line);padding-bottom:2px;transition:border-color .15s;}
+    .links a:hover{border-color:var(--ink);}
+    .links .soon{color:var(--muted);border:none;}
+
+    /* ── quiet FAQ (keeps FAQPage data legitimate) ── */
+    .faq{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;}
+    .faq details{border-bottom:1px solid var(--line);}
+    .faq summary{
+      list-style:none;cursor:pointer;padding:9px 0;font-size:12.5px;
+      letter-spacing:.04em;display:flex;justify-content:space-between;gap:12px;
+    }
+    .faq summary::-webkit-details-marker{display:none;}
+    .faq summary::after{content:"+";color:var(--muted);}
+    .faq details[open] summary::after{content:"–";}
+    .faq p{margin:0 0 12px;font-size:13px;line-height:1.6;color:#333;}
+
+    /* never clip content on phones / short screens */
+    @media (max-width:640px), (max-height:680px){
+      body{overflow:auto;place-items:start center;}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .mark > svg{animation:none;transform:scaleX(1) rotate(-.5deg);}
+      .caret::after{animation:none;}
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header class="head">
+      <b>LocalTV&nbsp;Remote</b>
+      <span>Windows&nbsp;· free&nbsp;· open&nbsp;source</span>
+    </header>
+
+    <h1>Control your Windows&nbsp;PC <span class="mark">from your phone.<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span></h1>
+
+    <section class="letter" aria-label="A note from the maker">
+      <p class="salute">Dear whoever keeps getting up to hit&nbsp;pause,</p>
+      <p>I made LocalTV Remote so your phone is the mouse, keyboard, and volume for your PC. Over Wi-Fi. On your network, nobody&nbsp;else's.</p>
+      <p>You install it once — on the PC. Your phone just opens a web page: no app store, no account, no cloud. Scan a QR and you're in. Pass the link to a friend and they get their own remote too, their own&nbsp;PIN.</p>
+      <p>Free. Open source. About 27&nbsp;MB. That's the whole&nbsp;pitch.</p>
+      <p class="sign">— Mudit, <span class="name">maker of LocalTV</span></p>
+    </section>
+
+    <div>
+      <div class="cta-row">
+        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe">Download for Windows — Free</a>
+        <span class="meta"><b>v0.1.1</b> · ~27&nbsp;MB · Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</span>
+      </div>
+    </div>
+
+    <nav class="links">
+      <a href="https://github.com/creationsofm7/localtv-remote">Read the source on GitHub</a>
+      <a href="https://github.com/creationsofm7/localtv-remote/releases/latest">All releases</a>
+      <span class="soon">winget — coming soon</span>
+    </nav>
+
+    <section class="faq" aria-label="Frequently asked questions">
+      <details>
+        <summary>Do I need to install an app on my phone?</summary>
+        <p>No. You only install LocalTV Remote on the Windows PC. Your phone scans a QR code and opens a controller page in the browser — a trackpad, keyboard and volume remote. No app store, no account.</p>
+      </details>
+      <details>
+        <summary>Can several people control one PC at once?</summary>
+        <p>Yes. Multiple phones connect at the same time, each paired independently with its own QR code and 6-digit PIN — no single shared remote to pass around.</p>
+      </details>
+      <details>
+        <summary>Is it a free alternative to Unified Remote / Remote Mouse?</summary>
+        <p>It is — free, Apache-2.0 open-source, no companion app on the phone, no paid tier, and LAN-only with no cloud relay or account.</p>
+      </details>
+    </section>
+  </main>
+
+  <script>
+    // Typewriter — types the letter while keeping the real text in the DOM for SEO.
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var letter = document.querySelector('.letter');
+      if (!letter || reduce) return;
+
+      var blocks = Array.prototype.slice.call(letter.querySelectorAll('p'));
+      var saved = blocks.map(function (b) { return b.textContent; });
+      blocks.forEach(function (b) { b.textContent = ''; b.style.minHeight = '1.2em'; });
+
+      var bi = 0;
+      function typeBlock() {
+        if (bi >= blocks.length) return;
+        var el = blocks[bi], text = saved[bi], ci = 0;
+        el.classList.add('caret');
+        (function tick() {
+          if (ci <= text.length) {
+            el.textContent = text.slice(0, ci);
+            ci++;
+            // slight human jitter; pause a touch on punctuation
+            var ch = text.charAt(ci - 2);
+            var d = 18 + Math.random() * 26 + (/[,.—]/.test(ch) ? 140 : 0);
+            setTimeout(tick, d);
+          } else {
+            el.classList.remove('caret');
+            bi++;
+            setTimeout(typeBlock, 230);
+          }
+        })();
+      }
+      typeBlock();
+    })();
+  </script>
+</body>
+</html>
