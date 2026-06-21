@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ── Primary SEO ───────────────────────────────────────────── -->
+  <title>Unified Remote Alternative — Free, Open-Source | LocalTV Remote</title>
+  <meta name="description" content="Looking for a free, open-source Unified Remote alternative for Windows? LocalTV Remote needs no phone app, no account, and runs LAN-only. Honest side-by-side comparison." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/unified-remote-alternative/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="author" content="Mudit Pandey" />
+
+  <!-- ── Open Graph / Twitter ──────────────────────────────────── -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="A free, open-source Unified Remote alternative for Windows" />
+  <meta property="og:description" content="No app on your phone, no account, LAN-only. See how LocalTV Remote compares to Unified Remote — including where Unified Remote is the better pick." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/unified-remote-alternative/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="A free, open-source Unified Remote alternative for Windows" />
+  <meta name="twitter:description" content="No app on your phone, no account, LAN-only. Honest comparison of LocalTV Remote vs Unified Remote." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Crect x='9' y='6' width='5' height='20' fill='%23111'/%3E%3Crect x='17' y='15' width='9' height='6' fill='%23ccff00'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+
+  <!-- ── Structured data: breadcrumb + FAQ ─────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "LocalTV Remote", "item": "https://creationsofm7.github.io/localtv-remote/" },
+      { "@type": "ListItem", "position": 2, "name": "Unified Remote alternative", "item": "https://creationsofm7.github.io/localtv-remote/unified-remote-alternative/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is LocalTV Remote a free alternative to Unified Remote?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. LocalTV Remote is free and Apache-2.0 open-source with no paid tier. Unified Remote has a free version, but unlocking its full set of remotes and features needs the one-time paid upgrade." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to install an app on my phone like Unified Remote requires?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Unified Remote needs a server on the PC and a client app on the phone. LocalTV Remote installs only on the PC; your phone opens a web page (PWA) after scanning a QR code, so there is nothing to install on the phone." }
+      },
+      {
+        "@type": "Question",
+        "name": "When is Unified Remote the better choice?",
+        "acceptedAnswer": { "@type": "Answer", "text": "If you need macOS or Linux support, Bluetooth as well as Wi-Fi, or its large library of app-specific remotes and integrations, Unified Remote is the more mature, cross-platform option. LocalTV Remote is Windows-only and focused on mouse, keyboard and volume." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root{
+      --ink:#111111;--paper:#ffffff;--muted:#6b6b6b;--line:#e6e6e6;
+      --neon:#ccff00;--neon-2:#9bff3d;--maxw:720px;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;background:var(--paper);color:var(--ink);
+      font-family:"Courier Prime", ui-monospace, "Cascadia Mono", monospace;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      display:grid;place-items:start center;
+      padding:clamp(24px,5vh,56px) clamp(18px,4vw,40px);line-height:1.6;
+    }
+    body::after{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.035;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    main{width:100%;max-width:var(--maxw);display:flex;flex-direction:column;gap:clamp(18px,2.8vh,28px);}
+
+    .crumb{font-size:12px;letter-spacing:.06em;color:var(--muted);}
+    .crumb a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);}
+    .crumb a:hover{color:var(--ink);border-color:var(--ink);}
+
+    .head{
+      display:flex;align-items:baseline;justify-content:space-between;
+      border-bottom:1.5px solid var(--ink);padding-bottom:10px;
+      font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    }
+    .head b{font-weight:700;}.head span{color:var(--muted);letter-spacing:.18em;}
+
+    h1{
+      font-family:"Fraunces", Georgia, serif;font-weight:500;
+      font-size:clamp(1.9rem,5.4vw,3rem);line-height:1.06;letter-spacing:-0.015em;margin:0;
+    }
+    h2{
+      font-family:"Fraunces", Georgia, serif;font-weight:500;
+      font-size:clamp(1.3rem,3.2vw,1.7rem);line-height:1.12;margin:1.4em 0 0;
+    }
+    p{margin:0 0 .2em;font-size:clamp(.92rem,1.05rem,1.04rem);}
+    .lead{font-size:clamp(1rem,1.15rem,1.18rem);line-height:1.7;}
+
+    .mark{position:relative;white-space:nowrap;}
+    .mark > svg{
+      position:absolute;left:-4px;right:-4px;bottom:.02em;width:calc(100% + 8px);height:.78em;z-index:-1;
+      mix-blend-mode:multiply;transform:scaleX(0) rotate(-.5deg);transform-origin:left center;
+      animation:swipe .7s cubic-bezier(.6,.02,.2,1) forwards;
+    }
+    .mark.d1>svg{animation-delay:.25s;}.mark.d2>svg{animation-delay:.6s;}
+    @keyframes swipe{to{transform:scaleX(1) rotate(-.5deg);}}
+
+    /* comparison table */
+    .cmp{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:.4em;}
+    .cmp caption{caption-side:top;text-align:left;font-size:11px;letter-spacing:.16em;
+      text-transform:uppercase;color:var(--muted);padding-bottom:8px;}
+    .cmp th,.cmp td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top;}
+    .cmp thead th{border-bottom:1.5px solid var(--ink);font-weight:700;}
+    .cmp tbody th{font-weight:400;color:#333;width:42%;}
+    .cmp td.us{background:#fcffe8;font-weight:700;}
+    .cmp .win{color:#1a7f37;font-weight:700;}
+
+    .cta-row{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px 14px;margin-top:.6em;}
+    .cta{
+      font-family:"Courier Prime",monospace;font-weight:700;font-size:1rem;letter-spacing:.02em;
+      text-decoration:none;color:#fff;background:#111;padding:14px 22px;border:1.5px solid var(--ink);
+      box-shadow:5px 5px 0 var(--neon);transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--neon);background:#000;}
+    .winget{display:inline-flex;align-items:stretch;border:1.5px solid var(--ink);background:#111;}
+    .winget code{font-family:"Courier Prime",monospace;font-size:13px;display:flex;align-items:center;padding:0 14px;color:#eaeaea;white-space:nowrap;}
+    .winget code::before{content:"$";color:var(--neon);margin-right:9px;font-weight:700;}
+    .copy{display:inline-flex;align-items:center;justify-content:center;border:none;border-left:1px solid #333;background:#111;color:#b9b9b9;padding:0 13px;cursor:pointer;font:inherit;transition:background .12s,color .12s;}
+    .copy:hover{background:#000;color:#fff;}
+    .copy.copied{background:var(--neon);color:#111;}
+    .copy svg{width:15px;height:15px;}
+    .copy .ic-check{display:none;}
+    .copy.copied .ic-copy{display:none;}
+    .copy.copied .ic-check{display:inline;}
+
+    .links{font-size:13px;display:flex;gap:18px;flex-wrap:wrap;margin-top:.4em;border-top:1px solid var(--line);padding-top:16px;}
+    .links a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--line);padding-bottom:2px;transition:border-color .15s;}
+    .links a:hover{border-color:var(--ink);}
+    .note{font-size:12px;color:var(--muted);}
+
+    @media (prefers-reduced-motion:reduce){.mark>svg{animation:none;transform:scaleX(1) rotate(-.5deg);}}
+  </style>
+</head>
+
+<body>
+  <main>
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="../">LocalTV Remote</a> / Unified Remote alternative
+    </nav>
+
+    <header class="head">
+      <b>LocalTV&nbsp;Remote</b>
+      <span>Windows&nbsp;· free&nbsp;· open&nbsp;source</span>
+    </header>
+
+    <h1>A free, open-source <span class="mark d1">Unified&nbsp;Remote alternative<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span> for Windows</h1>
+
+    <p class="lead">If you came here looking for a <strong>free Unified Remote alternative</strong>, here's the honest version: LocalTV Remote does one thing — turns your phone into a mouse, keyboard and volume remote for a Windows PC — and it does it with <span class="mark d2">no app on your phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>, no account, and no cloud. Below is a side-by-side comparison, including the cases where Unified Remote is the better choice.</p>
+
+    <section aria-label="Comparison">
+      <table class="cmp">
+        <caption>LocalTV Remote vs Unified Remote — free tiers, at the time of writing</caption>
+        <thead>
+          <tr><th scope="col"></th><th scope="col">LocalTV&nbsp;Remote</th><th scope="col">Unified&nbsp;Remote</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Price</th><td class="us">Free &amp; open-source (Apache&nbsp;2.0)</td><td>Free tier; one-time paid upgrade for full features</td></tr>
+          <tr><th scope="row">App to install on your phone</th><td class="us">None — opens in the browser (PWA)</td><td>Client app required (iOS / Android)</td></tr>
+          <tr><th scope="row">Install on the PC</th><td class="us">One installer, ~27&nbsp;MB</td><td>Server install required</td></tr>
+          <tr><th scope="row">Control one PC from several phones</th><td class="us">Yes — each phone pairs separately</td><td>Typically one client at a time</td></tr>
+          <tr><th scope="row">Cloud / account</th><td class="us">No — LAN-only, private</td><td>No account needed; LAN-based</td></tr>
+          <tr><th scope="row">Source code you can audit</th><td class="us">Yes — open-source</td><td>Closed-source</td></tr>
+          <tr><th scope="row">Operating systems (server)</th><td>Windows&nbsp;10&nbsp;/&nbsp;11 only</td><td class="win">Windows, macOS, Linux, Raspberry&nbsp;Pi</td></tr>
+          <tr><th scope="row">Connection types</th><td>Wi-Fi (LAN)</td><td class="win">Wi-Fi and Bluetooth</td></tr>
+          <tr><th scope="row">App-specific remotes &amp; integrations</th><td>Mouse, keyboard, volume</td><td class="win">Large library of remotes &amp; macros</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Unified Remote's features reflect its public free tier and may change — compare for yourself. Green marks where Unified Remote is the stronger pick.</p>
+    </section>
+
+    <h2>When LocalTV Remote is the better pick</h2>
+    <p>You're on Windows, you want a <strong>truly free and open-source</strong> tool, and you don't want to install anything on the phones doing the controlling — friends and family just scan a QR code and get their own remote. You care that input stays on your own network, with nothing routed through a cloud or tied to an account.</p>
+
+    <h2>When Unified Remote is the better pick</h2>
+    <p>You need to control a <strong>Mac or Linux</strong> machine, you want <strong>Bluetooth</strong> as well as Wi-Fi, or you rely on its deep library of app-specific remotes, media controls and custom macros. Unified Remote is older and broader; LocalTV Remote is deliberately narrow and Windows-only. If breadth matters more than openness, it's the safer bet.</p>
+
+    <div class="cta-block">
+      <div class="cta-row">
+        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe">Download for Windows — Free</a>
+        <div class="winget" aria-label="Install with winget">
+          <code>winget install LocalTV.Remote</code>
+          <button class="copy" type="button" aria-label="Copy winget command" title="Copy" data-copy="winget install LocalTV.Remote">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="note">v0.1.1 · ~27&nbsp;MB · Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</p>
+    </div>
+
+    <nav class="links">
+      <a href="../">← Back to LocalTV Remote</a>
+      <a href="https://github.com/creationsofm7/localtv-remote">Read the source on GitHub</a>
+      <a href="https://github.com/creationsofm7/localtv-remote/releases/latest">All releases</a>
+    </nav>
+  </main>
+
+  <script>
+    document.querySelectorAll('.copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy');
+        var done = function () {
+          btn.classList.add('copied'); btn.setAttribute('title', 'Copied');
+          setTimeout(function () { btn.classList.remove('copied'); btn.setAttribute('title', 'Copy'); }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(done);
+        } else {
+          var t = document.createElement('textarea'); t.value = text;
+          document.body.appendChild(t); t.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(t); done();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
