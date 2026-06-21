@@ -144,7 +144,10 @@
       transform:scaleX(0) rotate(-.5deg);transform-origin:left center;
       animation:swipe .7s cubic-bezier(.6,.02,.2,1) forwards;
     }
-    .mark.m2 > svg{animation-delay:1.0s;}
+    .mark.d1 > svg{animation-delay:.30s;}
+    .mark.d2 > svg{animation-delay:.70s;}
+    .mark.d3 > svg{animation-delay:1.00s;}
+    .mark.d4 > svg{animation-delay:1.30s;}
     @keyframes swipe{to{transform:scaleX(1) rotate(-.5deg);}}
 
     /* ── the typed letter ── */
@@ -153,14 +156,6 @@
     .letter .salute{color:var(--muted);}
     .sign{margin-top:.4em;}
     .sign .name{border-bottom:2px solid var(--neon-2);padding-bottom:1px;}
-    /* typewriter caret */
-    .caret::after{
-      content:"";display:inline-block;width:.6ch;height:1.05em;
-      background:var(--ink);margin-left:2px;transform:translateY(.16em);
-      animation:blink 1s steps(1) infinite;
-    }
-    @keyframes blink{50%{opacity:0;}}
-
     /* ── call to action ── */
     .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;}
     .cta{
@@ -200,7 +195,6 @@
 
     @media (prefers-reduced-motion:reduce){
       .mark > svg{animation:none;transform:scaleX(1) rotate(-.5deg);}
-      .caret::after{animation:none;}
     }
   </style>
 </head>
@@ -212,13 +206,13 @@
       <span>Windows&nbsp;· free&nbsp;· open&nbsp;source</span>
     </header>
 
-    <h1>Control your Windows&nbsp;PC <span class="mark">from your phone.<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span></h1>
+    <h1>Control your Windows&nbsp;PC <span class="mark d1">from your phone.<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span></h1>
 
     <section class="letter" aria-label="A note from the maker">
       <p class="salute">Dear whoever keeps getting up to hit&nbsp;pause,</p>
       <p>I made LocalTV Remote so your phone is the mouse, keyboard, and volume for your PC. Over Wi-Fi. On your network, nobody&nbsp;else's.</p>
-      <p>You install it once — on the PC. Your phone just opens a web page: no app store, no account, no cloud. Scan a QR and you're in. Pass the link to a friend and they get their own remote too, their own&nbsp;PIN.</p>
-      <p>Free. Open source. About 27&nbsp;MB. That's the whole&nbsp;pitch.</p>
+      <p>You install it <span class="mark d2">once<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span> — on the PC. Your phone just opens a web page: no app store, no account, <span class="mark d3">no cloud<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>. Scan a QR and you're in. Pass the link to a friend and they get their own remote too, their own&nbsp;PIN.</p>
+      <p><span class="mark d4">Free<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>. Open source. About 27&nbsp;MB. That's the whole&nbsp;pitch.</p>
       <p class="sign">— Mudit, <span class="name">maker of LocalTV</span></p>
     </section>
 
@@ -251,39 +245,5 @@
     </section>
   </main>
 
-  <script>
-    // Typewriter — types the letter while keeping the real text in the DOM for SEO.
-    (function () {
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var letter = document.querySelector('.letter');
-      if (!letter || reduce) return;
-
-      var blocks = Array.prototype.slice.call(letter.querySelectorAll('p'));
-      var saved = blocks.map(function (b) { return b.textContent; });
-      blocks.forEach(function (b) { b.textContent = ''; b.style.minHeight = '1.2em'; });
-
-      var bi = 0;
-      function typeBlock() {
-        if (bi >= blocks.length) return;
-        var el = blocks[bi], text = saved[bi], ci = 0;
-        el.classList.add('caret');
-        (function tick() {
-          if (ci <= text.length) {
-            el.textContent = text.slice(0, ci);
-            ci++;
-            // slight human jitter; pause a touch on punctuation
-            var ch = text.charAt(ci - 2);
-            var d = 18 + Math.random() * 26 + (/[,.—]/.test(ch) ? 140 : 0);
-            setTimeout(tick, d);
-          } else {
-            el.classList.remove('caret');
-            bi++;
-            setTimeout(typeBlock, 230);
-          }
-        })();
-      }
-      typeBlock();
-    })();
-  </script>
 </body>
 </html>
