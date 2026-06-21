@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>How to Control Your PC From Your Phone Over Wi-Fi (Free) | LocalTV Remote</title>
+  <meta name="description" content="Control your Windows PC from your phone over Wi-Fi in four steps: install on the PC, scan a QR code, then use your phone as a mouse, keyboard and volume remote. Free." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/control-pc-from-phone/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="author" content="Mudit Pandey" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How to control your PC from your phone over Wi-Fi" />
+  <meta property="og:description" content="Install on the PC, scan a QR code, and your phone becomes the mouse, keyboard and volume remote. No app on the phone, no account. Free and open-source." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/control-pc-from-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to control your PC from your phone over Wi-Fi" />
+  <meta name="twitter:description" content="Four steps to turn your phone into a mouse, keyboard and volume remote for Windows. No phone app, no account, free." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Crect x='9' y='6' width='5' height='20' fill='%23111'/%3E%3Crect x='17' y='15' width='9' height='6' fill='%23ccff00'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "LocalTV Remote", "item": "https://creationsofm7.github.io/localtv-remote/" },
+      { "@type": "ListItem", "position": 2, "name": "Control your PC from your phone", "item": "https://creationsofm7.github.io/localtv-remote/control-pc-from-phone/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to control your Windows PC from your phone over Wi-Fi",
+    "description": "Turn your phone into a wireless mouse, keyboard and volume remote for a Windows 10 or 11 PC using LocalTV Remote.",
+    "totalTime": "PT2M",
+    "tool": [
+      { "@type": "HowToTool", "name": "A Windows 10 or 11 PC" },
+      { "@type": "HowToTool", "name": "A phone with a camera and a web browser" },
+      { "@type": "HowToTool", "name": "A shared Wi-Fi network" }
+    ],
+    "step": [
+      { "@type": "HowToStep", "name": "Install on the PC", "text": "Download LocalTV Remote and run the installer. It is about 27 MB and finishes in under a minute. You only install it on the PC." },
+      { "@type": "HowToStep", "name": "Launch it", "text": "Open LocalTV Remote. A pairing window appears with a QR code and a 6-digit PIN." },
+      { "@type": "HowToStep", "name": "Scan with your phone", "text": "Point your phone camera at the QR code and tap the link. Your browser opens the controller page. Nothing to install on the phone." },
+      { "@type": "HowToStep", "name": "Take control", "text": "Swipe to move the cursor, tap to click, and switch to the keyboard or volume panel whenever you need it." }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need to install anything on my phone?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. You install LocalTV Remote on the Windows PC only. Your phone scans a QR code and opens the controller in its browser, so there is no app to download on the phone." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it work over any Wi-Fi?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Your phone and PC need to be on the same Wi-Fi network. It works on home and office networks. Guest networks that block device-to-device traffic can stop the phone from reaching the PC." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it really free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. LocalTV Remote is free and open-source under the Apache 2.0 license, with no ads and no paid tier." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root{
+      --ink:#111111;--paper:#ffffff;--muted:#6b6b6b;--line:#e6e6e6;
+      --neon:#ccff00;--neon-2:#9bff3d;--maxw:680px;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;background:var(--paper);color:var(--ink);
+      font-family:"Courier Prime", ui-monospace, "Cascadia Mono", monospace;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      display:grid;place-items:start center;
+      padding:clamp(24px,5vh,56px) clamp(18px,4vw,40px);line-height:1.6;
+    }
+    body::after{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.035;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    main{width:100%;max-width:var(--maxw);display:flex;flex-direction:column;gap:clamp(18px,2.8vh,28px);}
+
+    .crumb{font-size:12px;letter-spacing:.06em;color:var(--muted);}
+    .crumb a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);}
+    .crumb a:hover{color:var(--ink);border-color:var(--ink);}
+
+    .head{
+      display:flex;align-items:baseline;justify-content:space-between;
+      border-bottom:1.5px solid var(--ink);padding-bottom:10px;
+      font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    }
+    .head b{font-weight:700;}.head span{color:var(--muted);letter-spacing:.18em;}
+
+    h1{
+      font-family:"Fraunces", Georgia, serif;font-weight:500;
+      font-size:clamp(1.9rem,5.4vw,3rem);line-height:1.06;letter-spacing:-0.015em;margin:0;
+    }
+    h2{
+      font-family:"Fraunces", Georgia, serif;font-weight:500;
+      font-size:clamp(1.3rem,3.2vw,1.7rem);line-height:1.12;margin:1.2em 0 0;
+    }
+    p{margin:0 0 .2em;font-size:clamp(.92rem,1.05rem,1.04rem);}
+    .lead{font-size:clamp(1rem,1.15rem,1.18rem);line-height:1.7;}
+
+    .mark{position:relative;white-space:nowrap;}
+    .mark > svg{
+      position:absolute;left:-4px;right:-4px;bottom:.02em;width:calc(100% + 8px);height:.78em;z-index:-1;
+      mix-blend-mode:multiply;transform:scaleX(0) rotate(-.5deg);transform-origin:left center;
+      animation:swipe .7s cubic-bezier(.6,.02,.2,1) forwards;
+    }
+    .mark.d1>svg{animation-delay:.25s;}.mark.d2>svg{animation-delay:.6s;}
+    @keyframes swipe{to{transform:scaleX(1) rotate(-.5deg);}}
+
+    ol.steps{list-style:none;counter-reset:s;margin:.4em 0 0;padding:0;}
+    ol.steps li{counter-increment:s;position:relative;padding:0 0 18px 46px;border-bottom:1px solid var(--line);margin-bottom:18px;}
+    ol.steps li:last-child{border-bottom:none;margin-bottom:0;}
+    ol.steps li::before{
+      content:counter(s);position:absolute;left:0;top:-2px;
+      width:30px;height:30px;display:grid;place-items:center;
+      background:var(--neon);border:1.5px solid var(--ink);
+      font-weight:700;font-size:14px;
+    }
+    ol.steps b{font-weight:700;}
+    .req{list-style:none;margin:.2em 0 0;padding:0;font-size:.96rem;}
+    .req li{padding:6px 0 6px 22px;position:relative;}
+    .req li::before{content:"›";position:absolute;left:0;color:var(--ink);font-weight:700;}
+
+    .cta-row{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px 14px;margin-top:.6em;}
+    .cta{
+      font-family:"Courier Prime",monospace;font-weight:700;font-size:1rem;letter-spacing:.02em;
+      text-decoration:none;color:#fff;background:#111;padding:14px 22px;border:1.5px solid var(--ink);
+      box-shadow:5px 5px 0 var(--neon);transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--neon);background:#000;}
+    .winget{display:inline-flex;align-items:stretch;border:1.5px solid var(--ink);background:#111;}
+    .winget code{font-family:"Courier Prime",monospace;font-size:13px;display:flex;align-items:center;padding:0 14px;color:#eaeaea;white-space:nowrap;}
+    .winget code::before{content:"$";color:var(--neon);margin-right:9px;font-weight:700;}
+    .copy{display:inline-flex;align-items:center;justify-content:center;border:none;border-left:1px solid #333;background:#111;color:#b9b9b9;padding:0 13px;cursor:pointer;font:inherit;transition:background .12s,color .12s;}
+    .copy:hover{background:#000;color:#fff;}
+    .copy.copied{background:var(--neon);color:#111;}
+    .copy svg{width:15px;height:15px;}
+    .copy .ic-check{display:none;}
+    .copy.copied .ic-copy{display:none;}
+    .copy.copied .ic-check{display:inline;}
+
+    .faq details{border-bottom:1px solid var(--line);}
+    .faq summary{list-style:none;cursor:pointer;padding:10px 0;font-size:13.5px;display:flex;justify-content:space-between;gap:12px;}
+    .faq summary::-webkit-details-marker{display:none;}
+    .faq summary::after{content:"+";color:var(--muted);}
+    .faq details[open] summary::after{content:"\2013";}
+    .faq p{margin:0 0 12px;font-size:13px;line-height:1.6;color:#333;}
+
+    .links{font-size:13px;display:flex;gap:18px;flex-wrap:wrap;margin-top:.4em;border-top:1px solid var(--line);padding-top:16px;}
+    .links a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--line);padding-bottom:2px;transition:border-color .15s;}
+    .links a:hover{border-color:var(--ink);}
+    .note{font-size:12px;color:var(--muted);}
+
+    @media (prefers-reduced-motion:reduce){.mark>svg{animation:none;transform:scaleX(1) rotate(-.5deg);}}
+  </style>
+</head>
+
+<body>
+  <main>
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="../">LocalTV Remote</a> / Control your PC from your phone
+    </nav>
+
+    <header class="head">
+      <b>LocalTV&nbsp;Remote</b>
+      <span>Windows&nbsp;· free&nbsp;· open&nbsp;source</span>
+    </header>
+
+    <h1>How to control your PC <span class="mark d1">from your phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span> over Wi-Fi</h1>
+
+    <p class="lead">Your phone can be the mouse, keyboard, and volume knob for your Windows PC. You install one small app on the PC, scan a QR code, and start swiping. There's <span class="mark d2">nothing to install on the phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>, no account, and no cloud. The whole thing takes about two minutes.</p>
+
+    <section aria-label="Requirements">
+      <h2>What you need</h2>
+      <ul class="req">
+        <li>A Windows 10 or 11 PC</li>
+        <li>A phone with a camera and a browser (any iPhone or Android)</li>
+        <li>Both devices on the same Wi-Fi network</li>
+      </ul>
+    </section>
+
+    <section aria-label="Steps">
+      <h2>Four steps</h2>
+      <ol class="steps">
+        <li><b>Install on the PC.</b> Download LocalTV Remote and run the installer. It's about 27&nbsp;MB and finishes in under a minute. This is the only device you install anything on.</li>
+        <li><b>Launch it.</b> Open the app. A pairing window shows a QR code and a 6-digit PIN.</li>
+        <li><b>Scan with your phone.</b> Point your camera at the QR code and tap the link. Your browser opens the controller page.</li>
+        <li><b>Take control.</b> Swipe to move the cursor, tap to click, and switch to the keyboard or volume panel when you need it. Your phone remembers the pairing, so next time it reconnects on its own.</li>
+      </ol>
+    </section>
+
+    <section aria-label="Capabilities">
+      <h2>What your phone can do</h2>
+      <ul class="req">
+        <li><b>Trackpad:</b> move the cursor, left-click, right-click, and scroll</li>
+        <li><b>Keyboard:</b> type text and send key combinations to the PC</li>
+        <li><b>Volume:</b> turn the system volume up or down</li>
+      </ul>
+    </section>
+
+    <section aria-label="Troubleshooting">
+      <h2>If your phone can't connect</h2>
+      <ul class="req">
+        <li><b>Same network:</b> check that the phone and PC are on the same Wi-Fi, not a guest network that isolates devices.</li>
+        <li><b>Firewall:</b> the installer adds a Windows Firewall rule for you. If you blocked it by mistake, allow LocalTV Remote through.</li>
+        <li><b>Fresh code:</b> if the QR code expired, reopen the pairing window for a new one.</li>
+      </ul>
+    </section>
+
+    <div class="cta-block">
+      <div class="cta-row">
+        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe">Download for Windows — Free</a>
+        <div class="winget" aria-label="Install with winget">
+          <code>winget install LocalTV.Remote</code>
+          <button class="copy" type="button" aria-label="Copy winget command" title="Copy" data-copy="winget install LocalTV.Remote">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="note">v0.1.1 · ~27&nbsp;MB · Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</p>
+    </div>
+
+    <section class="faq" aria-label="Frequently asked questions">
+      <h2>Common questions</h2>
+      <details>
+        <summary>Do I need to install anything on my phone?</summary>
+        <p>No. You install LocalTV Remote on the Windows PC only. Your phone scans a QR code and opens the controller in its browser, so there is no app to download on the phone.</p>
+      </details>
+      <details>
+        <summary>Does it work over any Wi-Fi?</summary>
+        <p>Your phone and PC need to be on the same Wi-Fi network. It works on home and office networks. Guest networks that block device-to-device traffic can stop the phone from reaching the PC.</p>
+      </details>
+      <details>
+        <summary>Is it really free?</summary>
+        <p>Yes. LocalTV Remote is free and open-source under the Apache 2.0 license, with no ads and no paid tier.</p>
+      </details>
+    </section>
+
+    <nav class="links">
+      <a href="../">← Back to LocalTV Remote</a>
+      <a href="../unified-remote-alternative/">vs Unified Remote</a>
+      <a href="../remote-mouse-alternative/">vs Remote Mouse</a>
+      <a href="https://github.com/creationsofm7/localtv-remote">Source on GitHub</a>
+    </nav>
+  </main>
+
+  <script>
+    document.querySelectorAll('.copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy');
+        var done = function () {
+          btn.classList.add('copied'); btn.setAttribute('title', 'Copied');
+          setTimeout(function () { btn.classList.remove('copied'); btn.setAttribute('title', 'Copy'); }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(done);
+        } else {
+          var t = document.createElement('textarea'); t.value = text;
+          document.body.appendChild(t); t.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(t); done();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
