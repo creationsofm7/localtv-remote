@@ -28,7 +28,7 @@
   "optionalDependencies": {
     "node-audio-volume-mixer": "^1.0.3",
     "systray2": "^2.1.0",
-    "webview-nodejs": "^0.2.0"
+    "webview-nodejs": "^0.4.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
