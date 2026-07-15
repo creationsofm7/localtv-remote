@@ -77,6 +77,7 @@ Looking for a **free, open-source alternative to Unified Remote or Remote Mouse*
 
 Now available on the Windows Package Manager — installs without the SmartScreen prompt:
 
+Open Terminal/PowerShell and Paste:
 ```
 winget install LocalTV.Remote
 ```
