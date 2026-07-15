@@ -71,7 +71,17 @@ Looking for a **free, open-source alternative to Unified Remote or Remote Mouse*
 
 ## Install
 
-### Option 1 — Installer (recommended)
+
+
+### Option 1 — winget (recommended)
+
+Now available on the Windows Package Manager — installs without the SmartScreen prompt:
+
+```
+winget install LocalTV.Remote
+```
+
+### Option 2 — Installer 
 
 ### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe)
 
@@ -84,14 +94,6 @@ The setup wizard will:
 - Optionally create a desktop shortcut and enable start-on-login
 
 > First run shows a Windows SmartScreen "unknown publisher" notice (the installer isn't code-signed yet). Click **More info → Run anyway** to continue.
-
-### Option 2 — winget ✅ Live
-
-Now available on the Windows Package Manager — installs without the SmartScreen prompt:
-
-```
-winget install LocalTV.Remote
-```
 
 ---
 
@@ -235,7 +237,7 @@ Yes. Input is injected OS-wide via Win32 `SendInput`, so it works in any app, in
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).  
-Copyright 2026 Mudit Pandey. Contains no Widevine/CastLabs/DRM code.
+Copyright 2026 Mudit Pandey.
 
 <div align="center">
 
