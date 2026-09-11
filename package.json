@@ -39,6 +39,6 @@
     "postject": "^1.0.0-alpha.6",
     "rcedit": "^5.0.2",
     "tsx": "^4.19.0",
-    "typescript": "^5.4.5"
+    "typescript": "^6.0.3"
   }
 }
