@@ -1,28 +1,25 @@
 import type { ShortcutAction } from '../../shared/control';
+import type { InputModifiers } from './backends/input-backend';
 
-type BrowserNavigationShortcut = 'go_home' | 'go_back' | 'go_forward' | 'reload';
-type MediaShortcut = Exclude<ShortcutAction, BrowserNavigationShortcut>;
-
-const BROWSER_NAVIGATION_SHORTCUTS: ReadonlySet<ShortcutAction> = new Set([
-  'go_home',
-  'go_back',
-  'go_forward',
-  'reload',
-]);
-
-const MEDIA_SHORTCUT_KEYS: Readonly<Record<MediaShortcut, string>> = {
-  play_pause: 'MediaPlayPause',
-  seek_back: 'j',
-  seek_forward: 'l',
-  fullscreen: 'f',
-  mute: 'm',
-  captions: 'c',
-  speed_up: '>',
-  speed_down: '<',
+export type ShortcutCommand = {
+  key: string;
+  modifiers?: InputModifiers;
 };
 
-export const isBrowserNavigationShortcut = (action: ShortcutAction): boolean =>
-  BROWSER_NAVIGATION_SHORTCUTS.has(action);
+const SHORTCUT_COMMANDS: Readonly<Record<ShortcutAction, ShortcutCommand>> = {
+  play_pause: { key: 'MediaPlayPause' },
+  seek_back: { key: 'KeyJ' },
+  seek_forward: { key: 'KeyL' },
+  fullscreen: { key: 'KeyF' },
+  mute: { key: 'KeyM' },
+  captions: { key: 'KeyC' },
+  speed_up: { key: 'Period', modifiers: { shift: true } },
+  speed_down: { key: 'Comma', modifiers: { shift: true } },
+  go_home: { key: 'BrowserHome' },
+  go_back: { key: 'BrowserBack' },
+  go_forward: { key: 'BrowserForward' },
+  reload: { key: 'BrowserRefresh' },
+};
 
-export const resolveShortcutKey = (action: ShortcutAction): string | null =>
-  isBrowserNavigationShortcut(action) ? null : MEDIA_SHORTCUT_KEYS[action as MediaShortcut];
+export const resolveShortcutCommand = (action: ShortcutAction): ShortcutCommand =>
+  SHORTCUT_COMMANDS[action];

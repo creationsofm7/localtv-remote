@@ -11,6 +11,26 @@ type NativeMixer = {
   setMasterVolumeLevelScalar: (value: number) => void;
 };
 
+export const resolveNativeMixer = (loaded: unknown): NativeMixer | null => {
+  if (!loaded || typeof loaded !== 'object') return null;
+
+  const wrapper = loaded as Record<string, unknown>;
+  const candidate = wrapper.NodeAudioVolumeMixer ?? loaded;
+  if (!candidate || typeof candidate !== 'object') return null;
+
+  const mixer = candidate as Record<string, unknown>;
+  if (
+    typeof mixer.getMasterVolumeLevelScalar !== 'function' ||
+    typeof mixer.isMasterMuted !== 'function' ||
+    typeof mixer.muteMaster !== 'function' ||
+    typeof mixer.setMasterVolumeLevelScalar !== 'function'
+  ) {
+    return null;
+  }
+
+  return candidate as NativeMixer;
+};
+
 /**
  * Load the optional native Windows volume mixer.
  *
@@ -25,7 +45,8 @@ const loadNativeMixer = (): NativeMixer | null => {
   for (const base of candidates) {
     try {
       const nodeRequire = createRequire(base);
-      return nodeRequire('node-audio-volume-mixer') as NativeMixer;
+      const mixer = resolveNativeMixer(nodeRequire('node-audio-volume-mixer'));
+      if (mixer) return mixer;
     } catch {
       continue;
     }

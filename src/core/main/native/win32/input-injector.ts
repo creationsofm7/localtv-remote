@@ -8,6 +8,7 @@
  */
 
 import { nativeRequire } from '../../native-require';
+import type { InputModifiers } from '../../input/backends/input-backend';
 
 // Loaded at runtime (not bundled) so the SEA build can ship koffi's native
 // binary on disk next to the exe.
@@ -72,6 +73,11 @@ const VK_MAP: Readonly<Record<string, number>> = {
   PrintScreen: 0x2c,
   Insert: 0x2d,
   Delete: 0x2e,
+  KeyC: 0x43,
+  KeyF: 0x46,
+  KeyJ: 0x4a,
+  KeyL: 0x4c,
+  KeyM: 0x4d,
   F1: 0x70,
   F2: 0x71,
   F3: 0x72,
@@ -89,6 +95,8 @@ const VK_MAP: Readonly<Record<string, number>> = {
   BrowserRefresh: 0xa8,
   BrowserHome: 0xac,
   MediaPlayPause: 0xb3,
+  Comma: 0xbc,
+  Period: 0xbe,
   NumLock: 0x90,
   ScrollLock: 0x91,
 };
@@ -230,6 +238,31 @@ function makeKeyInput(vk: number, scan: number, flags: number): unknown {
   };
 }
 
+function makeKeyEvent(key: string, keyUp: boolean): unknown | null {
+  if (key.length === 1) {
+    const flags = KEYEVENTF_UNICODE | (keyUp ? KEYEVENTF_KEYUP : 0);
+    return makeKeyInput(0, key.charCodeAt(0), flags);
+  }
+
+  const vk = VK_MAP[key];
+  if (vk === undefined) return null;
+
+  const scan = _MapVirtualKeyW(vk, MAPVK_VK_TO_VSC) & 0xff;
+  let flags = keyUp ? KEYEVENTF_KEYUP : 0;
+  if (EXTENDED_VK.has(vk)) flags |= 0x0001;
+  return makeKeyInput(vk, scan, flags);
+}
+
+function modifierKeys(modifiers?: InputModifiers): string[] {
+  if (!modifiers) return [];
+  const keys: string[] = [];
+  if (modifiers.ctrl) keys.push('Control');
+  if (modifiers.alt) keys.push('Alt');
+  if (modifiers.shift) keys.push('Shift');
+  if (modifiers.meta) keys.push('Meta');
+  return keys;
+}
+
 function toAbsolute(
   screenX: number,
   screenY: number,
@@ -320,45 +353,29 @@ export function sendScroll(
   ]);
 }
 
-export function sendKeyDown(key: string): void {
+export function sendKeyDown(key: string, modifiers?: InputModifiers): void {
   resetIdleTimer();
-
-  if (key.length === 1) {
-    const charCode = key.charCodeAt(0);
-    sendInputs([makeKeyInput(0, charCode, KEYEVENTF_UNICODE)]);
-    return;
-  }
-
-  const vk = VK_MAP[key];
-  if (vk === undefined) return;
-
-  const scan = _MapVirtualKeyW(vk, MAPVK_VK_TO_VSC) & 0xff;
-  let flags = 0;
-  if (EXTENDED_VK.has(vk)) flags |= 0x0001; // KEYEVENTF_EXTENDEDKEY
-  sendInputs([makeKeyInput(vk, scan, flags)]);
+  const keyEvent = makeKeyEvent(key, false);
+  if (!keyEvent) return;
+  const modifierEvents = modifierKeys(modifiers)
+    .map((modifier) => makeKeyEvent(modifier, false))
+    .filter((event): event is unknown => event !== null);
+  sendInputs([...modifierEvents, keyEvent]);
 }
 
-export function sendKeyUp(key: string): void {
-  if (key.length === 1) {
-    const charCode = key.charCodeAt(0);
-    sendInputs([
-      makeKeyInput(0, charCode, KEYEVENTF_UNICODE | KEYEVENTF_KEYUP),
-    ]);
-    return;
-  }
-
-  const vk = VK_MAP[key];
-  if (vk === undefined) return;
-
-  const scan = _MapVirtualKeyW(vk, MAPVK_VK_TO_VSC) & 0xff;
-  let flags = KEYEVENTF_KEYUP;
-  if (EXTENDED_VK.has(vk)) flags |= 0x0001;
-  sendInputs([makeKeyInput(vk, scan, flags)]);
+export function sendKeyUp(key: string, modifiers?: InputModifiers): void {
+  const keyEvent = makeKeyEvent(key, true);
+  if (!keyEvent) return;
+  const modifierEvents = modifierKeys(modifiers)
+    .reverse()
+    .map((modifier) => makeKeyEvent(modifier, true))
+    .filter((event): event is unknown => event !== null);
+  sendInputs([keyEvent, ...modifierEvents]);
 }
 
-export function sendKeyPress(key: string): void {
-  sendKeyDown(key);
-  sendKeyUp(key);
+export function sendKeyPress(key: string, modifiers?: InputModifiers): void {
+  sendKeyDown(key, modifiers);
+  sendKeyUp(key, modifiers);
 }
 
 export function getVirtualScreenBounds(): {

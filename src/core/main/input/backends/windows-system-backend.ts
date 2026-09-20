@@ -1,4 +1,4 @@
-import type { ScreenBounds, SystemInputBackend } from './input-backend';
+import type { InputModifiers, ScreenBounds, SystemInputBackend } from './input-backend';
 
 type Injector = typeof import('../../native/win32/input-injector');
 
@@ -50,16 +50,16 @@ export class WindowsSystemBackend implements SystemInputBackend {
     this.injector?.sendScroll(deltaY, screenX, screenY);
   }
 
-  injectKeyDown(key: string): void {
-    this.injector?.sendKeyDown(key);
+  injectKeyDown(key: string, modifiers?: InputModifiers): void {
+    this.injector?.sendKeyDown(key, modifiers);
   }
 
-  injectKeyUp(key: string): void {
-    this.injector?.sendKeyUp(key);
+  injectKeyUp(key: string, modifiers?: InputModifiers): void {
+    this.injector?.sendKeyUp(key, modifiers);
   }
 
-  injectKeyPress(key: string): void {
-    this.injector?.sendKeyPress(key);
+  injectKeyPress(key: string, modifiers?: InputModifiers): void {
+    this.injector?.sendKeyPress(key, modifiers);
   }
 
   getVirtualScreenBounds(): ScreenBounds {

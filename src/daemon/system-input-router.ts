@@ -2,7 +2,7 @@ import type { ControlMessage, InputMode, ShortcutAction, VolumeState } from '../
 import type { SystemInputBackend } from '../core/main/input/backends/input-backend';
 import type { VolumeController } from '../core/main/audio/volume-controller';
 import type { InputRouter } from '../core/main/input/input-router';
-import { resolveShortcutKey } from '../core/main/input/shortcut-keys';
+import { resolveShortcutCommand } from '../core/main/input/shortcut-keys';
 import { systemShutdown, systemSleep } from '../core/main/system/power';
 
 const MOUSE_DELTA_SENSITIVITY = 1.8;
@@ -89,10 +89,8 @@ export class SystemInputRouter implements InputRouter {
   }
 
   private routeShortcut(action: ShortcutAction): void {
-    const key = resolveShortcutKey(action);
-    if (key) {
-      this.backend.injectKeyPress(key);
-    }
+    const command = resolveShortcutCommand(action);
+    this.backend.injectKeyPress(command.key, command.modifiers);
   }
 
   private routeToBackend(
