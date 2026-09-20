@@ -62,3 +62,13 @@ test('controller sends shortcut actions without a duplicate key map', () => {
     /const sendRemoteAction = \(action\) => \{\s*sendMessage\(\{ action, type: 'shortcut' \}\);\s*\};/,
   );
 });
+
+test('Win32 injector registers the MediaPlayPause virtual key', () => {
+  const source = fs.readFileSync(
+    path.join(__dirname, '../src/core/main/native/win32/input-injector.ts'),
+    'utf8',
+  );
+
+  assert.match(source, /MediaPlayPause:\s*0xb3/i);
+  assert.match(source, /EXTENDED_VK[\s\S]*0xb3/i);
+});
