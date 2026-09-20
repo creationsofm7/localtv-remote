@@ -1,38 +1,28 @@
-import type { KeyMessage, ShortcutAction } from '../../shared/control';
+import type { ShortcutAction } from '../../shared/control';
 
-const isAppShortcut = (action: ShortcutAction): boolean =>
-  action === 'go_home' ||
-  action === 'go_back' ||
-  action === 'go_forward' ||
-  action === 'reload';
+type BrowserNavigationShortcut = 'go_home' | 'go_back' | 'go_forward' | 'reload';
+type MediaShortcut = Exclude<ShortcutAction, BrowserNavigationShortcut>;
 
-export const isBrowserKeyShortcut = (action: ShortcutAction): boolean => !isAppShortcut(action);
+const BROWSER_NAVIGATION_SHORTCUTS: ReadonlySet<ShortcutAction> = new Set([
+  'go_home',
+  'go_back',
+  'go_forward',
+  'reload',
+]);
 
-export const shortcutToKeyMessages = (action: ShortcutAction): KeyMessage[] | null => {
-  if (isAppShortcut(action)) {
-    return null;
-  }
-
-  const key = (k: string): KeyMessage => ({ key: k, type: 'key' });
-
-  switch (action) {
-    case 'play_pause':
-      return [key('k')];
-    case 'seek_back':
-      return [key('j')];
-    case 'seek_forward':
-      return [key('l')];
-    case 'fullscreen':
-      return [key('f')];
-    case 'mute':
-      return [key('m')];
-    case 'captions':
-      return [key('c')];
-    case 'speed_up':
-      return [key('>')];
-    case 'speed_down':
-      return [key('<')];
-    default:
-      return null;
-  }
+const MEDIA_SHORTCUT_KEYS: Readonly<Record<MediaShortcut, string>> = {
+  play_pause: 'MediaPlayPause',
+  seek_back: 'j',
+  seek_forward: 'l',
+  fullscreen: 'f',
+  mute: 'm',
+  captions: 'c',
+  speed_up: '>',
+  speed_down: '<',
 };
+
+export const isBrowserNavigationShortcut = (action: ShortcutAction): boolean =>
+  BROWSER_NAVIGATION_SHORTCUTS.has(action);
+
+export const resolveShortcutKey = (action: ShortcutAction): string | null =>
+  isBrowserNavigationShortcut(action) ? null : MEDIA_SHORTCUT_KEYS[action as MediaShortcut];

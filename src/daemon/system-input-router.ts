@@ -2,7 +2,7 @@ import type { ControlMessage, InputMode, ShortcutAction, VolumeState } from '../
 import type { SystemInputBackend } from '../core/main/input/backends/input-backend';
 import type { VolumeController } from '../core/main/audio/volume-controller';
 import type { InputRouter } from '../core/main/input/input-router';
-import { isBrowserKeyShortcut, shortcutToKeyMessages } from '../core/main/input/shortcut-keys';
+import { resolveShortcutKey } from '../core/main/input/shortcut-keys';
 import { systemShutdown, systemSleep } from '../core/main/system/power';
 
 const MOUSE_DELTA_SENSITIVITY = 1.8;
@@ -89,16 +89,9 @@ export class SystemInputRouter implements InputRouter {
   }
 
   private routeShortcut(action: ShortcutAction): void {
-    if (!isBrowserKeyShortcut(action)) {
-      // go_home / go_back / go_forward / reload have no system-wide meaning.
-      return;
-    }
-    const keys = shortcutToKeyMessages(action);
-    if (!keys?.length) {
-      return;
-    }
-    for (const keyMessage of keys) {
-      this.backend.injectKeyPress(keyMessage.key);
+    const key = resolveShortcutKey(action);
+    if (key) {
+      this.backend.injectKeyPress(key);
     }
   }
 

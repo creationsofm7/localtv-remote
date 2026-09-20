@@ -11,6 +11,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test tests/*.test.cjs",
     "start": "node dist/daemon/index.js",
     "dev": "tsx src/daemon/index.ts",
     "bundle": "node scripts/bundle.mjs",
