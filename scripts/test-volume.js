@@ -2,7 +2,7 @@
 // volume_state the server reports back. Usage: node scripts/test-volume.js <port> <pairCode>
 const WebSocket = require('ws');
 const [, , portArg, code] = process.argv;
-const port = Number(portArg) || 3000;
+const port = Number(portArg) || 6776;
 
 const ws = new WebSocket(`ws://127.0.0.1:${port}/ws`, { headers: { origin: `http://127.0.0.1:${port}` } });
 let authed = false;

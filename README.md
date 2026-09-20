@@ -65,7 +65,7 @@ Looking for a **free, open-source alternative to Unified Remote or Remote Mouse*
 | 🔒 **LAN-only & private** | No cloud relay, no accounts, no data leaves your network |
 | 🪶 **Tiny footprint** | ~27 MB installer, ~25–40 MB RAM at idle, no Chromium |
 | 🖥️ **System tray** | Sits in the tray; optional start-on-login toggle |
-| 🔌 **Auto port** | Free-port fallback if 3000 is occupied — QR auto-updates |
+| 🔌 **Auto port** | Free-port fallback if 6776 is occupied — QR auto-updates |
 
 ---
 
@@ -112,7 +112,7 @@ Your phone remembers the pairing token — next time it reconnects automatically
 Phone browser (PWA)
       │  WebSocket + HTTP  (LAN)
       ▼
-LocalTVRemote.exe  ←── Express + ws server on 0.0.0.0:3000
+LocalTVRemote.exe  ←── Express + ws server on 0.0.0.0:6776
       │
       ├── Mouse / Keyboard → koffi → Win32 SendInput
       ├── Volume           → PowerShell COM → IAudioEndpointVolume
@@ -160,7 +160,7 @@ npm run installer   # compile Inno Setup → release/LocalTVRemote-Setup-x.y.z.e
 
 | Variable | Default | Description |
 |---|---|---|
-| `LOCALTV_REMOTE_PORT` | `3000` | Preferred server port (auto-increments if occupied) |
+| `LOCALTV_REMOTE_PORT` | `6776` | Preferred server port (auto-increments if occupied) |
 | `LOCALTV_REMOTE_STATIC_DIR` | `public/control` | Override the controller PWA directory |
 
 ---

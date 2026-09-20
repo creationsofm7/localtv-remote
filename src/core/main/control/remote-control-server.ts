@@ -51,7 +51,7 @@ export type RemoteControlServerOptions = {
   port?: number;
 };
 
-const DEFAULT_PORT = 3000;
+const DEFAULT_PORT = 6776;
 const MAX_AUTH_ATTEMPTS = 5;
 const AUTH_TIMEOUT_MS = 60_000;
 const HEARTBEAT_MS = 15_000;

@@ -3,7 +3,7 @@
 const WebSocket = require('ws');
 
 const [, , portArg, code, xArg, yArg] = process.argv;
-const port = Number(portArg) || 3000;
+const port = Number(portArg) || 6776;
 const x = Number(xArg);
 const y = Number(yArg);
 
