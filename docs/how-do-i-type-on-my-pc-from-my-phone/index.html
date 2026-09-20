@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Type on My PC From My Phone? | LocalTV Remote</title>
+  <meta name="description" content="Type on a Windows PC from your phone with LocalTV Remote’s browser controller, including text entry, editing, Enter, Tab, Escape, and arrow keys." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-type-on-my-pc-from-my-phone/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I type on my PC from my phone?" />
+  <meta property="og:description" content="Pair your phone, focus a Windows text field, and send text or special keys from the browser controller." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-type-on-my-pc-from-my-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Type on my PC from my phone","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-type-on-my-pc-from-my-phone/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Type from a phone</nav>
+    <article>
+      <h1>How do I type on my PC from my phone?</h1>
+      <p class="lead">Pair your phone with LocalTV Remote, click the text field you want to edit on the Windows PC, then type into the controller’s “Type here…” box. New text and supported editing keys are sent to the active Windows application.</p>
+
+      <p>LocalTV Remote is installed on the Windows PC; the phone uses a browser page. Complete the <a href="../control-pc-from-phone/">general setup guide</a> if the controller is not connected yet. Once connected, the important detail is focus: the PC application must have its cursor in the field that should receive the text.</p>
+
+      <h2>Send text to Windows</h2>
+      <ol class="steps">
+        <li><strong>Focus the destination on the PC.</strong> Use the phone trackpad or the PC mouse to click a search box, document, message field, or another editable control. A blinking caret is a useful sign that the field is ready.</li>
+        <li><strong>Use the quick text box.</strong> On the Remote tab, tap “Type here…” to open your phone keyboard. Start with a short test in an empty Notepad document. Add text at the end of the phone box and watch where it lands on the PC.</li>
+        <li><strong>Send editing keys.</strong> Enter, Backspace, Delete, Escape, Tab, and the four arrow keys are handled as individual key presses. Your phone keyboard can send some of them directly; the Input tab also provides dedicated buttons.</li>
+        <li><strong>Use the Input tab for navigation.</strong> Tap Input for Enter, Space, Tab, Esc, Home, and a directional pad. The center OK button sends Enter. The button labeled Delete sends Backspace, removing the character before the PC caret, not the one after it.</li>
+        <li><strong>Clear carefully.</strong> The clear button beside “Type here…” removes the current controller text and sends the corresponding Backspace presses to the PC. It is not merely a visual reset.</li>
+      </ol>
+
+      <h2>What is sent</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Controller action</th><th>Result on the PC</th></tr></thead>
+          <tbody>
+            <tr><td>Type or paste into “Type here…”</td><td>Inserted characters are sent in order</td></tr>
+            <tr><td>Edit earlier controller text</td><td>Not position-synchronized: changes act at the current PC caret</td></tr>
+            <tr><td>Tap a special-key button</td><td>One named Windows key press is sent</td></tr>
+            <tr><td>Tap OK on the D-pad</td><td>Enter is sent</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Limits and practical checks</h2>
+      <p class="note">This is remote keyboard input, not screen mirroring. The phone does not show the contents or selection state of the Windows field, and the controller text box is not a synchronized copy of the PC document. Phone keyboards, browsers, input methods, and Windows applications can handle composition, autocorrect, shortcuts, or protected fields differently.</p>
+      <p><strong>Avoid editing the middle of the phone text box.</strong> Moving its caret does not move the PC caret. Replacements and deletions can therefore affect the wrong text. Some keyboard/browser combinations can also send more than one deletion event. Test deletion in a disposable document before editing anything important, and correct existing text directly on the PC when in doubt.</p>
+      <p>If text appears in the wrong place, refocus the intended Windows field before typing. If characters do not arrive, try a dedicated key in an empty document. Elevated or protected Windows surfaces may not accept injected input.</p>
+
+      <section class="related" aria-labelledby="related-heading"><h2 id="related-heading">Related guides</h2><ul>
+        <li><a href="../guides/">All LocalTV Remote guides</a></li>
+        <li><a href="../control-pc-from-phone/">Set up phone control for a PC</a></li>
+        <li><a href="../how-do-i-use-my-phone-as-a-mouse/">Use a phone as a mouse</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-20. Product behavior referenced from <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/index.html">controller HTML</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/system-input-router.ts">system-input-router.ts</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

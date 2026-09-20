@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Control PC Volume From My Phone?</title>
+  <meta name="description" content="Control Windows system volume from your phone with LocalTV Remote: adjust the level, see the current percentage, and toggle mute from a browser." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-control-pc-volume-from-my-phone/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I control PC volume from my phone?" />
+  <meta property="og:description" content="Use LocalTV Remote to change Windows system volume and mute from your phone’s browser." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-control-pc-volume-from-my-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Control PC volume from my phone","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-control-pc-volume-from-my-phone/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / PC volume from a phone</nav>
+    <article>
+      <h1>How do I control PC volume from my phone?</h1>
+      <p class="lead">Connect your phone to LocalTV Remote and use the volume controls on the Remote tab. The minus and plus buttons lower or raise the Windows system volume, the center display shows the current percentage, and the speaker button toggles mute.</p>
+
+      <p>You only install LocalTV Remote on the Windows PC. Your phone opens its controller in a browser over the local network. If you have not paired the devices, use the <a href="../control-pc-from-phone/">general setup guide</a> before continuing.</p>
+
+      <h2>Change the Windows volume</h2>
+      <ol class="steps">
+        <li><strong>Open the connected controller.</strong> Scan the QR code shown by LocalTV Remote or return to the controller URL on a previously used phone. Enter the displayed pairing code when the page requests it.</li>
+        <li><strong>Use the Remote tab.</strong> The volume row sits below the trackpad and navigation buttons. Wait for its center value to change from “--” to a percentage; that indicates that the controller has received volume state from Windows.</li>
+        <li><strong>Tap minus or plus.</strong> Each tap adjusts the requested volume by three percentage points. Start with a few taps and check the sound before raising it further.</li>
+        <li><strong>Toggle mute.</strong> Tap the speaker button near the top of the controller to mute or unmute Windows audio. This is a toggle, so the result depends on the current mute state reported by the PC.</li>
+        <li><strong>Check the displayed result.</strong> The number updates as you tap and then reflects the level reported by Windows. Another phone or a keyboard volume key can change the same system volume.</li>
+      </ol>
+
+      <h2>Which volume does it control?</h2>
+      <p>LocalTV Remote controls the Windows system output level through its volume controller. It is not a per-application mixer: it does not provide separate sliders for a browser, game, call, or music player. The audible result can also depend on the selected Windows output device, an application’s own volume setting, and any hardware volume control on speakers or a display.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Control</th><th>Behavior</th></tr></thead>
+          <tbody>
+            <tr><td>Minus</td><td>Targets 3 percentage points lower</td></tr>
+            <tr><td>Plus</td><td>Targets 3 percentage points higher</td></tr>
+            <tr><td>Mute button</td><td>Toggles Windows system mute</td></tr>
+            <tr><td>Percentage</td><td>Shows the latest known system level</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Limits and troubleshooting</h2>
+      <p class="note">The phone and PC must remain reachable on the same local network, and the Windows app must be running. Multiple connected phones operate the same system volume, so one person’s adjustment is visible to the others. LocalTV Remote cannot raise sound that is muted inside an individual app or turned down on external hardware.</p>
+      <p>If the percentage remains “--”, verify that the controller is connected and reload it once. If the number changes but the sound does not, check the active Windows output device, the app’s mixer level, and the physical speaker or monitor volume.</p>
+
+      <section class="related" aria-labelledby="related-heading"><h2 id="related-heading">Related guides</h2><ul>
+        <li><a href="../guides/">All LocalTV Remote guides</a></li>
+        <li><a href="../control-pc-from-phone/">Set up phone control for a PC</a></li>
+        <li><a href="../how-do-i-control-one-pc-with-multiple-phones/">Control one PC with multiple phones</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-20. Product behavior referenced from <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/system-input-router.ts">system-input-router.ts</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">remote-control-server.ts</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Control One PC With Multiple Phones?</title>
+  <meta name="description" content="Connect multiple phones to one Windows PC with LocalTV Remote. Each phone gets a controller, while everyone shares the same cursor, keyboard, and volume." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-control-one-pc-with-multiple-phones/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I control one PC with multiple phones?" />
+  <meta property="og:description" content="Pair several phones with one LocalTV Remote PC and understand what controls and state they share." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-control-one-pc-with-multiple-phones/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Control one PC with multiple phones","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-control-one-pc-with-multiple-phones/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Multiple phones</nav>
+    <article>
+      <h1>How do I control one PC with multiple phones?</h1>
+      <p class="lead">Open the same LocalTV Remote pairing link on each phone and authenticate each browser. All connected phones can send mouse, keyboard, and volume commands to the same Windows PC, but they do not receive separate desktops or separate cursors.</p>
+
+      <p>Install and run one copy of LocalTV Remote on the PC. Every phone must be able to reach that PC on the local network. For first-time setup details, start with the <a href="../control-pc-from-phone/">general phone-to-PC guide</a>.</p>
+
+      <h2>Connect each phone</h2>
+      <ol class="steps">
+        <li><strong>Launch LocalTV Remote on the PC.</strong> Show its pairing window while people scan the QR code or enter the controller address. You can close the pairing window afterward; leave LocalTV Remote running in the system tray.</li>
+        <li><strong>Connect the first phone.</strong> Scan the QR code, open the browser controller, and enter the six-digit pairing code if prompted. Wait until the remote controls appear.</li>
+        <li><strong>Repeat on another phone.</strong> Scan the same currently displayed QR code with each additional phone. Everyone gets their own remote in their own browser, with no need to pass one phone around.</li>
+        <li><strong>Confirm the connected count.</strong> The PC host page tracks authenticated clients. Closing a controller tab or losing its network connection removes that client after the connection ends.</li>
+        <li><strong>Coordinate before sending input.</strong> Decide who is controlling at a given moment. Commands are processed as they arrive, so simultaneous swipes, clicks, typing, or volume changes can conflict.</li>
+      </ol>
+
+      <h2>What is shared?</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Item</th><th>Behavior with multiple phones</th></tr></thead>
+          <tbody>
+            <tr><td>Mouse pointer</td><td>One shared Windows cursor</td></tr>
+            <tr><td>Keyboard focus</td><td>One active Windows field or application</td></tr>
+            <tr><td>Volume</td><td>One shared Windows system level and mute state</td></tr>
+            <tr><td>Browser connection</td><td>A separate authenticated connection per phone</td></tr>
+            <tr><td>Desktop session</td><td>No separate session or private view per phone</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Pairing and reconnection limits</h2>
+      <p>Your browser remembers pairing information, but restarting the PC app clears its list of active sessions. If a phone asks to pair again, scan the QR code or enter the code shown on the PC. Clearing browser data or switching to another browser can also require pairing again.</p>
+      <p class="note">Everyone controls the same PC input state. LocalTV Remote does not assign ownership, queue turns, label each person’s commands, or isolate one phone from another. Only share the pairing code with people you want to let control the computer.</p>
+
+      <h2>If one phone cannot join</h2>
+      <p>Check that it is on a network that can reach the PC and that its browser opened the same PC address as the working phones. Guest Wi-Fi can isolate clients even when the network name looks similar. If an old page rejects authentication, reopen the current QR link and use the current code.</p>
+
+      <section class="related" aria-labelledby="related-heading"><h2 id="related-heading">Related guides</h2><ul>
+        <li><a href="../guides/">All LocalTV Remote guides</a></li>
+        <li><a href="../control-pc-from-phone/">Set up phone control for a PC</a></li>
+        <li><a href="../how-do-i-use-my-phone-as-a-mouse/">Use a phone as a mouse</a></li>
+        <li><a href="../how-do-i-control-pc-volume-from-my-phone/">Control PC volume from a phone</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-20. Product behavior referenced from <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">remote-control-server.ts</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/host-page.ts">host-page.ts</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

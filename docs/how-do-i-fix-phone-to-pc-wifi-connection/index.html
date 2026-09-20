@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Fix LocalTV Remote Wi-Fi Connection?</title>
+  <meta name="description" content="Fix a phone that cannot reach LocalTV Remote by checking the current address, same-network access, guest Wi-Fi isolation, and Windows firewall." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-phone-to-pc-wifi-connection/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I fix LocalTV Remote Wi-Fi connection?" />
+  <meta property="og:description" content="A practical check of the current address, local network, guest Wi-Fi isolation, and Windows firewall." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-phone-to-pc-wifi-connection/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},
+    {"@type":"ListItem","position":2,"name":"Troubleshooting guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},
+    {"@type":"ListItem","position":3,"name":"Fix phone-to-PC Wi-Fi connection","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-fix-phone-to-pc-wifi-connection/"}
+  ]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Wi-Fi connection</nav>
+    <article>
+      <h1>How do I fix my phone-to-PC Wi-Fi connection?</h1>
+      <p class="lead">If the PC changed networks or received a new local IP address, quit LocalTV Remote from its tray menu and launch it again. Then use the newly displayed address and confirm that the phone and PC can talk directly on the same local network.</p>
+
+      <h2>Check the connection in this order</h2>
+      <ol class="steps">
+        <li><strong>Confirm LocalTV Remote is running.</strong> Open it from the Start menu or tray. Keep the pairing window open while checking the address. If the app is not running, the phone has no local server to reach.</li>
+        <li><strong>Use the address shown now.</strong> Type the complete <code>http://...</code> address from the pairing window into the phone browser. LocalTV Remote prefers port <code>6776</code>, but the daemon checks successive ports when that one is occupied. It may use any available port from <code>6776</code> through <code>6795</code>, so an old bookmark can point to the wrong place.</li>
+        <li><strong>Put both devices on the same LAN.</strong> Connect the phone to Wi-Fi, not mobile data, and make sure the PC is on that same router by Wi-Fi or Ethernet. A wired PC and Wi-Fi phone can work together when the router places them on the same local network.</li>
+        <li><strong>Leave guest or isolated Wi-Fi.</strong> Guest networks, client isolation, AP isolation, and some workplace networks block one device from opening another device's local address. Move both devices to a normal trusted network, or ask the network administrator whether device-to-device traffic is allowed.</li>
+        <li><strong>Check the Windows network profile and firewall rule.</strong> Use a Private profile on a trusted home network and allow the LocalTV Remote executable on Private networks. Do not disable Windows Firewall. On a managed PC, ask IT to approve the program-scoped inbound rule.</li>
+        <li><strong>Restart LocalTV Remote after a network change.</strong> Choose Quit from the PC tray menu, launch the app again, and use the newly displayed link. Merely closing and reopening the pairing window does not recalculate the address.</li>
+      </ol>
+
+      <aside class="note"><strong>Privacy and limitation:</strong> LocalTV Remote serves the controller over plain HTTP and WebSocket on your LAN; the transport is not encrypted. Use it only on a network you trust. It has no cloud relay, so it cannot bridge separate networks, mobile data, or router isolation.</aside>
+
+      <h2>What the result tells you</h2>
+      <div class="table-wrap"><table><thead><tr><th>What you see</th><th>Likely next check</th></tr></thead><tbody>
+        <tr><td>The address never opens</td><td>Current address, same LAN, guest isolation, then firewall.</td></tr>
+        <tr><td>The page opens, but controls stop after the tab was backgrounded</td><td>Return to the active remote tab and try moving the pointer in a normal desktop app.</td></tr>
+        <tr><td>The page opens to the pairing form</td><td>Enter the PIN currently shown on the PC, then test the pointer on the Windows desktop.</td></tr>
+      </tbody></table></div>
+
+      <section class="related"><h2>Related guides</h2><ul>
+        <li><a href="../guides/">All troubleshooting guides</a></li>
+        <li><a href="../control-pc-from-phone/">Control a PC from a phone</a></li>
+        <li><a href="../how-do-i-allow-localtv-through-windows-firewall/">Allow LocalTV Remote through Windows Firewall</a></li>
+        <li><a href="../how-do-i-connect-without-scanning-qr-code/">Connect without scanning the QR code</a></li>
+      </ul></section>
+
+      <p class="cta"><a href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest LocalTV Remote release</a></p>
+      <footer><p>Reviewed 2026-09-20. Source references: <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/index.ts">daemon port selection</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">control server</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/installer/localtv-remote.iss">installer firewall rule</a>.</p></footer>
+    </article>
+  </main>
+</body>
+</html>

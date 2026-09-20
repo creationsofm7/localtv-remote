@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Allow LocalTV Through Windows Firewall?</title>
+  <meta name="description" content="Allow LocalTV Remote through Windows Firewall safely with a program-scoped Private-network rule, without disabling the firewall or opening public access." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-allow-localtv-through-windows-firewall/" />
+  <meta property="og:type" content="article" /><meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I allow LocalTV through Windows Firewall?" />
+  <meta property="og:description" content="Restore the program-scoped Private-network rule without disabling Windows Firewall." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-allow-localtv-through-windows-firewall/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Troubleshooting guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Allow through Windows Firewall","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-allow-localtv-through-windows-firewall/"}]}</script>
+</head>
+<body><main>
+  <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Windows Firewall</nav>
+  <article>
+    <h1>How do I allow LocalTV Remote through Windows Firewall?</h1>
+    <p class="lead">Allow the <strong>LocalTVRemote.exe</strong> program on trusted Private networks. Do not turn off Windows Firewall and do not enable broad access on Public networks.</p>
+
+    <h2>First, check the existing rule</h2>
+    <ol class="steps">
+      <li>Open <strong>Windows Security</strong>, choose <strong>Firewall &amp; network protection</strong>, then <strong>Allow an app through firewall</strong>.</li>
+      <li>Select <strong>Change settings</strong> if Windows permits it. Find <strong>LocalTV Remote</strong> or the installed <code>LocalTVRemote.exe</code>.</li>
+      <li>Enable the app for <strong>Private</strong> networks. Leave <strong>Public</strong> unchecked. The installer itself requests a program-scoped inbound rule named “LocalTV Remote” for Private and Domain profiles; program scope matters because the daemon may move from its preferred port when that port is busy.</li>
+      <li>Apply the change, reopen LocalTV Remote, and use the current address displayed in its pairing window from the phone.</li>
+    </ol>
+
+    <h2>If LocalTV Remote is not listed</h2>
+    <p>Choose <strong>Allow another app</strong>, browse to the installed <code>LocalTVRemote.exe</code>, add it, and allow only the appropriate trusted profile. The default installer location is normally under <code>Program Files\LocalTV Remote</code>, but use the executable’s actual installed location rather than guessing.</p>
+    <p>Reinstalling the latest release can also recreate the installer-managed rule. If Windows asks for administrator approval, review the executable path and publisher details before approving. LocalTV Remote’s installer can run per-user, but changing firewall policy may still require elevated permission.</p>
+
+    <div class="table-wrap"><table><thead><tr><th>Situation</th><th>Safe action</th></tr></thead><tbody>
+      <tr><td>Trusted home Wi-Fi marked Private</td><td>Allow the LocalTV Remote program on Private.</td></tr>
+      <tr><td>Cafe, hotel, airport, or other Public network</td><td>Do not broaden the rule. Use a trusted private LAN instead.</td></tr>
+      <tr><td>Work or school PC</td><td>Ask IT to approve the program-scoped rule and network path.</td></tr>
+      <tr><td>Third-party security suite controls traffic</td><td>Add an equivalent program rule there, following its vendor guidance.</td></tr>
+      <tr><td>Phone still cannot open the address</td><td>Check same-network access and guest/client isolation next.</td></tr>
+    </tbody></table></div>
+
+    <aside class="note"><strong>Security limitation:</strong> the phone controller uses plain HTTP and WebSocket traffic on the local network, not encrypted HTTPS. A firewall rule only controls reachability; it does not encrypt that traffic. Use LocalTV Remote on a network you trust.</aside>
+
+    <section class="related"><h2>Related guides</h2><ul>
+      <li><a href="../guides/">All troubleshooting guides</a></li><li><a href="../control-pc-from-phone/">Control a PC from a phone</a></li>
+      <li><a href="../how-do-i-fix-phone-to-pc-wifi-connection/">Fix the phone-to-PC Wi-Fi connection</a></li>
+      <li><a href="../how-do-i-fix-connected-remote-not-working/">Fix a connected remote that does not control Windows</a></li>
+    </ul></section>
+    <p class="cta"><a href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest LocalTV Remote release</a></p>
+    <footer><p>Reviewed 2026-09-20. Source references: <a href="https://github.com/creationsofm7/localtv-remote/blob/main/installer/localtv-remote.iss">installer firewall configuration</a> and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/index.ts">daemon port fallback</a>.</p></footer>
+  </article>
+</main></body>
+</html>

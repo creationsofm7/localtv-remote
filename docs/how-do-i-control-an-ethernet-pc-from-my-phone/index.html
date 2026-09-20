@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Control an Ethernet PC From My Phone?</title>
+  <meta name="description" content="Control an Ethernet-connected Windows PC from a phone on Wi-Fi when both devices can reach each other on the same local network." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-control-an-ethernet-pc-from-my-phone/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I control an Ethernet PC from my phone?" />
+  <meta property="og:description" content="A wired PC and Wi-Fi phone can use LocalTV Remote when the router puts them on a mutually reachable local network." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-control-an-ethernet-pc-from-my-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Control an Ethernet PC from my phone","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-control-an-ethernet-pc-from-my-phone/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Ethernet PC</nav>
+    <article>
+      <h1>How do I control an Ethernet PC from my phone?</h1>
+      <p class="lead">Connect the Windows PC to your router by Ethernet and the phone to that router’s Wi-Fi, then use LocalTV Remote normally. The devices do not need to use the same connection type; they need IP connectivity to each other on the same reachable local network.</p>
+
+      <p>LocalTV Remote listens on the PC’s network interfaces and builds the controller link from a non-internal IPv4 address. In a typical home network, wired Ethernet and the main Wi-Fi belong to the same LAN, so the QR code opens the wired PC’s controller from the phone.</p>
+
+      <h2>Connect the wired PC</h2>
+      <ol class="steps">
+        <li><strong>Connect Ethernet and verify Windows networking.</strong> Plug the PC into the router or network switch. Confirm that Windows has a working local network connection before opening LocalTV Remote.</li>
+        <li><strong>Join the phone to the matching Wi-Fi.</strong> Use the main Wi-Fi network served by the same router or routed LAN. Avoid mobile data and guest Wi-Fi while pairing.</li>
+        <li><strong>Launch LocalTV Remote on the PC.</strong> Its host window displays a QR code and pairing code. The QR link contains the LAN address selected by the app.</li>
+        <li><strong>Scan from the phone.</strong> Open the link from the phone camera and enter the six-digit code if requested. When authenticated, the trackpad and other controls appear.</li>
+        <li><strong>Use the remote.</strong> Mouse, keyboard, and volume commands travel between the phone browser and the PC over the reachable local network.</li>
+      </ol>
+
+      <p>For the complete installation and controller walkthrough, see <a href="../control-pc-from-phone/">how to control a PC from a phone</a>. Ethernet changes the network path, not the controller workflow.</p>
+
+      <h2>Network layouts</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>PC connection</th><th>Phone connection</th><th>Expected result</th></tr></thead>
+          <tbody>
+            <tr><td>Router Ethernet</td><td>Main router Wi-Fi</td><td>Usually reachable on a home LAN</td></tr>
+            <tr><td>Network switch</td><td>Wi-Fi on the same routed LAN</td><td>Works when routing and firewall permit it</td></tr>
+            <tr><td>Router Ethernet</td><td>Guest Wi-Fi</td><td>Often blocked by client isolation</td></tr>
+            <tr><td>Office Ethernet</td><td>Separate staff or guest Wi-Fi</td><td>Depends on network policy and VLAN routing</td></tr>
+            <tr><td>Ethernet</td><td>Phone mobile data</td><td>Not the same reachable LAN</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>If the QR link does not open</h2>
+      <p>First turn off mobile data temporarily so the phone uses Wi-Fi. Check that the phone is not on a guest SSID and that the wired and wireless networks can communicate. Windows Firewall must allow the LocalTV Remote service on the current network profile. Corporate access points, VLANs, VPNs, and “AP isolation” settings may block device-to-device traffic even when both devices have internet access.</p>
+      <p class="note">Ethernet support is not a promise that every wired and wireless network is bridged. LocalTV Remote works only when the phone can reach the PC’s displayed LAN address and port. It does not provide an internet relay or bypass router, firewall, or organizational network policy.</p>
+
+      <section class="related" aria-labelledby="related-heading"><h2 id="related-heading">Related guides</h2><ul>
+        <li><a href="../guides/">All LocalTV Remote guides</a></li>
+        <li><a href="../control-pc-from-phone/">Set up phone control for a PC</a></li>
+        <li><a href="../how-do-i-use-my-phone-as-a-mouse/">Use a phone as a mouse</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-20. Product behavior referenced from <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/lan.ts">lan.ts</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">remote-control-server.ts</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/control-server.ts">control-server.ts</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

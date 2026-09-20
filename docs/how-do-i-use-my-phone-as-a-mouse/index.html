@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Use My Phone as a Mouse? | LocalTV Remote</title>
+  <meta name="description" content="Use your phone as a mouse for a Windows PC: connect LocalTV Remote, swipe to move, tap to click, and use two fingers to scroll or right-click." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-use-my-phone-as-a-mouse/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I use my phone as a mouse?" />
+  <meta property="og:description" content="Connect your phone to a Windows PC, then swipe, tap, right-click, and scroll from the browser-based trackpad." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-use-my-phone-as-a-mouse/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Use my phone as a mouse","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-use-my-phone-as-a-mouse/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a>
+    </header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Phone as a mouse</nav>
+    <article>
+      <h1>How do I use my phone as a mouse?</h1>
+      <p class="lead">Install LocalTV Remote on your Windows PC, pair your phone through the QR code, and use the large trackpad in your phone’s browser. Swipe with one finger to move the Windows cursor, tap to left-click, tap with two fingers to right-click, and drag two fingers vertically to scroll.</p>
+
+      <p>This guide starts after installation. If you have not connected the devices yet, follow the <a href="../control-pc-from-phone/">general phone-to-PC setup guide</a> first. The controller runs in the phone browser; the Windows app receives the gestures and turns them into system mouse input.</p>
+
+      <h2>Use the trackpad</h2>
+      <ol class="steps">
+        <li><strong>Open the controller.</strong> Launch LocalTV Remote on the PC and scan its QR code. If the controller asks for a code, enter the six-digit code shown on the PC.</li>
+        <li><strong>Stay on the Remote tab.</strong> The large area labeled “Swipe to move cursor” is the trackpad. A one-finger swipe moves the existing Windows cursor relative to its current position.</li>
+        <li><strong>Click or right-click.</strong> Make a short one-finger tap for a left-click. Make a short two-finger tap for a right-click. Movement during the tap changes how the gesture is interpreted, so keep both fingers still for a right-click.</li>
+        <li><strong>Scroll.</strong> Put two fingers on the trackpad and move them up or down together. This sends a scroll action at the current cursor position.</li>
+        <li><strong>Adjust pointer speed.</strong> Open the controller settings and change Pointer speed if a swipe travels too far or not far enough. The setting changes how phone movement is scaled before Windows receives it.</li>
+      </ol>
+
+      <h2>Gesture reference</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Phone gesture</th><th>Windows action</th></tr></thead>
+          <tbody>
+            <tr><td>One-finger swipe</td><td>Move cursor</td></tr>
+            <tr><td>One-finger tap</td><td>Left-click</td></tr>
+            <tr><td>Two-finger tap</td><td>Right-click</td></tr>
+            <tr><td>Two-finger vertical drag</td><td>Scroll</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Limits and troubleshooting</h2>
+      <p class="note">The phone and PC must be reachable on the same local network. Guest Wi-Fi and client-isolation settings can block the connection. LocalTV Remote controls the Windows cursor; it does not create a separate pointer for each phone. If several phones are connected, their movements and clicks all affect that one shared cursor.</p>
+      <p>If a tap moves the pointer instead of clicking, lift your finger sooner and avoid moving while tapping. If nothing responds, bring the phone browser tab back to the foreground and check that the PC app is still running. Reload the controller and enter the pairing code if asked. If you changed networks, quit LocalTV Remote from the tray and launch it again before scanning the QR code.</p>
+
+      <section class="related" aria-labelledby="related-heading">
+        <h2 id="related-heading">Related guides</h2>
+        <ul>
+          <li><a href="../guides/">All LocalTV Remote guides</a></li>
+          <li><a href="../control-pc-from-phone/">Set up phone control for a PC</a></li>
+          <li><a href="../how-do-i-type-on-my-pc-from-my-phone/">Type on a PC from a phone</a></li>
+          <li><a href="../how-do-i-control-one-pc-with-multiple-phones/">Control one PC with multiple phones</a></li>
+        </ul>
+      </section>
+
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-20. Product behavior referenced from <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a> and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/system-input-router.ts">system-input-router.ts</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Connect Without Scanning the QR Code?</title>
+  <meta name="description" content="Connect to LocalTV Remote without scanning its QR code by opening the current local address and entering the six-digit pairing PIN." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-connect-without-scanning-qr-code/" />
+  <meta property="og:type" content="article" /><meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I connect without scanning the QR code?" />
+  <meta property="og:description" content="Open the current local address on your phone and enter the six-digit pairing PIN." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-connect-without-scanning-qr-code/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Troubleshooting guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Connect without scanning QR code","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-connect-without-scanning-qr-code/"}]}</script>
+</head>
+<body><main>
+  <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Manual connection</nav>
+  <article>
+    <h1>How do I connect without scanning the QR code?</h1>
+    <p class="lead">Open the <strong>current controller address</strong> shown by LocalTV Remote in your phone browser, then enter the six-digit PIN displayed on the PC.</p>
+
+    <h2>Connect by address and PIN</h2>
+    <ol class="steps">
+      <li><strong>Open LocalTV Remote on the PC.</strong> If it is already in the system tray, open its pairing window from there. The window shows both a local address and a six-digit pairing code.</li>
+      <li><strong>Check that both devices share a local network.</strong> The phone can be on Wi-Fi while the PC uses Wi-Fi or Ethernet, provided both reach the same LAN. Mobile data, guest isolation, and separate networks will not work because there is no cloud relay.</li>
+      <li><strong>Type the complete address into the phone browser.</strong> Include <code>http://</code>, the numeric IP address, and the port. A typical address resembles <code>http://192.168.1.25:6776</code>, but copy what the PC shows rather than using this example.</li>
+      <li><strong>Enter the six-digit PIN.</strong> The QR code simply packages the same current address with that PIN. Manual entry reaches the same controller and authentication flow.</li>
+      <li><strong>Wait for Connected before sending input.</strong> After successful pairing, the controller stores a session token in that browser’s local storage. Returning in the same browser profile may resume the session while the PC app remains running.</li>
+    </ol>
+
+    <h2>Why an old address may stop working</h2>
+    <p>The six-digit PIN is deterministically derived from the PC’s hostname and Windows username; it is not a short-lived code that expires every few minutes. The address is the part most likely to change. A router can assign the PC another local IP address, and the daemon can choose a fallback port when its preferred port is already occupied.</p>
+    <p>Reopen the pairing window to get the <strong>current address</strong>. If you renamed the PC or changed Windows accounts, use the PIN shown now rather than a previously saved code.</p>
+
+    <aside class="note"><strong>Privacy and limitation:</strong> the controller is served over plain HTTP on the LAN, so its traffic is not encrypted. Avoid untrusted or public networks. The local pairing page that reveals the PIN is restricted to the PC itself; read the PIN from the desktop window.</aside>
+
+    <section class="related"><h2>Related guides</h2><ul>
+      <li><a href="../guides/">All troubleshooting guides</a></li><li><a href="../control-pc-from-phone/">Control a PC from a phone</a></li>
+      <li><a href="../how-do-i-fix-phone-to-pc-wifi-connection/">Fix the phone-to-PC Wi-Fi connection</a></li>
+      <li><a href="../how-do-i-stop-phone-remote-disconnecting/">Stop the phone remote disconnecting</a></li>
+    </ul></section>
+    <p class="cta"><a href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest LocalTV Remote release</a></p>
+    <footer><p>Reviewed 2026-09-20. Source references: <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">pairing and trusted sessions</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/host-page.ts">desktop pairing page</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/index.ts">current address and port selection</a>.</p></footer>
+  </article>
+</main></body>
+</html>

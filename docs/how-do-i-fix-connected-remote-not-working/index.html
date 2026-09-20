@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Fix a Connected Remote Not Working?</title>
+  <meta name="description" content="Fix LocalTV Remote when it says Connected but controls do nothing by checking control type, Windows focus, input backend, and privilege restrictions." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-connected-remote-not-working/" />
+  <meta property="og:type" content="article" /><meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I fix a connected remote not working?" />
+  <meta property="og:description" content="Check control type, target focus, Windows input availability, and elevated-app restrictions." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-connected-remote-not-working/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Troubleshooting guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Fix connected remote not working","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-fix-connected-remote-not-working/"}]}</script>
+</head>
+<body><main>
+  <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Connected but not working</nav>
+  <article>
+    <h1>How do I fix a connected remote that is not working?</h1>
+    <p class="lead">First test different control types, then put focus on a normal desktop app. “Connected” confirms the phone authenticated to the PC server; it does not prove every Windows input action can reach the current target.</p>
+
+    <h2>Use the result to narrow the cause</h2>
+    <div class="table-wrap"><table><thead><tr><th>Test</th><th>If it works</th><th>If it fails</th></tr></thead><tbody>
+      <tr><td>Volume up or down</td><td>The connection and volume path work.</td><td>Check that LocalTV Remote is still running and Windows audio is available.</td></tr>
+      <tr><td>Move the pointer on the desktop</td><td>The Win32 input backend is available.</td><td>Restart LocalTV Remote; its native input backend may not have initialized.</td></tr>
+      <tr><td>Type into Notepad</td><td>Keyboard injection works in a normal app.</td><td>Click inside the document first, then retry one key.</td></tr>
+      <tr><td>Control only one elevated app</td><td>Normal desktop input works.</td><td>The target may be protected by a Windows privilege boundary.</td></tr>
+    </tbody></table></div>
+
+    <h2>Check controls, focus, and Windows restrictions</h2>
+    <ol class="steps">
+      <li><strong>Confirm the phone still says Connected.</strong> If it says Reconnecting or Disconnected, solve the network path first. Input messages are ignored while the WebSocket is closed or unauthenticated.</li>
+      <li><strong>Test volume separately from pointer and keyboard.</strong> The daemon routes volume through the Windows audio controller, while mouse and keyboard events require the Win32 input backend. One working path does not prove the other is healthy.</li>
+      <li><strong>Give the target app focus.</strong> Click the text field or window you want to control using the PC once, then send a simple key from the phone. Keyboard input goes to the foreground Windows target; LocalTV Remote does not choose a background text field for you.</li>
+      <li><strong>Try an ordinary desktop target.</strong> Use Notepad or the Windows desktop. Secure screens, permission prompts, and apps running with higher privileges can reject input sent by a non-elevated process because Windows separates processes by integrity level.</li>
+      <li><strong>Restart the app if all pointer and keyboard controls fail.</strong> The daemon logs when its Windows input backend cannot initialize. Closing and reopening LocalTV Remote gives the native injector another initialization attempt.</li>
+      <li><strong>Update to the latest release.</strong> Install over the existing version, reopen it, and pair again if the in-memory trusted session was cleared.</li>
+    </ol>
+
+    <aside class="note"><strong>Do not disable User Account Control.</strong> UAC and secure-desktop restrictions are Windows security boundaries. LocalTV Remote’s daemon treats elevation requests as a no-op and does not provide a bypass. Operate the elevated target locally, or use a workflow approved by your administrator.</aside>
+    <p>LocalTV Remote’s daemon has no embedded browser. Navigation commands intended for an embedded page are intentionally ignored, while supported media shortcuts are translated to Windows key presses. Diagnose the specific control that fails instead of treating every button as the same path.</p>
+
+    <section class="related"><h2>Related guides</h2><ul>
+      <li><a href="../guides/">All troubleshooting guides</a></li><li><a href="../control-pc-from-phone/">Control a PC from a phone</a></li>
+      <li><a href="../how-do-i-stop-phone-remote-disconnecting/">Stop the phone remote disconnecting</a></li>
+      <li><a href="../how-do-i-fix-phone-to-pc-wifi-connection/">Fix the phone-to-PC Wi-Fi connection</a></li>
+    </ul></section>
+    <p class="cta"><a href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest LocalTV Remote release</a></p>
+    <footer><p>Reviewed 2026-09-20. Source references: <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/system-input-router.ts">daemon input routing</a>, <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/input/backends/windows-system-backend.ts">Windows input backend</a>, and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">authenticated control channel</a>.</p></footer>
+  </article>
+</main></body>
+</html>

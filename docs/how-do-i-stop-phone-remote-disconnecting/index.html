@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Do I Stop LocalTV Phone Remote Disconnecting?</title>
+  <meta name="description" content="Diagnose LocalTV Remote disconnects by separating browser retry behavior from server sessions, inactivity limits, Wi-Fi changes, and PC sleep." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-stop-phone-remote-disconnecting/" />
+  <meta property="og:type" content="article" /><meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I stop the phone remote disconnecting?" />
+  <meta property="og:description" content="Separate browser retries from server sessions, then check Wi-Fi changes, PC sleep, and inactivity." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-stop-phone-remote-disconnecting/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Troubleshooting guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Stop phone remote disconnecting","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-stop-phone-remote-disconnecting/"}]}</script>
+</head>
+<body><main>
+  <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Disconnecting</nav>
+  <article>
+    <h1>How do I stop my phone remote disconnecting?</h1>
+    <p class="lead">Keep LocalTV Remote running on the PC, keep both devices on the same stable LAN, and reopen the current controller address after the PC, router, or selected network changes.</p>
+
+    <h2>Identify which connection ended</h2>
+    <div class="table-wrap"><table><thead><tr><th>Symptom</th><th>What it means</th><th>What to do</th></tr></thead><tbody>
+      <tr><td>“Reconnecting…” appears briefly</td><td>The phone UI lost its WebSocket and is retrying.</td><td>Wait through a retry, keep the tab active, and verify Wi-Fi remains connected.</td></tr>
+      <tr><td>It repeatedly stays disconnected</td><td>The PC server or network path is unavailable.</td><td>Open the PC app and load the current displayed address again.</td></tr>
+      <tr><td>The PIN screen returns</td><td>The saved browser token was unavailable or rejected.</td><td>Enter the PIN shown on the PC. Private browsing, cleared site data, or a different browser profile will not share the old token.</td></tr>
+      <tr><td>It disconnects after a long idle period</td><td>The server closes authenticated clients after 30 minutes without control activity.</td><td>Reconnect from the controller; do not assume a session is kept indefinitely.</td></tr>
+    </tbody></table></div>
+
+    <h2>Stabilize the connection</h2>
+    <ol class="steps">
+      <li><strong>Prevent the PC from sleeping during use.</strong> When Windows sleeps, stops the process, or signs out in a way that ends LocalTV Remote, the phone cannot maintain the connection.</li>
+      <li><strong>Avoid switching the phone between Wi-Fi and mobile data.</strong> LocalTV Remote is LAN-only. Disable aggressive Wi-Fi switching for the session if the phone keeps preferring mobile data when the signal weakens.</li>
+      <li><strong>Keep both devices off guest Wi-Fi.</strong> Client isolation can interrupt or completely block device-to-device traffic even when both devices show the same network name.</li>
+      <li><strong>Use the current address after a restart.</strong> The PC’s local IP can change, and the daemon may select another port if <code>6776</code> is busy. Reopen the pairing window instead of relying on an old bookmark.</li>
+      <li><strong>Check firewall and security software.</strong> Permit the program on the trusted Private network. Do not disable the firewall or expose the app broadly on Public networks.</li>
+    </ol>
+
+    <aside class="note"><strong>Retry is not guaranteed resume:</strong> after one successful authentication, the phone UI schedules reconnect attempts with exponential delays capped at 10 seconds. The server separately keeps trusted sessions only in the running process. Restarting LocalTV Remote clears those in-memory sessions, so automatic resume may fail and require the displayed PIN again.</aside>
+    <p>The connection also uses plain HTTP and WebSocket on the local network rather than encrypted transport. Use a trusted LAN; improving signal quality does not add encryption.</p>
+
+    <section class="related"><h2>Related guides</h2><ul>
+      <li><a href="../guides/">All troubleshooting guides</a></li><li><a href="../control-pc-from-phone/">Control a PC from a phone</a></li>
+      <li><a href="../how-do-i-fix-phone-to-pc-wifi-connection/">Fix the phone-to-PC Wi-Fi connection</a></li>
+      <li><a href="../how-do-i-connect-without-scanning-qr-code/">Connect without scanning the QR code</a></li>
+    </ul></section>
+    <p class="cta"><a href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest LocalTV Remote release</a></p>
+    <footer><p>Reviewed 2026-09-20. Source references: <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller retry behavior</a> and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">server heartbeat and sessions</a>.</p></footer>
+  </article>
+</main></body>
+</html>
