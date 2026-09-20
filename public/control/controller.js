@@ -180,19 +180,6 @@ const BINARY_TAG = {
 };
 
 const BUTTON_INDEX = { left: 0, middle: 1, right: 2 };
-const REMOTE_SHORTCUT_KEY_MAP = {
-  captions: 'c',
-  fullscreen: 'f',
-  go_back: 'BrowserBack',
-  go_forward: 'BrowserForward',
-  go_home: 'BrowserHome',
-  play_pause: 'k',
-  reload: 'BrowserRefresh',
-  seek_back: 'j',
-  seek_forward: 'l',
-  speed_down: '<',
-  speed_up: '>',
-};
 
 /* ── Binary buffers ── */
 
@@ -322,13 +309,6 @@ const sendText = (text) => {
 };
 
 const sendRemoteAction = (action) => {
-  const key = REMOTE_SHORTCUT_KEY_MAP[action];
-
-  if (currentAppMode === 'remote_control' && key) {
-    sendMessage({ key, type: 'key' });
-    return;
-  }
-
   sendMessage({ action, type: 'shortcut' });
 };
 

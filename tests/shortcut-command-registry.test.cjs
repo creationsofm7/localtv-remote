@@ -1,4 +1,6 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const test = require('node:test');
 
 const {
@@ -46,4 +48,17 @@ test('injects the registered key once for a semantic media command', async () =>
   await router.route({ type: 'shortcut', action: 'play_pause' });
 
   assert.deepEqual(injectedKeys, ['MediaPlayPause']);
+});
+
+test('controller sends shortcut actions without a duplicate key map', () => {
+  const source = fs.readFileSync(
+    path.join(__dirname, '../public/control/controller.js'),
+    'utf8',
+  );
+
+  assert.doesNotMatch(source, /REMOTE_SHORTCUT_KEY_MAP/);
+  assert.match(
+    source,
+    /const sendRemoteAction = \(action\) => \{\s*sendMessage\(\{ action, type: 'shortcut' \}\);\s*\};/,
+  );
 });
