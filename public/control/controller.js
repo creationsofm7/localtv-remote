@@ -149,6 +149,7 @@ const btnHome = document.getElementById('btn-home');
 const btnPlayPause = document.getElementById('btn-playpause');
 const volDown = document.getElementById('vol-down');
 const volUp = document.getElementById('vol-up');
+const volumeTrack = document.getElementById('volume-track');
 const volumeFill = document.getElementById('volume-fill');
 const volumeValue = document.getElementById('volume-value');
 const kbInput = document.getElementById('kb-input');
@@ -199,6 +200,9 @@ const clickBuffer = new ArrayBuffer(10);
 const clickView = new DataView(clickBuffer);
 clickView.setUint8(0, BINARY_TAG.CLICK);
 
+const buttonBuffer = new ArrayBuffer(10);
+const buttonView = new DataView(buttonBuffer);
+
 /* ── State ── */
 
 let socket = null;
@@ -220,9 +224,15 @@ let twoFingerScrollUsed = false;
 let twoFingerTapStartTime = 0;
 let pointerDragging = false;
 let pointerLast = null;
+let pressActive = false;
+let pressDragActive = false;
+let pressMovement = 0;
+let stickyLeftActive = false;
 let currentVolume = 0;
 let isMuted = false;
 let hasVolumeState = false;
+let volumeDragging = false;
+let volumePointerId = null;
 let activeTab = 'remote';
 let currentAppMode = 'remote_control';
 
@@ -379,6 +389,30 @@ const sendClick = (button) => {
   sendBinary(clickBuffer);
 };
 
+const sendMouseButton = (isDown, button) => {
+  buttonView.setUint8(0, isDown ? BINARY_TAG.MOUSE_DOWN : BINARY_TAG.MOUSE_UP);
+  buttonView.setUint8(1, BUTTON_INDEX[button] ?? 0);
+  buttonView.setFloat32(2, lastPointerNorm.x, true);
+  buttonView.setFloat32(6, lastPointerNorm.y, true);
+  sendBinary(buttonBuffer);
+};
+
+const syncLeftDragUI = () => {
+  leftDragButton?.classList.toggle('trackpad-tool--active', stickyLeftActive);
+  leftDragButton?.setAttribute('aria-pressed', String(stickyLeftActive));
+  if (leftDragButton) leftDragButton.textContent = stickyLeftActive ? 'Release left' : 'Hold left';
+};
+
+const releaseLeftButton = () => {
+  if (!pressDragActive && !stickyLeftActive) return;
+  sendMouseButton(false, 'left');
+  pressActive = false;
+  pressDragActive = false;
+  pressMovement = 0;
+  stickyLeftActive = false;
+  syncLeftDragUI();
+};
+
 const flashTrackpad = () => {
   if (!trackpad) return;
   trackpad.classList.remove('trackpad--flash');
@@ -395,6 +429,8 @@ const updateVolumeUI = () => {
   if (!hasVolumeState) {
     volumeValue.textContent = '--';
     if (volumeFill) volumeFill.style.width = '0%';
+    volumeTrack?.setAttribute('aria-valuenow', '0');
+    volumeTrack?.setAttribute('aria-valuetext', 'Volume unavailable');
     muteToggle?.classList.toggle('header__btn--muted', false);
     return;
   }
@@ -402,6 +438,8 @@ const updateVolumeUI = () => {
   const clamped = Math.max(0, Math.min(100, Math.round(currentVolume)));
   volumeValue.textContent = String(clamped);
   if (volumeFill) volumeFill.style.width = `${clamped}%`;
+  volumeTrack?.setAttribute('aria-valuenow', String(clamped));
+  volumeTrack?.setAttribute('aria-valuetext', `${clamped}%`);
   muteToggle?.classList.toggle('header__btn--muted', isMuted);
 };
 
@@ -441,6 +479,14 @@ const adjustVolume = (delta) => {
   if (!volumeSendTimer) volumeSendTimer = setTimeout(flushVolumeTarget, 120);
 };
 
+const setVolume = (percent) => {
+  hasVolumeState = true;
+  currentVolume = Math.max(0, Math.min(100, Math.round(percent)));
+  updateVolumeUI();
+  pendingVolumeTarget = currentVolume;
+  if (!volumeSendTimer) volumeSendTimer = setTimeout(flushVolumeTarget, 120);
+};
+
 let volRepeatInterval = null;
 
 const startVolumeRepeat = (delta) => {
@@ -458,6 +504,56 @@ volDown?.addEventListener('pointerdown', (e) => { e.preventDefault(); startVolum
 volUp?.addEventListener('pointerdown', (e) => { e.preventDefault(); startVolumeRepeat(VOLUME_STEP); });
 window.addEventListener('pointerup', stopVolumeRepeat);
 window.addEventListener('pointercancel', stopVolumeRepeat);
+
+const setVolumeFromPointer = (e) => {
+  if (!volumeTrack) return;
+  const bounds = volumeTrack.getBoundingClientRect();
+  if (!bounds.width) return;
+  setVolume(((e.clientX - bounds.left) / bounds.width) * 100);
+};
+
+volumeTrack?.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  volumeDragging = true;
+  volumePointerId = e.pointerId;
+  try { volumeTrack.setPointerCapture(e.pointerId); } catch { /* non-fatal */ }
+  setVolumeFromPointer(e);
+});
+
+volumeTrack?.addEventListener('pointermove', (e) => {
+  if (!volumeDragging || (volumePointerId !== null && e.pointerId !== volumePointerId)) return;
+  setVolumeFromPointer(e);
+});
+
+volumeTrack?.addEventListener('pointerup', (e) => {
+  if (!volumeDragging || (volumePointerId !== null && e.pointerId !== volumePointerId)) return;
+  setVolumeFromPointer(e);
+  volumeDragging = false;
+  volumePointerId = null;
+  flushVolumeTarget();
+});
+
+volumeTrack?.addEventListener('pointercancel', (e) => {
+  if (volumePointerId !== null && e.pointerId !== volumePointerId) return;
+  volumeDragging = false;
+  volumePointerId = null;
+});
+
+volumeTrack?.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    adjustVolume(-VOLUME_STEP);
+  } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    adjustVolume(VOLUME_STEP);
+  } else if (e.key === 'Home') {
+    e.preventDefault();
+    setVolume(0);
+  } else if (e.key === 'End') {
+    e.preventDefault();
+    setVolume(100);
+  }
+});
 
 updateVolumeUI();
 
@@ -543,6 +639,7 @@ const connect = (isReconnect = false) => {
   });
 
   socket.addEventListener('close', () => {
+    releaseLeftButton();
     const wasAuth = isAuthenticated;
     isAuthenticated = false;
 
@@ -607,7 +704,7 @@ if (trackpad) {
     const remaining = e.touches.length;
     if (remaining === 0) {
       const now = performance.now();
-      if (gestureMaxFingers === 1 && singleTapCandidate && now - singleTapCandidate.time <= TAP_TIME_MS) {
+      if (!stickyLeftActive && gestureMaxFingers === 1 && singleTapCandidate && now - singleTapCandidate.time <= TAP_TIME_MS) {
         sendClick('left');
         flashTrackpad();
       } else if (gestureMaxFingers === 2 && !twoFingerScrollUsed && now - twoFingerTapStartTime <= TWO_FINGER_TAP_TIME_MS) {
@@ -642,6 +739,9 @@ if (trackpad) {
     if (document.pointerLockElement === trackpad) return;
     try { trackpad.setPointerCapture(e.pointerId); } catch { /* non-fatal */ }
     pointerDragging = true;
+    pressActive = true;
+    pressDragActive = false;
+    pressMovement = 0;
     pointerLast = { x: e.clientX, y: e.clientY };
     singleTapCandidate = { x: e.clientX, y: e.clientY, time: performance.now() };
   });
@@ -653,9 +753,14 @@ if (trackpad) {
     const dx = (e.clientX - pointerLast.x) / bounds.width;
     const dy = (e.clientY - pointerLast.y) / bounds.height;
     pointerLast = { x: e.clientX, y: e.clientY };
-    if (singleTapCandidate && distancePx(singleTapCandidate, pointerLast) > TAP_MOVE_PX) singleTapCandidate = null;
+    pressMovement += Math.hypot(dx * bounds.width, dy * bounds.height);
+    if (singleTapCandidate && pressMovement > TAP_MOVE_PX) singleTapCandidate = null;
     lastPointerNorm.x = Math.min(1, Math.max(0, lastPointerNorm.x + dx * mouseDeltaSensitivity));
     lastPointerNorm.y = Math.min(1, Math.max(0, lastPointerNorm.y + dy * mouseDeltaSensitivity));
+    if (pressActive && !stickyLeftActive && !pressDragActive && pressMovement > TAP_MOVE_PX) {
+      sendMouseButton(true, 'left');
+      pressDragActive = true;
+    }
     queueMouseDelta(dx, dy);
   });
 
@@ -669,14 +774,24 @@ if (trackpad) {
     if (e.pointerType !== 'mouse') return;
     pointerDragging = false;
     pointerLast = null;
-    if (e.button === 0 && singleTapCandidate && performance.now() - singleTapCandidate.time <= TAP_TIME_MS) {
+    if (e.button === 0 && pressDragActive) {
+      sendMouseButton(false, 'left');
+    } else if (e.button === 0 && !stickyLeftActive && singleTapCandidate && performance.now() - singleTapCandidate.time <= TAP_TIME_MS) {
       sendClick('left');
       flashTrackpad();
     }
+    pressActive = false;
+    pressDragActive = false;
+    pressMovement = 0;
     singleTapCandidate = null;
   });
 
-  trackpad.addEventListener('pointercancel', () => { pointerDragging = false; pointerLast = null; singleTapCandidate = null; });
+  trackpad.addEventListener('pointercancel', () => {
+    releaseLeftButton();
+    pointerDragging = false;
+    pointerLast = null;
+    singleTapCandidate = null;
+  });
 
   trackpad.addEventListener('wheel', (e) => { e.preventDefault(); queueScroll(e.deltaY); }, { passive: false });
   trackpad.addEventListener('contextmenu', (e) => e.preventDefault());
@@ -702,8 +817,20 @@ lockButton?.addEventListener('click', () => {
 document.addEventListener('pointerlockchange', syncPointerLockUI);
 document.addEventListener('pointerlockerror', syncPointerLockUI);
 
+leftDragButton?.addEventListener('click', () => {
+  if (stickyLeftActive) {
+    releaseLeftButton();
+  } else {
+    sendMouseButton(true, 'left');
+    stickyLeftActive = true;
+    syncLeftDragUI();
+  }
+});
+
 rightClickButton?.addEventListener('click', () => { sendClick('right'); flashTrackpad(); });
 middleClickButton?.addEventListener('click', () => { sendClick('middle'); flashTrackpad(); });
+
+window.addEventListener('pagehide', releaseLeftButton);
 
 btnBack?.addEventListener('click', () => sendRemoteAction('go_back'));
 btnHome?.addEventListener('click', () => sendRemoteAction('go_home'));

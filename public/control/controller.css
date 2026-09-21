@@ -564,7 +564,11 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.06);
   overflow: hidden;
+  cursor: pointer;
+  touch-action: none;
 }
+
+.vol-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 .vol-fill {
   height: 100%;
