@@ -14,7 +14,6 @@ import type {
   VolumeStateMessage,
 } from '../../shared/control';
 import { parseBinaryMessage, parseControlMessage } from '../input/message-parser';
-import { getPreferredLanAddress } from './lan';
 import type { InputRouter } from '../input/input-router';
 
 type StateListener = (state: RemoteControlState) => void;
@@ -48,6 +47,8 @@ export type RemoteControlServerOptions = {
   staticDir: string;
   /** Optional absolute path to a @hugeicons ESM dir served under /hugeicons. */
   hugeIconsDir?: string;
+  /** IPv4 address advertised to phone controllers. */
+  lanAddress?: string;
   port?: number;
 };
 
@@ -86,7 +87,7 @@ export class RemoteControlServer {
   private readonly pairCode = derivePairCode();
   private readonly clients = new Set<ClientConnection>();
   private readonly trustedSessions = new Map<string, TrustedSession>();
-  private readonly lanAddress = getPreferredLanAddress();
+  private lanAddress: string;
   private app = express();
   private httpServer: HttpServer | null = null;
   private wsServer: WebSocketServer | null = null;
@@ -99,6 +100,7 @@ export class RemoteControlServer {
     this.inputRouter = inputRouter;
     this.staticDir = options.staticDir;
     this.hugeIconsDir = options.hugeIconsDir;
+    this.lanAddress = options.lanAddress ?? '127.0.0.1';
     this.port = options.port ?? DEFAULT_PORT;
   }
 
@@ -381,6 +383,11 @@ export class RemoteControlServer {
   setInputRouter(inputRouter: InputRouter): void {
     this.inputRouter = inputRouter;
     this.broadcastInputMode(this.inputRouter.getInputMode());
+    this.emitState();
+  }
+
+  setLanAddress(address: string): void {
+    this.lanAddress = address;
     this.emitState();
   }
 

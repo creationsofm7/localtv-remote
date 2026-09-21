@@ -7,9 +7,13 @@ import QRCode from 'qrcode';
 
 import { WindowsSystemBackend } from '../core/main/input/backends/windows-system-backend';
 import { VolumeController } from '../core/main/audio/volume-controller';
+import { resolveLanAddress, type LanAddress } from '../core/main/control/lan';
 import { nativeRequire } from '../core/main/native-require';
 import { SystemInputRouter } from './system-input-router';
-import { DaemonControlServer } from './control-server';
+import {
+  DaemonControlServer,
+  type NetworkSelection,
+} from './control-server';
 import { buildHostHtml } from './host-page';
 import { openInDefaultBrowser } from './open-url';
 import { startTray, type TrayHandle } from './tray';
@@ -116,6 +120,11 @@ async function runDaemon(): Promise<void> {
 
   const volume = new VolumeController();
   const router = new SystemInputRouter(backend, volume);
+  let networkMode: 'automatic' | 'manual' = 'automatic';
+  let network = await resolveLanAddress();
+  let networkRefresh: ReturnType<typeof setInterval> | null = null;
+  let networkRefreshRunning = false;
+  let server: DaemonControlServer;
 
   let quitting = false;
   let webviewChild: ChildProcess | null = null;
@@ -126,31 +135,86 @@ async function runDaemon(): Promise<void> {
     try { webviewChild?.kill(); } catch { /* ignore */ }
     try { tray?.kill(); } catch { /* ignore */ }
     try { lock.close(); } catch { /* ignore */ }
+    if (networkRefresh) clearInterval(networkRefresh);
     void server.stop().finally(() => process.exit(0));
     setTimeout(() => process.exit(0), 1500).unref();
   };
 
-  const server = new DaemonControlServer(router, {
+  const renderHostPage = async () => {
+    const state = server.getState();
+    const qrDataUrl = await QRCode.toDataURL(state.pairingUrl, {
+      width: 280,
+      margin: 2,
+      color: { dark: '#0a0e1a', light: '#ffffff' },
+    });
+    server.setHostHtml(buildHostHtml(qrDataUrl, state.pairCode, state.controllerUrl, {
+      addresses: network.addresses,
+      mode: networkMode,
+      selectedAddress: network.address,
+    }));
+  };
+
+  const applyNetworkSelection = async (selection: NetworkSelection) => {
+    const manualAddress = selection.mode === 'manual' ? selection.address : null;
+    const next = await resolveLanAddress(manualAddress);
+
+    if (
+      manualAddress
+      && !next.addresses.some((item: LanAddress) => item.address === manualAddress)
+    ) {
+      throw new Error('That network adapter is no longer available.');
+    }
+
+    networkMode = selection.mode;
+    network = next;
+    server.setLanAddress(next.address);
+    await renderHostPage();
+  };
+
+  server = new DaemonControlServer(router, {
     staticDir: resolveStaticDir(),
+    lanAddress: network.address,
     port,
     onQuit: quit,
+    onNetworkSelection: applyNetworkSelection,
   });
 
-  // Build the pairing page (QR is generated from the resolved pairing URL).
-  const state = server.getState();
-  const qrDataUrl = await QRCode.toDataURL(state.pairingUrl, {
-    width: 280,
-    margin: 2,
-    color: { dark: '#0a0e1a', light: '#ffffff' },
-  });
-  server.setHostHtml(buildHostHtml(qrDataUrl, state.pairCode, state.controllerUrl));
+  await renderHostPage();
 
   await server.start();
+  const state = server.getState();
   console.log(`[LocalTV] ${APP_NAME} ready.`);
   console.log(`[LocalTV]   Controller : ${state.controllerUrl}`);
   console.log(`[LocalTV]   Pair code  : ${state.pairCode}`);
 
   const hostUrl = `http://127.0.0.1:${port}/host`;
+
+  // Follow active-route changes in automatic mode. If a manually selected
+  // adapter disappears, recover to automatic rather than showing a dead QR.
+  networkRefresh = setInterval(() => {
+    if (networkRefreshRunning) return;
+    networkRefreshRunning = true;
+    void resolveLanAddress(networkMode === 'manual' ? network.address : null)
+      .then(async (next) => {
+        const manualStillAvailable = next.addresses.some(
+          (item) => item.address === network.address,
+        );
+        if (networkMode === 'manual' && !manualStillAvailable) {
+          networkMode = 'automatic';
+          next = await resolveLanAddress();
+        }
+
+        const addressesChanged = JSON.stringify(next.addresses) !== JSON.stringify(network.addresses);
+        if (next.address !== network.address || addressesChanged) {
+          network = next;
+          server.setLanAddress(next.address);
+          await renderHostPage();
+        }
+      })
+      .catch((error) => console.warn('[LocalTV] Network refresh failed:', error))
+      .finally(() => { networkRefreshRunning = false; });
+  }, 5000);
+  networkRefresh.unref();
 
   // Desktop pairing window: re-invoke this executable in `--webview` mode so
   // the blocking webview loop runs in its own process. SEA → [exe, --webview];

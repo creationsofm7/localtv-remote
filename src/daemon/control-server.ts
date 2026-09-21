@@ -1,4 +1,4 @@
-import type express from 'express';
+import express from 'express';
 
 import {
   RemoteControlServer,
@@ -9,7 +9,13 @@ import type { InputRouter } from '../core/main/input/input-router';
 export type DaemonControlServerOptions = RemoteControlServerOptions & {
   /** Called when the user clicks "Stop" on the desktop pairing page. */
   onQuit: () => void;
+  /** Applies an automatic or manual address selected in the host window. */
+  onNetworkSelection: (selection: NetworkSelection) => Promise<void>;
 };
+
+export type NetworkSelection =
+  | { mode: 'automatic' }
+  | { address: string; mode: 'manual' };
 
 const isLoopback = (ip: string | undefined): boolean =>
   ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1';
@@ -27,10 +33,12 @@ const isLoopback = (ip: string | undefined): boolean =>
  */
 export class DaemonControlServer extends RemoteControlServer {
   private hostHtml = '<!doctype html><title>LocalTV Remote</title><p>Starting…</p>';
+  private readonly onNetworkSelection: (selection: NetworkSelection) => Promise<void>;
   private readonly onQuit: () => void;
 
   constructor(inputRouter: InputRouter, options: DaemonControlServerOptions) {
     super(inputRouter, options);
+    this.onNetworkSelection = options.onNetworkSelection;
     this.onQuit = options.onQuit;
   }
 
@@ -53,6 +61,29 @@ export class DaemonControlServer extends RemoteControlServer {
 
     app.get('/api/state', loopbackOnly, (_req, res) => {
       res.json(this.getState());
+    });
+
+    app.post('/api/network', loopbackOnly, express.json({ limit: '1kb' }), async (req, res) => {
+      const mode = req.body?.mode;
+      const address = req.body?.address;
+      const selection: NetworkSelection | null = mode === 'automatic'
+        ? { mode: 'automatic' }
+        : mode === 'manual' && typeof address === 'string'
+          ? { address, mode: 'manual' }
+          : null;
+
+      if (!selection) {
+        res.status(400).json({ error: 'Invalid network selection.' });
+        return;
+      }
+
+      try {
+        await this.onNetworkSelection(selection);
+        res.json({ ok: true });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Network selection failed.';
+        res.status(400).json({ error: message });
+      }
     });
 
     app.post('/api/quit', loopbackOnly, (_req, res) => {
