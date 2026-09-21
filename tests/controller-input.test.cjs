@@ -135,6 +135,33 @@ test('pointer lock uses relative movement and never captures the pointer', () =>
   assert.equal(app.binaryFrames().at(-1).getUint8(0), 0x01);
 });
 
+test('pointer lock keeps stationary left presses as clicks', () => {
+  const app = createControllerHarness();
+  app.lockButton.emit('click', event());
+  app.trackpad.emit('pointerdown', pointer({ button: 0 }));
+  app.trackpad.emit('pointerup', pointer({ button: 0 }));
+  assert.deepEqual(app.binaryTags(), [0x06]);
+});
+
+test('pointer lock wraps relative drag movement in left down and up', () => {
+  const app = createControllerHarness();
+  app.lockButton.emit('click', event());
+  app.trackpad.emit('pointerdown', pointer({ button: 0 }));
+  app.trackpad.emit('mousemove', event({ movementX: 20, movementY: 0 }));
+  app.flushAnimationFrames();
+  app.trackpad.emit('pointerup', pointer({ button: 0 }));
+  assert.deepEqual(app.binaryTags(), [0x03, 0x01, 0x04]);
+});
+
+test('pointer lock request rejections are handled', async () => {
+  const app = createControllerHarness();
+  app.trackpad.requestPointerLock = () => Promise.reject(new Error('Pointer lock denied'));
+  app.lockButton.emit('click', event());
+  await Promise.resolve();
+  assert.equal(app.document.pointerLockElement, undefined);
+  assert.equal(app.lockButton.getAttribute('aria-pressed'), 'false');
+});
+
 test('movement beyond the threshold wraps deltas in left down and up', () => {
   const app = createControllerHarness();
   app.trackpad.emit('pointerdown', pointer({ button: 0, clientX: 10, clientY: 10 }));

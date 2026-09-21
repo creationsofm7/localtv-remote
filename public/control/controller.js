@@ -736,8 +736,9 @@ if (trackpad) {
     }
     if (e.button !== 0) return;
     e.preventDefault();
-    if (document.pointerLockElement === trackpad) return;
-    try { trackpad.setPointerCapture(e.pointerId); } catch { /* non-fatal */ }
+    if (document.pointerLockElement !== trackpad) {
+      try { trackpad.setPointerCapture(e.pointerId); } catch { /* non-fatal */ }
+    }
     pointerDragging = true;
     pressActive = true;
     pressDragActive = false;
@@ -767,7 +768,17 @@ if (trackpad) {
   trackpad.addEventListener('mousemove', (e) => {
     if (document.pointerLockElement !== trackpad) return;
     const bounds = trackpad.getBoundingClientRect();
-    queueMouseDelta(e.movementX / bounds.width, e.movementY / bounds.height);
+    const dx = e.movementX / bounds.width;
+    const dy = e.movementY / bounds.height;
+    pressMovement += Math.hypot(e.movementX, e.movementY);
+    if (singleTapCandidate && pressMovement > TAP_MOVE_PX) singleTapCandidate = null;
+    lastPointerNorm.x = Math.min(1, Math.max(0, lastPointerNorm.x + dx * mouseDeltaSensitivity));
+    lastPointerNorm.y = Math.min(1, Math.max(0, lastPointerNorm.y + dy * mouseDeltaSensitivity));
+    if (pressActive && !stickyLeftActive && !pressDragActive && pressMovement > TAP_MOVE_PX) {
+      sendMouseButton(true, 'left');
+      pressDragActive = true;
+    }
+    queueMouseDelta(dx, dy);
   });
 
   trackpad.addEventListener('pointerup', (e) => {
@@ -810,7 +821,12 @@ lockButton?.addEventListener('click', () => {
   if (document.pointerLockElement === trackpad) {
     document.exitPointerLock();
   } else {
-    trackpad?.requestPointerLock();
+    try {
+      const request = trackpad?.requestPointerLock();
+      if (request && typeof request.catch === 'function') request.catch(syncPointerLockUI);
+    } catch {
+      syncPointerLockUI();
+    }
   }
 });
 
