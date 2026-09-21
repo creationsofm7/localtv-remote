@@ -132,6 +132,10 @@ const connDot = document.getElementById('conn-dot');
 const connLabel = document.getElementById('conn-label');
 const headerDot = document.getElementById('header-dot');
 const trackpad = document.getElementById('trackpad');
+const leftDragButton = document.getElementById('btn-left-drag');
+const lockButton = document.getElementById('btn-lock');
+const rightClickButton = document.getElementById('btn-right-click');
+const middleClickButton = document.getElementById('btn-middle-click');
 const muteToggle = document.getElementById('mute-toggle');
 const settingsBtn = document.getElementById('settings-btn');
 const settingsPanel = document.getElementById('settings-panel');
@@ -626,15 +630,24 @@ if (trackpad) {
 
   /* Trackpad: mouse pointer (desktop testing) */
   trackpad.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    if (e.pointerType !== 'mouse') return;
+    if (e.button === 2 || e.button === 1) {
+      e.preventDefault();
+      sendClick(e.button === 2 ? 'right' : 'middle');
+      flashTrackpad();
+      return;
+    }
+    if (e.button !== 0) return;
     e.preventDefault();
-    trackpad.setPointerCapture(e.pointerId);
+    if (document.pointerLockElement === trackpad) return;
+    try { trackpad.setPointerCapture(e.pointerId); } catch { /* non-fatal */ }
     pointerDragging = true;
     pointerLast = { x: e.clientX, y: e.clientY };
     singleTapCandidate = { x: e.clientX, y: e.clientY, time: performance.now() };
   });
 
   trackpad.addEventListener('pointermove', (e) => {
+    if (document.pointerLockElement === trackpad) return;
     if (!pointerDragging || e.pointerType !== 'mouse' || !pointerLast) return;
     const bounds = trackpad.getBoundingClientRect();
     const dx = (e.clientX - pointerLast.x) / bounds.width;
@@ -644,6 +657,12 @@ if (trackpad) {
     lastPointerNorm.x = Math.min(1, Math.max(0, lastPointerNorm.x + dx * mouseDeltaSensitivity));
     lastPointerNorm.y = Math.min(1, Math.max(0, lastPointerNorm.y + dy * mouseDeltaSensitivity));
     queueMouseDelta(dx, dy);
+  });
+
+  trackpad.addEventListener('mousemove', (e) => {
+    if (document.pointerLockElement !== trackpad) return;
+    const bounds = trackpad.getBoundingClientRect();
+    queueMouseDelta(e.movementX / bounds.width, e.movementY / bounds.height);
   });
 
   trackpad.addEventListener('pointerup', (e) => {
@@ -660,9 +679,31 @@ if (trackpad) {
   trackpad.addEventListener('pointercancel', () => { pointerDragging = false; pointerLast = null; singleTapCandidate = null; });
 
   trackpad.addEventListener('wheel', (e) => { e.preventDefault(); queueScroll(e.deltaY); }, { passive: false });
+  trackpad.addEventListener('contextmenu', (e) => e.preventDefault());
 }
 
 /* ── Control buttons ── */
+
+const syncPointerLockUI = () => {
+  const isLocked = document.pointerLockElement === trackpad;
+  lockButton?.classList.toggle('trackpad-tool--active', isLocked);
+  lockButton?.setAttribute('aria-pressed', String(isLocked));
+  if (lockButton) lockButton.textContent = isLocked ? 'Exit pointer lock' : 'Enable pointer lock';
+};
+
+lockButton?.addEventListener('click', () => {
+  if (document.pointerLockElement === trackpad) {
+    document.exitPointerLock();
+  } else {
+    trackpad?.requestPointerLock();
+  }
+});
+
+document.addEventListener('pointerlockchange', syncPointerLockUI);
+document.addEventListener('pointerlockerror', syncPointerLockUI);
+
+rightClickButton?.addEventListener('click', () => { sendClick('right'); flashTrackpad(); });
+middleClickButton?.addEventListener('click', () => { sendClick('middle'); flashTrackpad(); });
 
 btnBack?.addEventListener('click', () => sendRemoteAction('go_back'));
 btnHome?.addEventListener('click', () => sendRemoteAction('go_home'));
