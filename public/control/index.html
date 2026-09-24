@@ -79,13 +79,19 @@
 
         <!-- ── Header ── -->
         <header class="header">
-          <button class="header__btn" id="mute-toggle" type="button" aria-label="Toggle mute">
-            <span class="icon-slot" data-hgi="volumeMute"></span>
-          </button>
-          <div class="header__device">
-            <span class="header__conn-dot" id="header-dot"></span>
-            <span class="header__device-name">LocalTV</span>
+          <div class="header__start">
+            <button class="header__btn" id="mute-toggle" type="button" aria-label="Toggle mute">
+              <span class="icon-slot" data-hgi="volumeMute"></span>
+            </button>
           </div>
+          <button class="header__help" id="help-open" type="button" aria-haspopup="dialog" aria-controls="help-dialog">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5" />
+              <path d="M9.8 9.4a2.35 2.35 0 0 1 4.55.8c0 1.75-2.35 2.05-2.35 3.5" />
+              <path d="M12 16.8h.01" />
+            </svg>
+            <span>Help</span>
+          </button>
           <div class="header__actions">
             <button class="header__btn" id="settings-btn" type="button" aria-label="Remote settings">
               <span class="icon-slot" data-hgi="settings"></span>
@@ -121,14 +127,14 @@
           <!-- ─── Panel: Remote ─── -->
           <section class="panel" id="panel-remote" data-panel="remote">
             <div class="trackpad-wrap">
-              <div class="trackpad-tools" aria-label="Desktop trackpad tools">
-                <button class="trackpad-tool" id="btn-left-drag" type="button" aria-pressed="false">Left drag</button>
-                <button class="trackpad-tool" id="btn-lock" type="button" aria-pressed="false">Enable pointer lock</button>
-                <button class="trackpad-tool" id="btn-right-click" type="button" aria-label="Right click">Right click</button>
-                <button class="trackpad-tool" id="btn-middle-click" type="button" aria-label="Middle click">Middle click</button>
-              </div>
               <div class="trackpad" id="trackpad">
                 <span class="trackpad__hint">Swipe to move cursor</span>
+              </div>
+              <div class="trackpad-tools" aria-label="Desktop trackpad tools">
+                <button class="trackpad-tool" id="btn-left-drag" type="button" aria-label="Hold left mouse button" aria-pressed="false">Hold</button>
+                <button class="trackpad-tool" id="btn-right-click" type="button" aria-label="Right click">Right</button>
+                <button class="trackpad-tool" id="btn-middle-click" type="button" aria-label="Middle click">Middle</button>
+                <button class="trackpad-tool" id="btn-lock" type="button" aria-label="Capture mouse pointer" aria-pressed="false">Capture</button>
               </div>
             </div>
             <div class="ctrl-row">
@@ -147,7 +153,7 @@
                 <span class="icon-slot" data-hgi="volumeDown"></span>
               </button>
               <div class="vol-display">
-                <div class="vol-track" id="volume-track" role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="vol-fill" id="volume-fill"></div></div>
+                <div class="vol-track" id="volume-track" role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="vol-fill" id="volume-fill"><span class="vol-thumb" id="volume-thumb" aria-hidden="true"></span></div></div>
                 <span class="vol-label" id="volume-value">--</span>
               </div>
               <button class="vol-btn" id="vol-up" type="button" aria-label="Volume up">
@@ -272,7 +278,130 @@
         </nav>
       </div>
 
+      <dialog class="help-dialog" id="help-dialog" aria-modal="true" aria-labelledby="help-title">
+        <section class="help-sheet">
+          <header class="help-sheet__header">
+            <div>
+              <p class="help-sheet__step" id="help-step" role="status" aria-live="polite" aria-atomic="true">Guide 1 of 4</p>
+              <h2 class="help-sheet__title" id="help-title">Use your phone like a trackpad</h2>
+            </div>
+            <button class="help-sheet__close" id="help-close" type="button" aria-label="Close help">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" /></svg>
+            </button>
+          </header>
+
+          <div class="help-viewport" id="help-viewport">
+            <div class="help-track" id="help-track">
+              <article class="help-card" data-help-card="0" aria-hidden="false">
+                <div class="gesture-stage" aria-hidden="true">
+                  <svg class="gesture-svg" viewBox="0 0 320 184" role="img">
+                    <path class="gesture-trail" d="M56 82c54-34 133-38 203 4" />
+                    <circle class="gesture-cursor" cx="246" cy="75" r="9" />
+                    <g class="gesture-hand gesture-hand--move" transform="translate(85 23) rotate(-14 78 72)">
+                      <path class="gesture-hand__body" d="M110 147c-22 1-41-12-48-33L48 69c-3-9 2-18 11-21 9-3 18 2 21 11l8 25-2-52c0-10 8-18 18-18s18 8 18 18v43l5-28c2-9 11-15 20-13 9 2 15 11 13 20l-6 32 4-12c3-9 13-13 22-10s13 13 10 22l-14 37c-7 17-23 25-40 24z" />
+                      <path class="gesture-hand__line" d="M88 84c3 13 4 24 4 34M122 75v38M154 86l-5 28" />
+                      <path class="gesture-hand__nail" d="M96 28c0-5 4-9 9-9s9 4 9 9v14H96z" />
+                    </g>
+                    <circle class="gesture-contact" cx="163" cy="71" r="18" />
+                  </svg>
+                </div>
+                <div class="help-card__copy">
+                  <h3>Move the pointer</h3>
+                  <p>Glide one finger anywhere on the trackpad. Short, relaxed strokes give you the best control.</p>
+                </div>
+              </article>
+
+              <article class="help-card" data-help-card="1" aria-hidden="true">
+                <div class="gesture-stage" aria-hidden="true">
+                  <svg class="gesture-svg" viewBox="0 0 320 184" role="img">
+                    <rect class="gesture-object gesture-object--start" x="107" y="68" width="54" height="42" rx="10" />
+                    <rect class="gesture-object gesture-object--target" x="218" y="68" width="54" height="42" rx="10" />
+                    <path class="gesture-trail" d="M134 91h111" />
+                    <g class="gesture-hand gesture-hand--drag" transform="translate(56 27) rotate(-14 78 72)">
+                      <path class="gesture-hand__body" d="M110 147c-22 1-41-12-48-33L48 69c-3-9 2-18 11-21 9-3 18 2 21 11l8 25-2-52c0-10 8-18 18-18s18 8 18 18v43l5-28c2-9 11-15 20-13 9 2 15 11 13 20l-6 32 4-12c3-9 13-13 22-10s13 13 10 22l-14 37c-7 17-23 25-40 24z" />
+                      <path class="gesture-hand__line" d="M88 84c3 13 4 24 4 34M122 75v38M154 86l-5 28" />
+                      <path class="gesture-hand__nail" d="M96 28c0-5 4-9 9-9s9 4 9 9v14H96z" />
+                    </g>
+                    <circle class="gesture-contact gesture-contact--hold" cx="134" cy="73" r="18" />
+                  </svg>
+                </div>
+                <div class="help-card__copy">
+                  <h3>Click and drag</h3>
+                  <p>Tap once to click. For drag-and-drop, turn on <strong>Hold</strong>, then move with one finger and tap Hold again to release.</p>
+                </div>
+              </article>
+
+              <article class="help-card" data-help-card="2" aria-hidden="true">
+                <div class="gesture-stage" aria-hidden="true">
+                  <svg class="gesture-svg" viewBox="0 0 320 184" role="img">
+                    <path class="gesture-scroll-line" d="M242 50v76m0-76-10 12m10-12 10 12m-10 64-10-12m10 12 10-12" />
+                    <g class="gesture-hand gesture-hand--two" transform="translate(88 29) rotate(-14 78 72)">
+                      <path class="gesture-hand__body" d="M91 146c-20 0-37-13-43-32L35 75c-3-9 2-18 11-21 9-3 18 2 21 11l7 21V39c0-10 8-18 18-18s18 8 18 18v39-46c0-10 8-18 18-18s18 8 18 18v56l5-17c3-9 13-14 22-11 9 3 14 13 11 22l-13 40c-6 17-22 25-39 24z" />
+                      <path class="gesture-hand__line" d="M74 86c2 12 3 22 3 32M110 78v39M146 88l-4 29" />
+                      <path class="gesture-hand__nail" d="M82 35c0-5 4-9 9-9s9 4 9 9v14H82zM118 28c0-5 4-9 9-9s9 4 9 9v14h-18z" />
+                    </g>
+                    <circle class="gesture-contact gesture-contact--left" cx="164" cy="61" r="15" />
+                    <circle class="gesture-contact gesture-contact--right" cx="199" cy="54" r="15" />
+                  </svg>
+                </div>
+                <div class="help-card__copy">
+                  <h3>Right-click and scroll</h3>
+                  <p>Tap with two fingers for a right-click. Slide two fingers together to scroll up or down.</p>
+                </div>
+              </article>
+
+              <article class="help-card" data-help-card="3" aria-hidden="true">
+                <div class="gesture-stage gesture-stage--install" aria-hidden="true">
+                  <svg class="gesture-svg" viewBox="0 0 320 184" role="img">
+                    <rect class="gesture-phone" x="111" y="16" width="98" height="152" rx="22" />
+                    <path class="gesture-phone__screen" d="M126 38h68v93h-68z" />
+                    <path class="gesture-install-icon" d="M160 59v40m-15-15 15 15 15-15M142 112h36" />
+                    <g class="gesture-hand gesture-hand--install" transform="translate(172 84) rotate(-18 58 54)">
+                      <path class="gesture-hand__body" d="M70 96c-16 0-30-10-35-25L24 43c-3-8 1-16 9-19 8-3 16 1 19 9l5 13V18c0-8 7-15 15-15s15 7 15 15v39l5-12c3-8 12-12 20-9 8 3 12 12 9 20l-12 25c-7 12-21 16-39 15z" />
+                      <path class="gesture-hand__nail" d="M64 15c0-4 3-7 7-7s7 3 7 7v12H64z" />
+                    </g>
+                    <circle class="gesture-contact gesture-contact--install" cx="187" cy="130" r="16" />
+                  </svg>
+                </div>
+                <div class="help-card__copy help-card__copy--install">
+                  <h3>Keep the remote one tap away</h3>
+                  <p id="help-install-summary">Add this remote to your Home Screen for a full-screen app experience.</p>
+                  <div class="install-platforms" role="group" aria-label="Phone type">
+                    <button type="button" data-help-platform="ios" aria-pressed="false">iPhone</button>
+                    <button type="button" data-help-platform="android" aria-pressed="false">Android</button>
+                  </div>
+                  <ol class="install-steps" data-install-panel="ios" hidden>
+                    <li>Open this page in Safari.</li>
+                    <li>Tap the Share button.</li>
+                    <li>Choose <strong>Add to Home Screen</strong>, then Add.</li>
+                  </ol>
+                  <ol class="install-steps" data-install-panel="android" hidden>
+                    <li>Open Chrome's menu.</li>
+                    <li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li>
+                    <li>Confirm Install.</li>
+                  </ol>
+                  <button class="install-button" id="help-install" type="button" hidden>Install app</button>
+                  <p class="install-status" id="help-install-status" role="status" aria-live="polite"></p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <footer class="help-sheet__footer">
+            <button class="help-nav" id="help-prev" type="button">Back</button>
+            <div class="help-dots" aria-label="Tutorial progress">
+              <button type="button" data-help-dot="0" aria-label="Go to guide 1" aria-current="step"></button>
+              <button type="button" data-help-dot="1" aria-label="Go to guide 2"></button>
+              <button type="button" data-help-dot="2" aria-label="Go to guide 3"></button>
+              <button type="button" data-help-dot="3" aria-label="Go to guide 4"></button>
+            </div>
+            <button class="help-nav help-nav--primary" id="help-next" type="button">Next</button>
+          </footer>
+        </section>
+      </dialog>
+
     </main>
+    <script src="/help.js" defer></script>
     <script src="/controller.js" defer></script>
     <script>
       // Register the PWA service worker

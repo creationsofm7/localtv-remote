@@ -64,13 +64,14 @@ test('controller sends shortcut actions without a duplicate key map', () => {
   );
 });
 
-test('service worker invalidates the controller volume cache', () => {
+test('service worker invalidates the controller help and volume cache', () => {
   const source = fs.readFileSync(
     path.join(__dirname, '../public/control/sw.js'),
     'utf8',
   );
 
-  assert.match(source, /CACHE_VERSION = 'localtv-remote-v4'/);
+  assert.match(source, /CACHE_VERSION = 'localtv-remote-v5'/);
+  assert.match(source, /'\/help\.js'/);
 });
 
 test('Win32 injector registers the MediaPlayPause virtual key', () => {

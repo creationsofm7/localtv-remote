@@ -4,7 +4,7 @@
    Bump CACHE_VERSION to invalidate all cached assets.
    ═══════════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'localtv-remote-v4';
+const CACHE_VERSION = 'localtv-remote-v5';
 
 /**
  * Static assets to pre-cache on install.
@@ -14,6 +14,7 @@ const PRECACHE_ASSETS = [
   '/',
   '/index.html',
   '/controller.css',
+  '/help.js',
   '/controller.js',
   '/manifest.json',
   '/icons/icon-192.png',

@@ -32,6 +32,26 @@
 <!-- TODO: add a real demo at docs/demo.gif (phone moving the PC cursor over Wi-Fi) and uncomment below -->
 <!-- ![Controlling a Windows PC from a phone over Wi-Fi, with no app to install on the phone](docs/demo.gif) -->
 
+## From pairing to a permanent home-screen remote
+
+<table>
+  <tr>
+    <th width="33%">1. Connect</th>
+    <th width="33%">2. Open Help</th>
+    <th width="33%">3. Save as a PWA</th>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/readme-connect.png" alt="LocalTV Remote pairing screen with a six-digit code field and Connect button" /></td>
+    <td><img src="docs/assets/readme-help.png" alt="LocalTV Remote Help card illustrating one-finger pointer movement" /></td>
+    <td><img src="docs/assets/readme-install-pwa.png" alt="LocalTV Remote install guide with iPhone selected and an Android option" /></td>
+  </tr>
+  <tr>
+    <td align="center">Enter the six-digit pairing code.</td>
+    <td align="center">Tap <strong>Help</strong> for visual gesture guides.</td>
+    <td align="center">Choose iPhone or Android and add it to your Home Screen.</td>
+  </tr>
+</table>
+
 ---
 
 ## Why LocalTV Remote?
@@ -84,9 +104,9 @@ winget install LocalTV.Remote
 
 ### Option 2 — Installer 
 
-### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe)
+### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v1.1.3/LocalTVRemote-Setup-1.1.3.exe)
 
-Latest release: **[v0.1.1](https://github.com/creationsofm7/localtv-remote/releases/latest)** · Windows 10/11 · ~27 MB. Download the installer, run it, and you're paired in under a minute. Already installed? Grab the link above to **update to the latest version**.
+Latest release: **[v1.1.3](https://github.com/creationsofm7/localtv-remote/releases/latest)** · Windows 10/11 · ~27 MB. Download the installer, run it, and you're paired in under a minute. Already installed? Grab the link above to **update to the latest version**.
 
 The setup wizard will:
 - Install to `%ProgramFiles%\LocalTV Remote`

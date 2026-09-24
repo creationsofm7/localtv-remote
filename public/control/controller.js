@@ -130,7 +130,23 @@ const connectBtn = document.getElementById('connect-btn');
 const pairStatus = document.getElementById('pair-status');
 const connDot = document.getElementById('conn-dot');
 const connLabel = document.getElementById('conn-label');
-const headerDot = document.getElementById('header-dot');
+const helpOpen = document.getElementById('help-open');
+const helpDialog = document.getElementById('help-dialog');
+const helpSheet = helpDialog?.querySelector?.('.help-sheet') || null;
+const helpClose = document.getElementById('help-close');
+const helpViewport = document.getElementById('help-viewport');
+const helpTrack = document.getElementById('help-track');
+const helpStep = document.getElementById('help-step');
+const helpPrev = document.getElementById('help-prev');
+const helpNext = document.getElementById('help-next');
+const helpInstall = document.getElementById('help-install');
+const helpInstallSummary = document.getElementById('help-install-summary');
+const helpInstallStatus = document.getElementById('help-install-status');
+const helpCards = Array.from(document.querySelectorAll('.help-card[data-help-card]'));
+const helpDots = Array.from(document.querySelectorAll('[data-help-dot]'));
+const helpPlatformButtons = Array.from(document.querySelectorAll('[data-help-platform]'));
+const helpInstallPanels = Array.from(document.querySelectorAll('[data-install-panel]'));
+const helpModel = window.LocalTVHelp || null;
 const trackpad = document.getElementById('trackpad');
 const leftDragButton = document.getElementById('btn-left-drag');
 const lockButton = document.getElementById('btn-lock');
@@ -235,6 +251,11 @@ let volumeDragging = false;
 let volumePointerId = null;
 let activeTab = 'remote';
 let currentAppMode = 'remote_control';
+let helpIndex = 0;
+let helpPlatform = 'android';
+let helpSwipe = null;
+let deferredInstallPrompt = null;
+let helpCloseTimer = null;
 
 /* ── Screen switching ── */
 
@@ -291,6 +312,228 @@ document.addEventListener('click', (event) => {
   if (!(target instanceof Node)) return;
   if (!settingsPanel.contains(target) && !settingsBtn?.contains(target)) {
     setSettingsOpen(false);
+  }
+});
+
+/* ── Help tutorial & PWA installation ── */
+
+const isStandaloneDisplay = () => Boolean(
+  window.navigator?.standalone ||
+  window.matchMedia?.('(display-mode: standalone)')?.matches,
+);
+
+const setHelpIndex = (nextIndex, { animate = true } = {}) => {
+  if (!helpCards.length || !helpTrack) return;
+  helpIndex = Math.max(0, Math.min(helpCards.length - 1, Number(nextIndex) || 0));
+  helpTrack.dataset.animate = String(animate);
+  helpTrack.style.setProperty('--help-offset', `${helpIndex * -100}%`);
+  helpTrack.style.setProperty('--help-drag', '0px');
+
+  helpCards.forEach((card, index) => {
+    const isActive = index === helpIndex;
+    card.setAttribute('aria-hidden', String(!isActive));
+    card.inert = !isActive;
+  });
+  helpDots.forEach((dot, index) => {
+    if (index === helpIndex) dot.setAttribute('aria-current', 'step');
+    else dot.removeAttribute('aria-current');
+  });
+
+  if (helpStep) {
+    const lessonTitle = helpCards[helpIndex].querySelector('h3')?.textContent || '';
+    helpStep.textContent = `Guide ${helpIndex + 1} of ${helpCards.length}: ${lessonTitle}`;
+  }
+  if (helpPrev) helpPrev.disabled = helpIndex === 0;
+  if (helpNext) helpNext.textContent = helpIndex === helpCards.length - 1 ? 'Done' : 'Next';
+};
+
+const syncInstallGuidance = () => {
+  if (!helpModel) return;
+  const guidance = helpModel.getInstallGuidance(helpPlatform, {
+    canPrompt: Boolean(deferredInstallPrompt),
+    isStandalone: isStandaloneDisplay(),
+  });
+
+  helpPlatformButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.helpPlatform === helpPlatform));
+  });
+  helpInstallPanels.forEach((panel) => {
+    panel.hidden = guidance.mode === 'installed' || panel.dataset.installPanel !== helpPlatform;
+  });
+
+  if (helpInstall) helpInstall.hidden = guidance.mode !== 'prompt';
+  if (helpInstallSummary) {
+    helpInstallSummary.textContent = guidance.mode === 'installed'
+      ? 'This remote is already installed and ready from your Home Screen.'
+      : 'Add this remote to your Home Screen for a full-screen app experience.';
+  }
+  if (helpInstallStatus) {
+    helpInstallStatus.textContent = guidance.mode === 'installed'
+      ? 'Installed'
+      : guidance.mode === 'prompt'
+        ? 'Your browser can install the remote now.'
+        : '';
+  }
+};
+
+const selectHelpPlatform = (platform) => {
+  if (platform !== 'ios' && platform !== 'android') return;
+  helpPlatform = platform;
+  syncInstallGuidance();
+};
+
+const finishHelpClose = () => {
+  if (!helpDialog?.open) return;
+  helpDialog.close();
+  helpOpen?.focus();
+};
+
+const closeHelp = () => {
+  if (!helpDialog?.open) return;
+  helpDialog.dataset.open = 'false';
+  clearTimeout(helpCloseTimer);
+  helpCloseTimer = setTimeout(finishHelpClose, 280);
+};
+
+const openHelp = () => {
+  if (!helpDialog || !helpCards.length || helpDialog.open) return;
+  setHelpIndex(0, { animate: false });
+  syncInstallGuidance();
+  helpDialog.showModal();
+  requestAnimationFrame(() => {
+    helpDialog.dataset.open = 'true';
+    helpClose?.focus();
+  });
+};
+
+if (helpDialog && helpCards.length && helpModel) {
+  const browserNavigator = window.navigator || {};
+  const detectedPlatform = helpModel.detectInstallPlatform({
+    userAgent: browserNavigator.userAgent || '',
+    platform: browserNavigator.platform || '',
+    maxTouchPoints: browserNavigator.maxTouchPoints || 0,
+  });
+  helpPlatform = detectedPlatform === 'ios' ? 'ios' : 'android';
+  setHelpIndex(0, { animate: false });
+  syncInstallGuidance();
+}
+
+helpOpen?.addEventListener('click', openHelp);
+helpClose?.addEventListener('click', closeHelp);
+helpPrev?.addEventListener('click', () => setHelpIndex(helpIndex - 1));
+helpNext?.addEventListener('click', () => {
+  if (helpIndex === helpCards.length - 1) closeHelp();
+  else setHelpIndex(helpIndex + 1);
+});
+helpDots.forEach((dot) => {
+  dot.addEventListener('click', () => setHelpIndex(Number(dot.dataset.helpDot)));
+});
+helpPlatformButtons.forEach((button) => {
+  button.addEventListener('click', () => selectHelpPlatform(button.dataset.helpPlatform));
+});
+
+if (helpDialog) {
+  helpDialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeHelp();
+  });
+  helpDialog.addEventListener('click', (event) => {
+    if (event.target === helpDialog) closeHelp();
+  });
+  helpDialog.addEventListener('close', () => {
+    helpDialog.dataset.open = 'false';
+    clearTimeout(helpCloseTimer);
+    helpOpen?.focus();
+  });
+  helpDialog.addEventListener('keydown', (event) => {
+    if (event.target.closest?.('button, input, select, textarea, a[href]')) return;
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      setHelpIndex(helpIndex - 1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      setHelpIndex(helpIndex + 1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      setHelpIndex(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      setHelpIndex(helpCards.length - 1);
+    }
+  });
+}
+
+helpViewport?.addEventListener('pointerdown', (event) => {
+  if (event.target.closest?.('button')) return;
+  helpSwipe = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    rawDeltaX: 0,
+    deltaX: 0,
+    axis: null,
+  };
+  try { helpViewport.setPointerCapture(event.pointerId); } catch { /* non-fatal */ }
+});
+helpViewport?.addEventListener('pointermove', (event) => {
+  if (!helpSwipe || helpSwipe.pointerId !== event.pointerId) return;
+  const deltaX = event.clientX - helpSwipe.startX;
+  const deltaY = event.clientY - helpSwipe.startY;
+  if (!helpSwipe.axis && Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 8) return;
+  if (!helpSwipe.axis) {
+    helpSwipe.axis = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical';
+  }
+  if (helpSwipe.axis !== 'horizontal') return;
+
+  event.preventDefault();
+  const isPastStart = helpIndex === 0 && deltaX > 0;
+  const isPastEnd = helpIndex === helpCards.length - 1 && deltaX < 0;
+  const edgeResistance = isPastStart || isPastEnd ? 0.22 : 1;
+  helpSwipe.rawDeltaX = deltaX;
+  helpSwipe.deltaX = deltaX * edgeResistance;
+  helpTrack.dataset.dragging = 'true';
+  helpTrack.style.setProperty('--help-drag', `${helpSwipe.deltaX}px`);
+});
+
+const finishHelpSwipe = (event) => {
+  if (!helpSwipe || helpSwipe.pointerId !== event.pointerId || !helpModel) return;
+  const nextIndex = helpModel.resolveSwipeIndex({
+    current: helpIndex,
+    count: helpCards.length,
+    deltaX: helpSwipe.axis === 'horizontal' ? helpSwipe.rawDeltaX : 0,
+    width: helpViewport.getBoundingClientRect().width,
+  });
+  helpSwipe = null;
+  helpTrack.dataset.dragging = 'false';
+  setHelpIndex(nextIndex);
+};
+
+helpViewport?.addEventListener('pointerup', finishHelpSwipe);
+helpViewport?.addEventListener('pointercancel', (event) => {
+  if (!helpSwipe || helpSwipe.pointerId !== event.pointerId) return;
+  helpSwipe = null;
+  helpTrack.dataset.dragging = 'false';
+  helpTrack.style.setProperty('--help-drag', '0px');
+});
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  syncInstallGuidance();
+});
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  syncInstallGuidance();
+});
+
+helpInstall?.addEventListener('click', async () => {
+  if (!deferredInstallPrompt) return;
+  try {
+    await deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+  } finally {
+    deferredInstallPrompt = null;
+    syncInstallGuidance();
   }
 });
 
@@ -400,7 +643,7 @@ const sendMouseButton = (isDown, button) => {
 const syncLeftDragUI = () => {
   leftDragButton?.classList.toggle('trackpad-tool--active', stickyLeftActive);
   leftDragButton?.setAttribute('aria-pressed', String(stickyLeftActive));
-  if (leftDragButton) leftDragButton.textContent = stickyLeftActive ? 'Release left' : 'Hold left';
+  if (leftDragButton) leftDragButton.textContent = stickyLeftActive ? 'Release' : 'Hold';
 };
 
 const releaseLeftButton = () => {
@@ -814,7 +1057,7 @@ const syncPointerLockUI = () => {
   const isLocked = document.pointerLockElement === trackpad;
   lockButton?.classList.toggle('trackpad-tool--active', isLocked);
   lockButton?.setAttribute('aria-pressed', String(isLocked));
-  if (lockButton) lockButton.textContent = isLocked ? 'Exit pointer lock' : 'Enable pointer lock';
+  if (lockButton) lockButton.textContent = isLocked ? 'Release' : 'Capture';
 };
 
 lockButton?.addEventListener('click', () => {

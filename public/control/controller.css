@@ -5,23 +5,23 @@
 
 :root {
   color-scheme: dark;
-  --bg: #000000;
-  --surface: rgba(28, 28, 30, 0.92);
-  --glass: rgba(255, 255, 255, 0.055);
-  --glass-active: rgba(255, 255, 255, 0.12);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --text: #f5f5f7;
-  --text-muted: rgba(245, 245, 247, 0.45);
-  --text-dim: rgba(245, 245, 247, 0.22);
-  --accent: #0a84ff;
-  --accent-glow: rgba(10, 132, 255, 0.3);
+  --bg: #111318;
+  --surface: #1a1d24;
+  --raised: #252a33;
+  --glass: #252a33;
+  --glass-active: #303640;
+  --glass-border: #343a45;
+  --text: #f4f6f8;
+  --text-muted: #a5adb8;
+  --text-dim: #6f7885;
+  --accent: #56d6cf;
+  --accent-glow: rgba(86, 214, 207, 0.28);
   --red: #ff453a;
-  --green: #30d158;
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --green: #56d6cf;
+  --radius-control: 12px;
+  --radius-surface: 18px;
+  --radius-feature: 24px;
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +37,7 @@ body {
   height: 100dvh;
   touch-action: manipulation;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
+  background: radial-gradient(circle at 50% -20%, #202730 0, var(--bg) 42%);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
@@ -53,7 +53,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 
 .app {
   height: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -86,7 +86,6 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   gap: 20px;
   width: 100%;
   max-width: 320px;
-  animation: fadeUp 600ms var(--ease) backwards;
 }
 
 .pair__logo {
@@ -127,7 +126,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   flex: 1;
   height: 56px;
   padding: 0 20px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   border: 1px solid var(--glass-border);
   background: var(--surface);
   color: var(--text);
@@ -154,7 +153,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   flex-shrink: 0;
   height: 56px;
   padding: 0 28px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   border: none;
   background: var(--accent);
   color: white;
@@ -204,13 +203,21 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 }
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 88px;
   align-items: center;
-  justify-content: space-between;
   padding: 10px 0 6px;
   flex-shrink: 0;
-  animation: fadeUp 350ms var(--ease) backwards;
 }
+
+.header__start,
+.header__actions {
+  display: flex;
+  align-items: center;
+}
+
+.header__start { justify-content: flex-start; }
+.header__actions { justify-content: flex-end; gap: 4px; }
 
 .header__btn {
   display: flex;
@@ -229,35 +236,30 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 
 .header__btn:active { background: var(--glass-active); color: var(--text); }
 
-.header__actions {
+.header__help {
+  justify-self: center;
   display: flex;
   align-items: center;
-  gap: 4px;
-}
-
-.header__device {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border-radius: 20px;
-  background: var(--glass);
+  justify-content: center;
+  gap: 7px;
+  min-width: 86px;
+  height: 38px;
+  padding: 0 14px;
   border: 1px solid var(--glass-border);
+  border-radius: var(--radius-control);
+  background: var(--glass);
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, transform 120ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.header__conn-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 6px rgba(48, 209, 88, 0.5);
-}
-
-.header__device-name {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
+.header__help svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.header__help:active { background: var(--glass-active); color: var(--text); transform: scale(0.96); }
+.header__help:focus-visible,
+.header__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .icon { width: 22px; height: 22px; flex-shrink: 0; }
 .icon--lg { width: 28px; height: 28px; }
@@ -266,7 +268,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .icon-slot--lg { width: 28px; height: 28px; }
 
 .settings {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-surface);
   border: 1px solid var(--glass-border);
   background: var(--surface);
   margin-bottom: 10px;
@@ -294,12 +296,353 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .settings__select {
   min-width: 110px;
   height: 34px;
-  border-radius: 10px;
+  border-radius: var(--radius-control);
   border: 1px solid var(--glass-border);
   background: rgba(0, 0, 0, 0.35);
   color: var(--text);
   padding: 0 10px;
   outline: none;
+}
+
+
+/* ────────────────────────────────────────
+   Gesture Help Sheet
+   ──────────────────────────────────────── */
+
+.help-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  overflow: hidden;
+}
+
+.help-dialog[open] {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.help-dialog::backdrop { background: rgba(3, 5, 8, 0.76); }
+
+.help-sheet {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 440px);
+  max-height: min(94dvh, 760px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 18px 16px max(16px, env(safe-area-inset-bottom));
+  border-radius: var(--radius-feature) var(--radius-feature) 0 0;
+  background: var(--surface);
+  box-shadow: 0 -18px 60px rgba(0, 0, 0, 0.45), inset 0 1px rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1), opacity 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.help-dialog[data-open='true'] .help-sheet { opacity: 1; transform: translateY(0); }
+
+.help-sheet__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 2px 14px;
+}
+
+.help-sheet__step {
+  margin-bottom: 5px;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.help-sheet__title {
+  max-width: 290px;
+  font-size: 1.18rem;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.help-sheet__close {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--glass);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 140ms ease, background 140ms ease, transform 120ms ease;
+}
+
+.help-sheet__close svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.help-sheet__close:active { color: var(--text); background: var(--glass-active); transform: scale(0.96); }
+.help-sheet__close:focus-visible,
+.help-nav:focus-visible,
+.help-dots button:focus-visible,
+.install-platforms button:focus-visible,
+.install-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.help-viewport {
+  min-height: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.help-track {
+  --help-offset: 0%;
+  --help-drag: 0px;
+  display: flex;
+  transform: translate3d(calc(var(--help-offset) + var(--help-drag)), 0, 0);
+  transition: transform 240ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.help-track[data-animate='false'],
+.help-track[data-dragging='true'] { transition: none; }
+
+.help-card {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding: 2px;
+}
+
+.gesture-stage {
+  display: grid;
+  width: 100%;
+  height: clamp(174px, 26dvh, 214px);
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-surface);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(86, 214, 207, 0.12), transparent 48%),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.055);
+}
+
+.gesture-stage--install { background: radial-gradient(circle at 50% 45%, rgba(48, 209, 88, 0.1), transparent 50%), rgba(255, 255, 255, 0.035); }
+.gesture-svg { display: block; width: min(100%, 350px); height: 100%; overflow: visible; }
+.gesture-hand { translate: 0 0; }
+.gesture-hand__body { fill: #d5ad90; stroke: #f2ccb0; stroke-width: 2.2; stroke-linejoin: round; }
+.gesture-hand__line { fill: none; stroke: rgba(111, 70, 50, 0.45); stroke-width: 2; stroke-linecap: round; }
+.gesture-hand__nail { fill: rgba(255, 236, 224, 0.62); stroke: rgba(111, 70, 50, 0.34); stroke-width: 1.5; }
+.gesture-trail { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 7 9; opacity: 0.44; }
+.gesture-cursor { fill: var(--text); stroke: rgba(17, 19, 24, 0.72); stroke-width: 5; }
+.gesture-contact { fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.gesture-scroll-line { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.68; }
+.gesture-object { stroke-width: 2; }
+.gesture-object--start { fill: rgba(86, 214, 207, 0.22); stroke: var(--accent); }
+.gesture-object--target { fill: none; stroke: rgba(245, 245, 247, 0.22); stroke-dasharray: 6 6; }
+.gesture-phone { fill: rgba(10, 12, 16, 0.72); stroke: rgba(245, 245, 247, 0.62); stroke-width: 2; }
+.gesture-phone__screen { fill: rgba(86, 214, 207, 0.09); stroke: rgba(86, 214, 207, 0.4); stroke-width: 1.5; }
+.gesture-install-icon { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+.help-card[aria-hidden='false'] .gesture-hand--move { animation: gesture-move-hand 2.7s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-cursor { animation: gesture-move-cursor 2.7s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-hand--drag { animation: gesture-drag-hand 3s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-object--start { animation: gesture-drag-object 3s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-hand--two { animation: gesture-two-hand 3.2s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-hand--install { animation: gesture-install-hand 2.6s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-contact { animation: gesture-contact 2.7s ease-out infinite; }
+.help-card[aria-hidden='false'] .gesture-contact--hold { animation: gesture-drag-contact 3s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
+.help-card[aria-hidden='false'] .gesture-contact--left,
+.help-card[aria-hidden='false'] .gesture-contact--right { animation-duration: 3.2s; }
+.help-card[aria-hidden='false'] .gesture-contact--install { animation-duration: 2.6s; }
+
+@keyframes gesture-move-hand {
+  0%, 15% { translate: -34px 8px; }
+  72%, 100% { translate: 48px -2px; }
+}
+
+@keyframes gesture-move-cursor {
+  0%, 15% { transform: translate(-115px, 7px); }
+  72%, 100% { transform: translate(0, 0); }
+}
+
+@keyframes gesture-drag-hand {
+  0%, 18% { translate: 0 5px; }
+  28% { translate: 0 11px; }
+  76%, 100% { translate: 111px 5px; }
+}
+
+@keyframes gesture-drag-object {
+  0%, 28% { transform: translateX(0); }
+  76%, 100% { transform: translateX(111px); }
+}
+
+@keyframes gesture-drag-contact {
+  0%, 18% { opacity: 0; transform: translateX(0) scale(0.72); }
+  28% { opacity: 0.9; transform: translateX(0) scale(1); }
+  38% { opacity: 0.48; transform: translateX(0) scale(1.18); }
+  76% { opacity: 0.48; transform: translateX(111px) scale(1.18); }
+  100% { opacity: 0; transform: translateX(111px) scale(1.35); }
+}
+
+@keyframes gesture-two-hand {
+  0%, 17% { translate: 0 -14px; }
+  26%, 38% { translate: 0 2px; }
+  56% { translate: 0 -8px; }
+  88%, 100% { translate: 0 24px; }
+}
+
+@keyframes gesture-install-hand {
+  0%, 22% { translate: 24px 22px; }
+  42%, 62% { translate: 0 0; }
+  82%, 100% { translate: 24px 22px; }
+}
+
+@keyframes gesture-contact {
+  0%, 19% { opacity: 0; transform: scale(0.72); }
+  27% { opacity: 0.9; transform: scale(1); }
+  45%, 100% { opacity: 0; transform: scale(1.45); }
+}
+
+.help-card__copy {
+  min-height: 106px;
+  padding: 17px 6px 10px;
+}
+
+.help-card__copy h3 {
+  margin-bottom: 7px;
+  font-size: 1.06rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.help-card__copy p {
+  max-width: 38rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.help-card__copy strong { color: var(--text); font-weight: 700; }
+.help-card__copy--install { min-height: 212px; }
+
+.install-platforms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 4px;
+  border-radius: var(--radius-surface);
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.install-platforms button {
+  height: 36px;
+  border: 0;
+  border-radius: calc(var(--radius-surface) - 4px);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.install-platforms button[aria-pressed='true'] { color: var(--text); background: var(--glass-active); }
+
+.install-steps {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0 20px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.install-steps[hidden] { display: none; }
+
+.install-button {
+  width: 100%;
+  height: 42px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--accent);
+  color: #061312;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 140ms ease, transform 120ms ease;
+}
+
+.install-button:active { opacity: 0.84; transform: scale(0.96); }
+.install-button[hidden] { display: none; }
+.install-status { min-height: 18px; margin-top: 8px; color: var(--accent) !important; font-weight: 700; text-align: center; }
+
+.help-sheet__footer {
+  display: grid;
+  grid-template-columns: 76px 1fr 76px;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.help-nav {
+  height: 42px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--glass);
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, transform 120ms ease;
+}
+
+.help-nav--primary { background: var(--accent); color: #061312; }
+.help-nav:disabled { opacity: 0.35; cursor: default; }
+.help-nav:not(:disabled):active { transform: scale(0.96); }
+
+.help-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.help-dots button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  cursor: pointer;
+}
+
+.help-dots button::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: background 140ms ease, transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.help-dots button[aria-current='step']::before { background: var(--accent); transform: scale(1.35); }
+
+@media (max-height: 700px) {
+  .gesture-stage { height: 152px; }
+  .help-card__copy { min-height: 92px; padding-top: 12px; }
+  .help-card__copy--install { min-height: 190px; }
+  .help-card__copy p { font-size: 0.75rem; }
+  .install-steps { gap: 3px; margin-top: 8px; }
 }
 
 
@@ -323,7 +666,6 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   flex-direction: column;
   gap: 10px;
   padding: 8px 0 20px;
-  animation: fadeUp 300ms var(--ease) backwards;
 }
 
 .panel[hidden] { display: none; }
@@ -377,7 +719,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   gap: 3px;
   padding: 8px 4px 6px;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   background: transparent;
   color: var(--text-dim);
   font-size: 0.62rem;
@@ -401,35 +743,36 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .trackpad-wrap {
   display: flex;
   flex-direction: column;
-  padding: 4px;
-  border-radius: calc(var(--radius-xl) + 4px);
+  padding: 6px;
+  border-radius: var(--radius-feature);
   background: var(--surface);
-  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 0 0 1px var(--glass-border), 0 14px 40px rgba(0, 0, 0, 0.18);
 }
 
 .trackpad-tools {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
-  padding: 4px 4px 8px;
+  padding-top: 6px;
 }
 
 .trackpad-tool {
-  flex: 1 1 120px;
-  min-height: 34px;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  background: var(--glass);
+  min-width: 0;
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--raised);
   color: var(--text-muted);
   font: inherit;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+  transition: background 140ms ease, box-shadow 140ms ease, color 140ms ease, transform 120ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.trackpad-tool:hover { color: var(--text); }
-.trackpad-tool--active { color: var(--accent); border-color: var(--accent); }
+.trackpad-tool:active { transform: scale(0.96); }
+.trackpad-tool--active { color: var(--accent); background: rgba(86, 214, 207, 0.1); box-shadow: inset 0 0 0 1px rgba(86, 214, 207, 0.55); }
 .trackpad-tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .trackpad {
@@ -437,10 +780,11 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   width: 100%;
   min-height: 0;
   aspect-ratio: 1 / 0.95;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-surface);
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
-    linear-gradient(165deg, rgba(44, 44, 48, 0.6) 0%, rgba(28, 28, 30, 0.25) 100%);
+    radial-gradient(ellipse at 32% 12%, rgba(255, 255, 255, 0.045) 0%, transparent 56%),
+    linear-gradient(155deg, #252a33 0%, #1a1e25 100%);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.055), inset 0 0 0 1px rgba(255, 255, 255, 0.035);
   touch-action: none;
   cursor: grab;
   overflow: hidden;
@@ -452,7 +796,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .trackpad--flash { animation: trackpad-flash 250ms ease-out; }
 
 @keyframes trackpad-flash {
-  0%   { background-color: rgba(10, 132, 255, 0.12); }
+  0%   { background-color: rgba(86, 214, 207, 0.12); }
   100% { background-color: transparent; }
 }
 
@@ -472,10 +816,28 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 
 @media (hover: none) and (pointer: coarse) {
   #btn-lock { display: none; }
+  .trackpad-tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trackpad-tool:hover { color: var(--text); background: var(--glass-active); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .trackpad-tool { transition: none; }
+  .help-sheet { transform: none; transition: opacity 180ms ease; }
+  .help-track { transition: none; }
+  .gesture-hand,
+  .gesture-cursor,
+  .gesture-object,
+  .gesture-contact { animation: none !important; }
+  .gesture-hand--move { translate: 48px -2px; }
+  .gesture-hand--drag { translate: 111px 5px; }
+  .gesture-hand--two { translate: 0 10px; }
+  .gesture-hand--install { translate: 0 0; }
+  .gesture-object--start { transform: translateX(111px); }
+  .gesture-contact { opacity: 0.5; transform: scale(1); }
+  .gesture-contact--hold { transform: translateX(111px) scale(1); }
 }
 
 
@@ -494,9 +856,9 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   align-items: center;
   justify-content: center;
   height: 52px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
-  background: var(--surface);
+  border-radius: var(--radius-control);
+  border: 0;
+  background: var(--raised);
   color: var(--text-muted);
   cursor: pointer;
   transition: background 100ms ease, color 100ms ease, transform 80ms ease;
@@ -506,12 +868,12 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .ctrl-btn:active { background: var(--glass-active); color: var(--text); transform: scale(0.96); }
 
 .ctrl-btn--primary {
-  background: rgba(44, 44, 48, 0.95);
+  background: #303640;
   color: var(--text);
-  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.ctrl-btn--primary:active { background: rgba(60, 60, 66, 0.95); }
+.ctrl-btn--primary:active { background: #39414d; }
 
 
 /* ────────────────────────────────────────
@@ -523,9 +885,9 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-surface);
   background: var(--surface);
-  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 0 0 1px var(--glass-border);
 }
 
 .vol-btn {
@@ -559,24 +921,52 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 }
 
 .vol-track {
-  width: 100%;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.06);
-  overflow: hidden;
+  position: relative;
+  width: calc(100% - 18px);
+  height: 28px;
+  margin: 0 9px;
+  background: transparent;
   cursor: pointer;
   touch-action: none;
+}
+
+.vol-track::before {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 6px;
+  border-radius: 3px;
+  background: #303640;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%);
 }
 
 .vol-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 .vol-fill {
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 6px;
   border-radius: 3px;
   background: var(--accent);
   box-shadow: 0 0 8px var(--accent-glow);
+  transform: translateY(-50%);
   width: 0%;
-  transition: width 120ms ease-out;
+  transition: width 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.vol-thumb {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.42), 0 0 0 3px rgba(86, 214, 207, 0.16);
+  pointer-events: none;
+  transform: translate(50%, -50%);
 }
 
 .vol-label {
@@ -597,8 +987,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   margin-bottom: 10px;
   font-size: 0.64rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: var(--text-dim);
 }
 
@@ -613,8 +1002,8 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   justify-content: center;
   gap: 4px;
   padding: 14px 4px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-control);
+  border: 0;
   background: var(--glass);
   color: var(--text-muted);
   font-size: 0.66rem;
@@ -644,9 +1033,9 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   flex: 1;
   height: 48px;
   padding: 0 16px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   border: 1px solid var(--glass-border);
-  background: rgba(0, 0, 0, 0.4);
+  background: #0f1217;
   color: var(--text);
   font-size: 0.88rem;
   outline: none;
@@ -664,7 +1053,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   justify-content: center;
   width: 48px;
   height: 48px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   border: 1px solid var(--glass-border);
   background: var(--glass);
   color: var(--text-muted);
@@ -690,7 +1079,7 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   flex-shrink: 0;
   height: 48px;
   padding: 0 22px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   border: none;
   background: var(--accent);
   color: white;
@@ -726,9 +1115,9 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: var(--glass);
+  border-radius: var(--radius-surface);
+  border: 0;
+  background: var(--raised);
   color: var(--text-muted);
   cursor: pointer;
   transition: background 80ms ease, transform 60ms ease, color 80ms ease;
@@ -746,15 +1135,15 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .dpad__btn--right { grid-area: right; }
 .dpad__btn--ok    {
   grid-area: ok;
-  background: rgba(44, 44, 48, 0.95);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: #303640;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
   color: var(--text);
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
-.dpad__btn--ok:active { background: rgba(60, 60, 66, 0.95); }
+.dpad__btn--ok:active { background: #39414d; }
 
 .mode-switch-btn {
   width: 100%;
@@ -762,8 +1151,8 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   margin: 10px auto 0;
   height: 48px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  background: rgba(10, 132, 255, 0.14);
+  border-radius: var(--radius-control);
+  background: rgba(86, 214, 207, 0.12);
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 700;
@@ -774,8 +1163,8 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 }
 
 .mode-switch-btn:active {
-  background: rgba(10, 132, 255, 0.24);
-  border-color: rgba(10, 132, 255, 0.38);
+  background: rgba(86, 214, 207, 0.2);
+  border-color: rgba(86, 214, 207, 0.42);
   transform: scale(0.98);
 }
 
@@ -789,19 +1178,13 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
   vertical-align: middle;
   margin-left: 6px;
   padding: 2px 8px;
-  border-radius: 999px;
+  border-radius: var(--radius-control);
   font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   color: #2a1c00;
-  background: linear-gradient(110deg, #ffd76a 0%, #ffb020 25%, #fff3cc 50%, #ffb020 75%, #ffd76a 100%);
-  background-size: 220% 100%;
-  animation: proSheen 2.6s linear infinite;
-  box-shadow: 0 0 10px rgba(255, 184, 32, 0.45);
-}
-
-@keyframes proSheen {
-  to { background-position: -220% 0; }
+  background: #f7c55c;
+  box-shadow: 0 2px 8px rgba(247, 197, 92, 0.18);
 }
 
 .pro-note {
@@ -839,12 +1222,6 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 /* ────────────────────────────────────────
    Animations
    ──────────────────────────────────────── */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 
 /* ────────────────────────────────────────
    Safe area
