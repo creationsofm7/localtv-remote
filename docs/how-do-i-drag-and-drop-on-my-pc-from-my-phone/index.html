@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drag and Drop on a PC From Your Phone | LocalTV Remote</title>
+  <meta name="description" content="Drag a Windows item from your phone using LocalTV Remote's Hold and Release controls. Follow the steps and learn what this does not transfer." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-drag-and-drop-on-my-pc-from-my-phone/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I drag and drop on my PC from my phone?" />
+  <meta property="og:description" content="Hold the Windows left mouse button from your phone, move the cursor, then release it over the target." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-drag-and-drop-on-my-pc-from-my-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Drag and drop from a phone","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-drag-and-drop-on-my-pc-from-my-phone/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Drag and drop</nav>
+    <article>
+      <h1>How do I drag and drop on my PC from my phone?</h1>
+      <p class="lead">In the LocalTV Remote controller, move the Windows cursor onto an item, tap <strong>Hold</strong>, swipe across the trackpad to move it, then tap <strong>Release</strong> over its destination. This holds and releases the PC's left mouse button; it does not move a file from your phone to your PC.</p>
+
+      <p>You need an active connection to your Windows PC first. The large trackpad on the Remote tab moves the existing desktop cursor. If you have only used taps and swipes so far, see the <a href="../how-do-i-use-my-phone-as-a-mouse/">phone-as-mouse guide</a> for the basic gestures before trying a drag.</p>
+
+      <h2>Drag a Windows item</h2>
+      <ol class="steps">
+        <li><strong>Find the item on the PC screen.</strong> Open the folder or app containing it and identify where you want to drop it. The phone controller sends input, but you still look at the PC display to see the item and target.</li>
+        <li><strong>Position the cursor.</strong> On your phone, stay on the Remote tab and swipe on the area labeled <strong>Swipe to move cursor</strong>. Stop when the Windows cursor is over the item. Do not tap the trackpad yet.</li>
+        <li><strong>Hold the left button.</strong> Tap <strong>Hold</strong> below the trackpad. The control becomes active and changes to <strong>Release</strong>. On the PC, this is the start of a normal left-button drag.</li>
+        <li><strong>Move to the destination.</strong> Swipe on the trackpad while the left button remains held. Use several short swipes if the destination is far away. Watch the PC screen so you can stop over the correct folder, window, or other drop target.</li>
+        <li><strong>Release deliberately.</strong> Tap <strong>Release</strong>. That sends the mouse-up action to Windows and ends the drag. Check the result on the PC before starting another one; some apps reject drops or use their own rules for what a drop does.</li>
+      </ol>
+
+      <h2>When a drag does not land where you expected</h2>
+      <p>If the item was selected but did not move, check whether <strong>Hold</strong> became <strong>Release</strong> before you swiped. A quick tap on the trackpad can act like a click instead of a drag. Start again with the cursor directly on the item, then make a deliberate first movement. If the cursor travels too far, reduce <strong>Pointer speed</strong> in the controller settings and try shorter swipes.</p>
+      <p>Releasing over an empty area may not have the same effect as releasing over a valid target. For example, a window edge may resize instead of moving, and a file manager may copy or move an item according to Windows rules. Confirm the outcome on the PC rather than assuming every drag has the same result.</p>
+
+      <p class="note"><strong>Limits:</strong> This is mouse input on the PC, not file transfer, screen mirroring, or control over the internet. The phone and PC must be reachable on the same local network. A disconnected controller cannot finish an in-progress drag; reconnect and check the Windows desktop before continuing.</p>
+
+      <section class="related"><h2>Related guides</h2><ul>
+        <li><a href="../control-pc-from-phone/">Set up phone control for a Windows PC</a></li>
+        <li><a href="../how-do-i-fix-connected-remote-not-working/">Fix a connected remote that sends no input</a></li>
+        <li><a href="../guides/">Browse all LocalTV Remote guides</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <footer><p class="reviewed">Source reviewed 2026-09-25. The <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/index.html">controller markup</a> names the trackpad control; <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a> sends held-button and release actions; <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/system-input-router.ts">system-input-router.ts</a> routes them to the PC mouse backend.</p></footer>
+    </article>
+  </main>
+</body>
+</html>

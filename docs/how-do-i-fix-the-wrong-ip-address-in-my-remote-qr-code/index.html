@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wrong IP in a Remote QR Code: Fix It | LocalTV Remote</title>
+  <meta name="description" content="If the LocalTV Remote QR code points to an unreachable PC address, select the reachable Wi-Fi or Ethernet interface in the pairing window and scan again." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-the-wrong-ip-address-in-my-remote-qr-code/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I fix the wrong IP address in my remote QR code?" />
+  <meta property="og:description" content="Choose a reachable PC network interface in the pairing window, then use the refreshed QR code and address." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-the-wrong-ip-address-in-my-remote-qr-code/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Fix the QR code IP address","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-fix-the-wrong-ip-address-in-my-remote-qr-code/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Wrong QR address</nav>
+    <article>
+      <h1>How do I fix the wrong IP address in my remote QR code?</h1>
+      <p class="lead">Open <strong>Network settings</strong> in the LocalTV Remote pairing window on your PC. If <strong>Automatic</strong> picked an address your phone cannot reach, select the PC's Wi-Fi or Ethernet interface that belongs to your phone's local network. The pairing window will refresh its address and QR code; scan the new code.</p>
+
+      <p>A PC can have several network addresses at once. VPNs, virtual adapters, and multiple Wi-Fi or Ethernet connections may make the automatically selected address unsuitable for the phone. This guide is about choosing the address printed in the QR code. For a broader check of guest Wi-Fi, router isolation, and other connection problems, use the <a href="../how-do-i-fix-phone-to-pc-wifi-connection/">phone-to-PC Wi-Fi guide</a>.</p>
+
+      <h2>Select the address your phone can reach</h2>
+      <ol class="steps">
+        <li><strong>Keep the pairing window open on the PC.</strong> Look at the full controller address displayed below its QR code. The numeric part before the port is the PC address currently being advertised to your phone.</li>
+        <li><strong>Open Network settings.</strong> Select the settings icon in the top-right area of the PC pairing window. Under <strong>Connection network</strong>, you will see <strong>Automatic (recommended)</strong> and the available PC network interfaces with their addresses.</li>
+        <li><strong>Pick the reachable interface.</strong> Choose the PC's active Wi-Fi or Ethernet connection to the router your phone uses. Avoid a VPN or virtual adapter address if your phone cannot reach that network. The interface name and address are shown together so you can compare them with the connection you expect.</li>
+        <li><strong>Use the refreshed QR code.</strong> Selecting an interface updates the server's advertised address and reloads the pairing window. Scan the QR code now displayed, not a screenshot or bookmark from before the change. You can also type the newly displayed controller address into the phone browser.</li>
+        <li><strong>Test from the phone.</strong> Keep the phone on Wi-Fi and open the new address. If the pairing page loads, enter the code currently shown on the PC and try a harmless pointer movement. If the page still does not load, try another listed interface that the phone can reach.</li>
+      </ol>
+
+      <h2>If the new address still will not open</h2>
+      <p>Choosing an interface changes which PC address appears in the pairing link; it does not join your phone to that network or change the router. If your phone is on mobile data, guest Wi-Fi, or an isolated wireless network, it may be blocked from contacting the PC even when the address is correct. Put both devices on a local network that permits device-to-device traffic. A PC on Ethernet and a phone on Wi-Fi can work when both are reachable through the same router.</p>
+      <p>Windows Firewall can also block the connection. Keep the firewall enabled and review the program rule using the <a href="../how-do-i-allow-localtv-through-windows-firewall/">Windows Firewall guide</a>. If the QR image itself is difficult to scan but the printed address looks right, use the <a href="../how-do-i-connect-without-scanning-qr-code/">manual address and code instructions</a> instead.</p>
+
+      <p class="note"><strong>Limits:</strong> LocalTV Remote uses the local network, not an internet relay. A manual interface selection cannot overcome router isolation or make an offline PC reachable. If that interface disappears, the app may return to Automatic; check the address shown in the current pairing window before reconnecting.</p>
+
+      <section class="related"><h2>Related guides</h2><ul>
+        <li><a href="../guides/">Browse all LocalTV Remote guides</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <footer><p class="reviewed">Source reviewed 2026-09-25. The <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/host-page.ts">pairing window source</a> contains the network choices; <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/index.ts">daemon/index.ts</a> applies the selected address and rebuilds the QR code; <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/lan.ts">lan.ts</a> lists and selects local interfaces.</p></footer>
+    </article>
+  </main>
+</body>
+</html>

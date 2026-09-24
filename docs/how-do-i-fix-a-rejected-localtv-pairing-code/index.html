@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fix a Rejected Pairing Code | LocalTV Remote</title>
+  <meta name="description" content="Fix a rejected LocalTV Remote code by checking the six digits on the current PC pairing page, reopening an old page, or retrying after a saved session fails." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-a-rejected-localtv-pairing-code/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I fix a rejected LocalTV pairing code?" />
+  <meta property="og:description" content="Check the code on the active PC, replace a stale pairing page, and recover when the phone's saved session no longer works." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-fix-a-rejected-localtv-pairing-code/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Fix a rejected LocalTV pairing code","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-fix-a-rejected-localtv-pairing-code/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a>
+    </header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / Rejected pairing code</nav>
+    <article>
+      <h1>How do I fix a rejected LocalTV pairing code?</h1>
+      <p class="lead">Read the <mark>six-digit code on the PC's current LocalTV Remote pairing page</mark> and enter those digits on your phone. If the phone says "Pairing failed," check whether you opened an old PC page or whether the browser tried to restore a saved session before treating it as a new code problem.</p>
+
+      <p>A rejection means the phone reached a controller but did not authenticate. That differs from a phone that cannot open the controller address at all. The PC app shows both a QR code and a pairing code, while the phone may remember a previous code and session in its browser. Start with the PC you actually intend to control, especially if more than one computer runs LocalTV Remote.</p>
+
+      <h2>Check the code you entered</h2>
+      <ol class="steps">
+        <li><strong>Look at the active PC pairing page.</strong> Open LocalTV Remote on the Windows PC and read the six digits shown below its QR code. Do not use a code copied from another PC or typed from memory.</li>
+        <li><strong>Correct the phone field.</strong> On the phone's pairing screen, replace any prefilled digits with the six digits on that PC, then tap <strong>Connect</strong>. The browser may have filled the field from an earlier connection.</li>
+        <li><strong>Stop after repeated failures.</strong> The server limits failed authentication attempts on a connection. If the code is still rejected, check the page and device below rather than tapping Connect repeatedly.</li>
+      </ol>
+
+      <h2>Replace an old pairing page</h2>
+      <p>If the PC page was left open while the network changed, it may show an address your phone should no longer use. Close that old page, open the current LocalTV Remote pairing page on the intended PC, and scan its QR code again. If the QR opens a different computer, return to the correct PC and use its displayed address and code. The code is derived from the Windows machine and user identity; it is <strong>not a timer-based code that expires just because the page is old</strong>. A stale page matters because its address or PC context may be wrong.</p>
+
+      <p>If the current QR address does not open on the phone, use the <a href="../how-do-i-connect-without-scanning-qr-code/">manual connection guide</a> or check the <a href="../how-do-i-fix-phone-to-pc-wifi-connection/">local-network troubleshooting steps</a>. A page that never loads needs a network fix before any pairing code can be checked.</p>
+
+      <h2>Recover from an invalid saved session</h2>
+      <p>The phone browser stores a session token after a successful pairing and may try to reconnect with it later. If that token is no longer recognized, the controller sends its saved code as a fallback when available. A failed authentication clears the saved token and returns the phone to the pairing screen. <strong>Overwrite the prefilled code</strong> with the digits on the current PC page, then connect again. If no code appears, enter it manually. This is a new pairing attempt, not a way to revoke another phone's access.</p>
+
+      <p>For a phone that pairs but later loses control, see the <a href="../how-do-i-stop-phone-remote-disconnecting/">disconnecting remote guide</a>. For initial installation and QR setup, use the <a href="../control-pc-from-phone/">phone-to-PC setup guide</a>.</p>
+
+      <h2>Limits to keep in mind</h2>
+      <p class="note">LocalTV Remote pairs on the local network; this guide does not enable internet control. The current phone and PC screens do not offer a per-device revoke button. Do not share your PC's pairing address and code with people you do not want to connect. If a code is correct but the phone never reaches the controller, investigate the network rather than changing the code.</p>
+
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-25. Code display comes from <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/daemon/host-page.ts">host-page.ts</a>; code validation, failed-attempt handling, and trusted sessions are in <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/control/remote-control-server.ts">remote-control-server.ts</a>; browser storage and reconnection are in <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

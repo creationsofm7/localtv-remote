@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control PowerPoint Slides From Your Phone | LocalTV Remote</title>
+  <meta name="description" content="Move through a PowerPoint slideshow on your Windows PC using your phone. Set up LocalTV Remote, focus the slideshow, and use the Input tab's arrow keys." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-control-powerpoint-slides-from-my-phone/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I control PowerPoint slides from my phone?" />
+  <meta property="og:description" content="Use your phone's browser to send next, previous, and Escape keys to a focused PowerPoint slideshow on a Windows PC." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-control-powerpoint-slides-from-my-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Control PowerPoint slides from my phone","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-control-powerpoint-slides-from-my-phone/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" /> LocalTV Remote</a>
+    </header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / PowerPoint slides</nav>
+    <article>
+      <h1>How do I control PowerPoint slides from my phone?</h1>
+      <p class="lead">Start the slideshow on your Windows PC and keep it <mark>focused</mark>. Open LocalTV Remote on your phone, switch to the Input tab, and tap Right to advance or Left to go back. Your phone sends keys to the PC; it <strong>does not show your slides</strong>.</p>
+
+      <p>This is useful when your PC is connected to a projector or a room display and you want to move through slides without standing at its keyboard. LocalTV Remote runs on the PC, while the controller opens in your phone's browser. Both devices need to be reachable on the same local network. If you have not paired them, use the <a href="../control-pc-from-phone/">phone-to-PC setup guide</a> before your presentation.</p>
+
+      <h2>Advance and return to slides</h2>
+      <ol class="steps">
+        <li><strong>Start the slideshow on the PC.</strong> Open your presentation in PowerPoint and start Slide Show view on the Windows computer. Make sure that the slideshow, not another window or a text field, has focus.</li>
+        <li><strong>Open your paired phone controller.</strong> Scan the QR code shown by LocalTV Remote on the PC, or return to the controller address you used to pair. Enter the six-digit code displayed on the PC if prompted.</li>
+        <li><strong>Choose the Input tab.</strong> At the bottom of the phone controller, tap <strong>Input</strong>. The directional pad has Left and Right buttons. You do not need to type into the phone's keyboard field.</li>
+        <li><strong>Move through the show.</strong> Tap Right for the next animation or slide. Tap Left for the previous animation or slide. The <strong>OK</strong> button sends Enter, which can also advance the show. Tap <strong>Esc</strong> in the Keys section to end Slide Show view.</li>
+      </ol>
+
+      <h2>If a button changes the wrong thing</h2>
+      <p>The phone sends ordinary Windows key input to whichever application currently has focus. If Right moves a cursor or selects something instead of advancing a slide, look at the PC: click the slideshow once, then try Right again. If PowerPoint is still in edit view, start Slide Show view first. PowerPoint's own <a href="https://support.microsoft.com/en-US/accessibility/powerpoint/use-keyboard-shortcuts-to-deliver-powerpoint-presentations">presentation shortcuts</a> distinguish advancing animations from changing slides, so one tap may reveal an animation before the slide changes.</p>
+
+      <p>If the phone cannot connect at all, that is a pairing or network problem rather than a slideshow shortcut problem. Follow the <a href="../how-do-i-fix-phone-to-pc-wifi-connection/">Wi-Fi connection checks</a>. If the phone opens the controller but refuses the displayed code, use the <a href="../how-do-i-fix-a-rejected-localtv-pairing-code/">rejected pairing code guide</a>.</p>
+
+      <h2>What this remote does not do</h2>
+      <p class="note">LocalTV Remote does not mirror the PC screen, display slide thumbnails or speaker notes on the phone, or control the PC over the internet. You still need to see the presentation on the PC or its connected display. Keep that display in view if you need to know which slide is current. The controls are Windows keys, not a PowerPoint-specific connection, so their effect depends on the focused window.</p>
+
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <p class="note">Reviewed 2026-09-25. The phone's Input controls and key dispatch are shown in <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/index.html">public/control/index.html</a> and <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">public/control/controller.js</a>; Windows arrow and Escape handling is in <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/native/win32/input-injector.ts">input-injector.ts</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

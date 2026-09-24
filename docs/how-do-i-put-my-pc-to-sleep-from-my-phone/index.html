@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Put Your PC to Sleep From Your Phone | LocalTV Remote</title>
+  <meta name="description" content="Use LocalTV Remote's power button to put a Windows PC to sleep or shut it down from your phone. Choose the action, confirm it, and know when control ends." />
+  <link rel="canonical" href="https://creationsofm7.github.io/localtv-remote/how-do-i-put-my-pc-to-sleep-from-my-phone/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LocalTV Remote" />
+  <meta property="og:title" content="How do I put my PC to sleep from my phone?" />
+  <meta property="og:description" content="Choose Sleep or Shutdown in the phone controller, confirm the action, and understand why the connection ends." />
+  <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/how-do-i-put-my-pc-to-sleep-from-my-phone/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <link rel="stylesheet" href="../guides.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LocalTV Remote","item":"https://creationsofm7.github.io/localtv-remote/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://creationsofm7.github.io/localtv-remote/guides/"},{"@type":"ListItem","position":3,"name":"Put a PC to sleep from a phone","item":"https://creationsofm7.github.io/localtv-remote/how-do-i-put-my-pc-to-sleep-from-my-phone/"}]}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a href="../"><img src="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" width="32" height="32" alt="" />LocalTV Remote</a></header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> / <a href="../guides/">Guides</a> / PC power</nav>
+    <article>
+      <h1>How do I put my PC to sleep from my phone?</h1>
+      <p class="lead">With your phone connected to LocalTV Remote, leave <strong>Power button action</strong> set to <strong>Sleep</strong>, tap the power icon, and confirm the prompt. You can also select <strong>Shutdown</strong> in Remote Settings before tapping the same icon. The phone-to-PC connection ends after either action.</p>
+
+      <p>This works through the Windows app running on the PC and the controller in your phone browser. Pair them while the PC is awake and reachable on the local network. If you have not paired yet, follow the <a href="../control-pc-from-phone/">phone-to-PC setup steps</a> first. The power control is for ending a session, not for starting a PC that is already asleep or turned off.</p>
+
+      <h2>Choose Sleep or Shutdown</h2>
+      <ol class="steps">
+        <li><strong>Finish your work on the PC.</strong> Save open documents before using a power action. Shutdown closes the current Windows session; do not rely on an unsaved app to recover its changes. Sleep preserves the session differently, but saving first is still prudent.</li>
+        <li><strong>Open Remote Settings on the phone.</strong> In the connected controller, tap the settings icon in the header. Find the selector labeled <strong>Power button action</strong>.</li>
+        <li><strong>Select the action you want.</strong> Leave it on <strong>Sleep</strong> to suspend the PC. Select <strong>Shutdown</strong> if you intend to turn it off. Read the selected value before going on, since the same power icon is used for both actions.</li>
+        <li><strong>Tap the power icon.</strong> The controller asks <strong>Put the computer to sleep?</strong> or <strong>Shut down the computer now?</strong>, according to the selected action. Cancel if that is not what you meant to do.</li>
+        <li><strong>Confirm and expect disconnection.</strong> Confirm the prompt only when ready. LocalTV Remote sends the chosen command to Windows. As the PC sleeps or shuts down, its local controller stops responding and the phone connection ends.</li>
+      </ol>
+
+      <h2>What happens afterward</h2>
+      <p>Sleep and Shutdown have different recovery paths. To resume after Sleep, wake the PC using a method supported by that PC, such as its power button or keyboard. After Shutdown, turn the PC on normally. LocalTV Remote does not provide a wake-over-network or remote power-on feature. Once Windows and the app are running again, reconnect using the current address and pairing screen if the phone does not reconnect on its own.</p>
+      <p>If the power icon seems to do nothing, first check whether the controller still says it is connected and whether the Windows machine is responding to other remote input. Then check the selected action and whether the confirmation prompt was dismissed. For a connection problem after the PC is awake again, use the <a href="../how-do-i-fix-phone-to-pc-wifi-connection/">phone-to-PC connection guide</a> instead of repeatedly sending power commands.</p>
+
+      <p class="note"><strong>Limits:</strong> The command is available only while the PC app is running and your phone can reach it on the same local network. The phone does not remain connected after Sleep or Shutdown, and this control cannot wake or start the PC again. Windows or another application may prevent an action from completing, so check the PC if the expected state does not occur.</p>
+
+      <section class="related"><h2>Related guides</h2><ul>
+        <li><a href="../how-do-i-stop-phone-remote-disconnecting/">Keep the phone remote connected while the PC is awake</a></li>
+        <li><a href="../guides/">Browse all LocalTV Remote guides</a></li>
+      </ul></section>
+      <p><a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get LocalTV Remote for Windows</a></p>
+      <footer><p class="reviewed">Source reviewed 2026-09-25. The <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/index.html">controller markup</a> provides the action selector and power button; <a href="https://github.com/creationsofm7/localtv-remote/blob/main/public/control/controller.js">controller.js</a> shows the confirmation prompt; <a href="https://github.com/creationsofm7/localtv-remote/blob/main/src/core/main/system/power.ts">power.ts</a> runs the Windows Sleep or Shutdown command.</p></footer>
+    </article>
+  </main>
+</body>
+</html>
