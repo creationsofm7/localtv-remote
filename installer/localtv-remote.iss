@@ -8,7 +8,7 @@
   #define AppVersion "0.1.0"
 #endif
 #define AppPublisher "LocalTV"
-#define AppURL       "https://github.com/muditpandey2077/localtv-remote"
+#define AppURL       "https://github.com/creationsofm7/localtv-remote"
 #define AppExeName   "LocalTVRemote.exe"
 #define AppId        "{{A3B7C2D1-E4F5-6789-ABCD-EF0123456789}"
 
@@ -33,6 +33,8 @@ SolidCompression=yes
 WizardStyle=modern
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 DisableWelcomePage=no
 ; Require Windows 10 build 17134+ (WebView2 baseline)
 MinVersion=10.0.17134

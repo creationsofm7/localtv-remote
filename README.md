@@ -104,9 +104,9 @@ winget install LocalTV.Remote
 
 ### Option 2 — Installer 
 
-### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v1.1.3/LocalTVRemote-Setup-1.1.3.exe)
+### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v1.1.4/LocalTVRemote-Setup-1.1.4.exe)
 
-Latest release: **[v1.1.3](https://github.com/creationsofm7/localtv-remote/releases/latest)** · Windows 10/11 · ~27 MB. Download the installer, run it, and you're paired in under a minute. Already installed? Grab the link above to **update to the latest version**.
+Latest release: **[v1.1.4](https://github.com/creationsofm7/localtv-remote/releases/latest)** · Windows 10/11 · ~27 MB. Download the installer, run it, and you're paired in under a minute. Already installed? Grab the link above to **update to the latest version**.
 
 The setup wizard will:
 - Install to `%ProgramFiles%\LocalTV Remote`

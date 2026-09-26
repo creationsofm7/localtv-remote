@@ -11,6 +11,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+if (process.platform !== 'win32' || process.arch !== 'x64') {
+  throw new Error('The Windows x64 installer must be built with Windows x64 Node.js.');
+}
 const buildDir = path.join(root, 'build');
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 

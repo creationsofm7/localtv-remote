@@ -19,6 +19,7 @@ import { openInDefaultBrowser } from './open-url';
 import { startTray, type TrayHandle } from './tray';
 import { getStartupEnabled, setStartupEnabled, isStartupLaunch } from './startup';
 import { APP_NAME, DEFAULT_PORT } from './constants';
+import { acquireSingleInstance, requestActivation } from './single-instance';
 
 /** Loopback port used purely as a single-instance lock (not the control port). */
 const SINGLE_INSTANCE_LOCK_PORT = 47633;
@@ -74,15 +75,6 @@ function runWebviewWindow(url: string): void {
   }
 }
 
-/** Resolve true if we acquired the lock; false if another instance holds it. */
-function acquireSingleInstanceLock(): Promise<net.Server | null> {
-  return new Promise((resolve) => {
-    const srv = net.createServer();
-    srv.once('error', () => resolve(null));
-    srv.listen(SINGLE_INSTANCE_LOCK_PORT, '127.0.0.1', () => resolve(srv));
-  });
-}
-
 /** Probe a port by binding+closing; returns true if it was free. */
 function portIsFree(port: number): Promise<boolean> {
   return new Promise((resolve) => {
@@ -102,10 +94,20 @@ async function findFreePort(start: number, attempts = 20): Promise<number> {
 
 async function runDaemon(): Promise<void> {
   // Single-instance guard (before binding the control port).
-  const lock = await acquireSingleInstanceLock();
+  let showPairingWindow: ((forceVisible?: boolean) => void) | null = null;
+  let activationPending = false;
+  const lock = await acquireSingleInstance(SINGLE_INSTANCE_LOCK_PORT, () => {
+    if (showPairingWindow) showPairingWindow(true);
+    else activationPending = true;
+  });
   if (!lock) {
-    console.log('[LocalTV] LocalTV Remote is already running. Exiting.');
-    process.exit(0);
+    if (!isStartupLaunch() && await requestActivation(SINGLE_INSTANCE_LOCK_PORT)) {
+      console.log('[LocalTV] Reopened the existing pairing screen.');
+    } else if (!isStartupLaunch()) {
+      console.error('[LocalTV] Another process owns the LocalTV lock but did not respond.');
+      process.exitCode = 1;
+    }
+    return;
   }
 
   const port = await findFreePort(DEFAULT_PORT);
@@ -219,22 +221,29 @@ async function runDaemon(): Promise<void> {
   // Desktop pairing window: re-invoke this executable in `--webview` mode so
   // the blocking webview loop runs in its own process. SEA → [exe, --webview];
   // dev → [node, mainScript, --webview].
-  const showPairingWindow = () => {
-    if (webviewChild && !webviewChild.killed) return;
+  showPairingWindow = (forceVisible = false) => {
+    if (webviewChild && !webviewChild.killed) {
+      if (forceVisible) openInDefaultBrowser(hostUrl);
+      return;
+    }
     const args = isSea() ? ['--webview', hostUrl] : [process.argv[1], '--webview', hostUrl];
     const child = spawn(process.execPath, args, { stdio: 'ignore', windowsHide: false });
     webviewChild = child;
     child.on('exit', (code) => {
       webviewChild = null;
-      if (code === 1) openInDefaultBrowser(hostUrl); // WebView2 missing → browser
+      if (code !== 0 && !quitting) openInDefaultBrowser(hostUrl);
     });
-    child.on('error', () => openInDefaultBrowser(hostUrl));
+    child.on('error', () => {
+      webviewChild = null;
+      if (!quitting) openInDefaultBrowser(hostUrl);
+    });
   };
 
   // Start minimized to tray when launched at login.
   if (!isStartupLaunch()) {
     showPairingWindow();
   }
+  if (activationPending) showPairingWindow(true);
 
   const tray: TrayHandle = await startTray({
     onShow: showPairingWindow,
