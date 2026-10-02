@@ -18,11 +18,11 @@
   <meta property="og:title" content="A free, open-source Unified Remote alternative for Windows" />
   <meta property="og:description" content="No app on your phone, no account, LAN-only. See how LocalTV Remote compares to Unified Remote, including where Unified Remote is the better pick." />
   <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/unified-remote-alternative/" />
-  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta property="og:image" content="https://creationsofm7.github.io/localtv-remote/assets/social-card.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="A free, open-source Unified Remote alternative for Windows" />
   <meta name="twitter:description" content="No app on your phone, no account, LAN-only. Honest comparison of LocalTV Remote vs Unified Remote." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta name="twitter:image" content="https://creationsofm7.github.io/localtv-remote/assets/social-card.png" />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Crect x='9' y='6' width='5' height='20' fill='%23111'/%3E%3Crect x='17' y='15' width='9' height='6' fill='%23ccff00'/%3E%3C/svg%3E" />
 
@@ -151,6 +151,7 @@
 
     @media (prefers-reduced-motion:reduce){.mark>svg{animation:none;transform:scaleX(1) rotate(-.5deg);}}
   </style>
+  <link rel="stylesheet" href="../landing.css" />
 </head>
 
 <body>
@@ -169,6 +170,7 @@
     <p class="lead">If you came here looking for a <strong>free Unified Remote alternative</strong>, here's the honest version. LocalTV Remote does one thing: it turns your phone into a mouse, keyboard and volume remote for a Windows PC, and it does that with <span class="mark d2">no app on your phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>, no account, and no cloud. Below is a side-by-side comparison, including the cases where Unified Remote is the better choice.</p>
 
     <section aria-label="Comparison">
+      <div class="table-scroll" role="region" aria-label="Feature comparison" tabindex="0">
       <table class="cmp">
         <caption>LocalTV Remote vs Unified Remote: free tiers, at the time of writing</caption>
         <thead>
@@ -178,7 +180,7 @@
           <tr><th scope="row">Price</th><td class="us">Free &amp; open-source (Apache&nbsp;2.0)</td><td>Free tier; one-time paid upgrade for full features</td></tr>
           <tr><th scope="row">App to install on your phone</th><td class="us">None (opens in the browser as a PWA)</td><td>Client app required (iOS / Android)</td></tr>
           <tr><th scope="row">Install on the PC</th><td class="us">One installer, ~27&nbsp;MB</td><td>Server install required</td></tr>
-          <tr><th scope="row">Control one PC from several phones</th><td class="us">Yes, each phone pairs separately</td><td>Typically one client at a time</td></tr>
+          <tr><th scope="row">Control one PC from several phones</th><td class="us">Yes, each phone pairs separately</td><td>Check the current client and server behavior</td></tr>
           <tr><th scope="row">Cloud / account</th><td class="us">No (LAN-only and private)</td><td>No account needed; LAN-based</td></tr>
           <tr><th scope="row">Source code you can audit</th><td class="us">Yes, fully open-source</td><td>Closed-source</td></tr>
           <tr><th scope="row">Operating systems (server)</th><td>Windows&nbsp;10&nbsp;/&nbsp;11 only</td><td class="win">Windows, macOS, Linux, Raspberry&nbsp;Pi</td></tr>
@@ -186,6 +188,7 @@
           <tr><th scope="row">App-specific remotes &amp; integrations</th><td>Mouse, keyboard, volume</td><td class="win">Large library of remotes &amp; macros</td></tr>
         </tbody>
       </table>
+      </div>
       <p class="note">Unified Remote's features reflect its public free tier and may change, so compare for yourself. Green marks show where Unified Remote is the stronger pick.</p>
     </section>
 
@@ -195,9 +198,11 @@
     <h2>When Unified Remote is the better pick</h2>
     <p>You need to control a <strong>Mac or Linux</strong> machine, you want <strong>Bluetooth</strong> as well as Wi-Fi, or you rely on its deep library of app-specific remotes, media controls and custom macros. Unified Remote is older and broader; LocalTV Remote is deliberately narrow and Windows-only. If breadth matters more than openness, it's the safer bet.</p>
 
+    <p>For setup, read <a href="../control-pc-from-phone/">how to control a PC from your phone</a>, or see the <a href="../how-do-i-use-my-phone-as-a-mouse/">phone-as-mouse gestures</a>.</p>
+
     <div class="cta-block">
       <div class="cta-row">
-        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe">Download for Windows — Free</a>
+        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest Windows release</a>
         <div class="winget" aria-label="Install with winget">
           <code>winget install LocalTV.Remote</code>
           <button class="copy" type="button" aria-label="Copy winget command" title="Copy" data-copy="winget install LocalTV.Remote">
@@ -206,7 +211,7 @@
           </button>
         </div>
       </div>
-      <p class="note">v0.1.1 · ~27&nbsp;MB · Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</p>
+      <p class="note">Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</p>
     </div>
 
     <nav class="links">

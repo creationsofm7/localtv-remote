@@ -16,11 +16,11 @@
   <meta property="og:title" content="How to control your PC from your phone over Wi-Fi" />
   <meta property="og:description" content="Install on the PC, scan a QR code, and your phone becomes the mouse, keyboard and volume remote. No app on the phone, no account. Free and open-source." />
   <meta property="og:url" content="https://creationsofm7.github.io/localtv-remote/control-pc-from-phone/" />
-  <meta property="og:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta property="og:image" content="https://creationsofm7.github.io/localtv-remote/assets/social-card.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="How to control your PC from your phone over Wi-Fi" />
   <meta name="twitter:description" content="Four steps to turn your phone into a mouse, keyboard and volume remote for Windows. No phone app, no account, free." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/creationsofm7/localtv-remote/main/assets/icon.png" />
+  <meta name="twitter:image" content="https://creationsofm7.github.io/localtv-remote/assets/social-card.png" />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Crect x='9' y='6' width='5' height='20' fill='%23111'/%3E%3Crect x='17' y='15' width='9' height='6' fill='%23ccff00'/%3E%3C/svg%3E" />
 
@@ -44,11 +44,10 @@
     "@type": "HowTo",
     "name": "How to control your Windows PC from your phone over Wi-Fi",
     "description": "Turn your phone into a wireless mouse, keyboard and volume remote for a Windows 10 or 11 PC using LocalTV Remote.",
-    "totalTime": "PT2M",
     "tool": [
       { "@type": "HowToTool", "name": "A Windows 10 or 11 PC" },
       { "@type": "HowToTool", "name": "A phone with a camera and a web browser" },
-      { "@type": "HowToTool", "name": "A shared Wi-Fi network" }
+      { "@type": "HowToTool", "name": "A local network where the phone can reach the PC" }
     ],
     "step": [
       { "@type": "HowToStep", "name": "Install on the PC", "text": "Download LocalTV Remote and run the installer. It is about 27 MB and finishes in under a minute. You only install it on the PC." },
@@ -71,7 +70,7 @@
       {
         "@type": "Question",
         "name": "Does it work over any Wi-Fi?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Your phone and PC need to be on the same Wi-Fi network. It works on home and office networks. Guest networks that block device-to-device traffic can stop the phone from reaching the PC." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Your phone and PC need to reach each other on the same local network. The PC can be connected by Ethernet. Guest networks that isolate devices can block the connection." }
       },
       {
         "@type": "Question",
@@ -179,6 +178,7 @@
 
     @media (prefers-reduced-motion:reduce){.mark>svg{animation:none;transform:scaleX(1) rotate(-.5deg);}}
   </style>
+  <link rel="stylesheet" href="../landing.css" />
 </head>
 
 <body>
@@ -194,19 +194,19 @@
 
     <h1>How to control your PC <span class="mark d1">from your phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span> over Wi-Fi</h1>
 
-    <p class="lead">Your phone can be the mouse, keyboard, and volume knob for your Windows PC. You install one small app on the PC, scan a QR code, and start swiping. There's <span class="mark d2">nothing to install on the phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>, no account, and no cloud. The whole thing takes about two minutes.</p>
+    <p class="lead">Your phone can be the mouse, keyboard, and volume knob for your Windows PC. You install one small app on the PC, scan a QR code, and start swiping. There's <span class="mark d2">nothing to install on the phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>, no account, and no cloud. Your phone and PC must be able to reach each other on the local network.</p>
 
     <section aria-label="Requirements">
       <h2>What you need</h2>
       <ul class="req">
         <li>A Windows 10 or 11 PC</li>
         <li>A phone with a camera and a browser (any iPhone or Android)</li>
-        <li>Both devices on the same Wi-Fi network</li>
+        <li>Both devices on the same local network (the PC may use Ethernet)</li>
       </ul>
     </section>
 
     <section aria-label="Steps">
-      <h2>Four steps</h2>
+      <h2>Set up your phone as a Windows remote</h2>
       <ol class="steps">
         <li><b>Install on the PC.</b> Download LocalTV Remote and run the installer. It's about 27&nbsp;MB and finishes in under a minute. This is the only device you install anything on.</li>
         <li><b>Launch it.</b> Open the app. A pairing window shows a QR code and a 6-digit PIN.</li>
@@ -224,6 +224,8 @@
       </ul>
     </section>
 
+    <p>Want the specific gestures? See <a href="../how-do-i-use-my-phone-as-a-mouse/">how to use your phone as a mouse</a> and <a href="../how-do-i-type-on-my-pc-from-my-phone/">how to type on your PC from your phone</a>.</p>
+
     <section aria-label="Troubleshooting">
       <h2>If your phone can't connect</h2>
       <ul class="req">
@@ -235,7 +237,7 @@
 
     <div class="cta-block">
       <div class="cta-row">
-        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/download/v0.1.1/LocalTVRemote-Setup-0.1.1.exe">Download for Windows — Free</a>
+        <a class="cta" href="https://github.com/creationsofm7/localtv-remote/releases/latest">Get the latest Windows release</a>
         <div class="winget" aria-label="Install with winget">
           <code>winget install LocalTV.Remote</code>
           <button class="copy" type="button" aria-label="Copy winget command" title="Copy" data-copy="winget install LocalTV.Remote">
@@ -244,7 +246,7 @@
           </button>
         </div>
       </div>
-      <p class="note">v0.1.1 · ~27&nbsp;MB · Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</p>
+      <p class="note">Windows&nbsp;10&nbsp;/&nbsp;11 · no account, no&nbsp;cloud</p>
     </div>
 
     <section class="faq" aria-label="Frequently asked questions">
@@ -255,7 +257,7 @@
       </details>
       <details>
         <summary>Does it work over any Wi-Fi?</summary>
-        <p>Your phone and PC need to be on the same Wi-Fi network. It works on home and office networks. Guest networks that block device-to-device traffic can stop the phone from reaching the PC.</p>
+        <p>Your phone and PC need to reach each other on the same local network. The PC can be connected by Ethernet. Guest networks that isolate devices can block the connection.</p>
       </details>
       <details>
         <summary>Is it really free?</summary>
