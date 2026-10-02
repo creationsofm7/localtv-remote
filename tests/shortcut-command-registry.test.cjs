@@ -64,13 +64,13 @@ test('controller sends shortcut actions without a duplicate key map', () => {
   );
 });
 
-test('service worker invalidates the controller help and volume cache', () => {
+test('service worker invalidates the controller cache for update notices', () => {
   const source = fs.readFileSync(
     path.join(__dirname, '../public/control/sw.js'),
     'utf8',
   );
 
-  assert.match(source, /CACHE_VERSION = 'localtv-remote-v5'/);
+  assert.match(source, /CACHE_VERSION = 'localtv-remote-v6'/);
   assert.match(source, /'\/help\.js'/);
 });
 

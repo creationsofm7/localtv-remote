@@ -125,6 +125,9 @@ renderHugeIcons();
 
 const pairScreen = document.getElementById('pair-screen');
 const remoteScreen = document.getElementById('remote-screen');
+const updateNotice = document.getElementById('update-notice');
+const updateVersion = document.getElementById('update-version');
+const updateDismiss = document.getElementById('update-dismiss');
 const pairInput = document.getElementById('pair-code');
 const connectBtn = document.getElementById('connect-btn');
 const pairStatus = document.getElementById('pair-status');
@@ -190,6 +193,7 @@ const TWO_FINGER_TAP_TIME_MS = 380;
 const VOLUME_STEP = 3;
 const SESSION_TOKEN_STORAGE_KEY = 'localtv.remote.sessionToken';
 const LAST_PAIR_CODE_STORAGE_KEY = 'localtv.remote.lastPairCode';
+const DISMISSED_UPDATE_STORAGE_KEY = 'localtv.remote.dismissedUpdate';
 
 const BINARY_TAG = {
   MOUSE_MOVE_DELTA: 0x01,
@@ -256,6 +260,8 @@ let helpPlatform = 'android';
 let helpSwipe = null;
 let deferredInstallPrompt = null;
 let helpCloseTimer = null;
+let availableUpdateVersion = null;
+let dismissedUpdateInMemory = null;
 
 /* ── Screen switching ── */
 
@@ -346,6 +352,39 @@ const setHelpIndex = (nextIndex, { animate = true } = {}) => {
   if (helpPrev) helpPrev.disabled = helpIndex === 0;
   if (helpNext) helpNext.textContent = helpIndex === helpCards.length - 1 ? 'Done' : 'Next';
 };
+
+const getDismissedUpdate = () => {
+  try {
+    return dismissedUpdateInMemory || window.localStorage.getItem(DISMISSED_UPDATE_STORAGE_KEY);
+  } catch {
+    return dismissedUpdateInMemory;
+  }
+};
+
+const rememberDismissedUpdate = (version) => {
+  dismissedUpdateInMemory = version;
+  try {
+    window.localStorage.setItem(DISMISSED_UPDATE_STORAGE_KEY, version);
+  } catch {
+    // A private or storage-restricted browser can still dismiss this session.
+  }
+};
+
+const showAvailableUpdate = (version) => {
+  availableUpdateVersion = typeof version === 'string' && /^\d+(?:\.\d+)+$/.test(version)
+    ? version : null;
+  if (!updateNotice || !updateVersion) return;
+  updateVersion.textContent = availableUpdateVersion ? `v${availableUpdateVersion}` : '';
+  updateNotice.hidden = !availableUpdateVersion
+    || getDismissedUpdate() === availableUpdateVersion;
+};
+
+updateDismiss?.addEventListener('click', () => {
+  if (availableUpdateVersion) {
+    rememberDismissedUpdate(availableUpdateVersion);
+  }
+  if (updateNotice) updateNotice.hidden = true;
+});
 
 const syncInstallGuidance = () => {
   if (!helpModel) return;
@@ -857,6 +896,7 @@ const connect = (isReconnect = false) => {
         cursorVisibility.checked = payload.remoteCursorVisible;
       }
       syncModeSwitchButton();
+      showAvailableUpdate(payload.availableUpdateVersion);
       setPairStatus('Connected', 'online');
       showRemoteScreen();
       return;
@@ -864,6 +904,11 @@ const connect = (isReconnect = false) => {
 
     if (payload.type === 'volume_state') {
       syncVolumeState(payload.state);
+      return;
+    }
+
+    if (payload.type === 'update_available') {
+      showAvailableUpdate(payload.version);
       return;
     }
 
