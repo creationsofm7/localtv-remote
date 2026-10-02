@@ -101,6 +101,14 @@
             </button>
           </div>
         </header>
+        <aside class="update-notice" id="update-notice" hidden aria-live="polite">
+          <div class="update-notice__heading">
+            <span>PC update available</span>
+            <button id="update-dismiss" type="button" aria-label="Dismiss update notice">×</button>
+          </div>
+          <p>LocalTV <strong id="update-version"></strong> is ready. On your PC, run:</p>
+          <code>winget upgrade --id LocalTV.Remote --exact</code>
+        </aside>
         <aside class="settings" id="settings-panel" hidden>
           <span class="section-label">Remote Settings</span>
           <label class="settings__row" for="pointer-speed">

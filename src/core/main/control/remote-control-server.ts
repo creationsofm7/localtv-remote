@@ -94,6 +94,7 @@ export class RemoteControlServer {
   private heartbeatInterval: ReturnType<typeof setInterval> | null = null;
   private started = false;
   private appMode: AppMode = 'remote_control';
+  private availableUpdateVersion: string | null = null;
   private switchAppModeHandler: ((mode: AppMode) => void) | null = null;
 
   constructor(inputRouter: InputRouter, options: RemoteControlServerOptions) {
@@ -405,6 +406,15 @@ export class RemoteControlServer {
     this.switchAppModeHandler = handler;
   }
 
+  setAvailableUpdateVersion(version: string | null): void {
+    if (this.availableUpdateVersion === version) return;
+    this.availableUpdateVersion = version;
+    const payload = JSON.stringify({ type: 'update_available', version });
+    for (const client of this.clients) {
+      if (client.authenticated) client.socket.send(payload);
+    }
+  }
+
   /**
    * Hook for hosts (e.g. the daemon) to register additional Express routes
    * such as the desktop pairing page (`/host`) and `/api/quit`. Default no-op.
@@ -478,6 +488,7 @@ export class RemoteControlServer {
     if (message.type === 'auth') {
       client.socket.send(
         JSON.stringify({
+          availableUpdateVersion: this.availableUpdateVersion,
           inputMode: this.inputRouter.getInputMode(),
           remoteCursorVisible: this.inputRouter.getCursorVisible(),
           systemModeAvailable: this.inputRouter.isSystemModeAvailable(),
@@ -544,6 +555,7 @@ export class RemoteControlServer {
     client.socket.send(
       JSON.stringify({
         appMode: this.appMode,
+        availableUpdateVersion: this.availableUpdateVersion,
         inputMode: this.inputRouter.getInputMode(),
         remoteCursorVisible: this.inputRouter.getCursorVisible(),
         sessionToken: session.token,

@@ -20,6 +20,7 @@ import { startTray, type TrayHandle } from './tray';
 import { getStartupEnabled, setStartupEnabled, isStartupLaunch } from './startup';
 import { APP_NAME, DEFAULT_PORT } from './constants';
 import { acquireSingleInstance, requestActivation } from './single-instance';
+import { startUpdateChecks } from './update-checker';
 
 /** Loopback port used purely as a single-instance lock (not the control port). */
 const SINGLE_INSTANCE_LOCK_PORT = 47633;
@@ -127,6 +128,7 @@ async function runDaemon(): Promise<void> {
   let networkRefresh: ReturnType<typeof setInterval> | null = null;
   let networkRefreshRunning = false;
   let server: DaemonControlServer;
+  let stopUpdateChecks: (() => void) | null = null;
 
   let quitting = false;
   let webviewChild: ChildProcess | null = null;
@@ -138,6 +140,7 @@ async function runDaemon(): Promise<void> {
     try { tray?.kill(); } catch { /* ignore */ }
     try { lock.close(); } catch { /* ignore */ }
     if (networkRefresh) clearInterval(networkRefresh);
+    stopUpdateChecks?.();
     void server.stop().finally(() => process.exit(0));
     setTimeout(() => process.exit(0), 1500).unref();
   };
@@ -184,6 +187,7 @@ async function runDaemon(): Promise<void> {
   await renderHostPage();
 
   await server.start();
+  stopUpdateChecks = await startUpdateChecks((version) => server.setAvailableUpdateVersion(version));
   const state = server.getState();
   console.log(`[LocalTV] ${APP_NAME} ready.`);
   console.log(`[LocalTV]   Controller : ${state.controllerUrl}`);

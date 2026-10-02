@@ -267,6 +267,26 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .icon-slot svg { width: 100%; height: 100%; }
 .icon-slot--lg { width: 28px; height: 28px; }
 
+.update-notice {
+  flex-shrink: 0;
+  margin: 4px 0 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(86, 214, 207, 0.35);
+  border-radius: var(--radius-surface);
+  background: linear-gradient(135deg, rgba(86, 214, 207, 0.12), var(--surface) 72%);
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.update-notice[hidden] { display: none; }
+.update-notice__heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--accent); font-weight: 800; }
+.update-notice__heading button { width: 40px; height: 40px; margin: -10px -10px -6px 0; border: 0; border-radius: var(--radius-control); background: transparent; color: var(--text-muted); font-size: 1.25rem; cursor: pointer; }
+.update-notice__heading button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.update-notice p { margin: 3px 0 7px; }
+.update-notice strong { color: var(--text); }
+.update-notice code { display: block; width: fit-content; max-width: 100%; padding: 6px 8px; border-radius: 8px; background: rgba(0, 0, 0, 0.26); color: var(--text); font-size: 0.72rem; overflow-wrap: anywhere; user-select: text; }
+
 .settings {
   border-radius: var(--radius-surface);
   border: 1px solid var(--glass-border);
