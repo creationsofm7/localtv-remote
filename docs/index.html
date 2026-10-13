@@ -65,7 +65,7 @@
       {
         "@type": "Question",
         "name": "Can multiple people control one PC at the same time?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Several phones connect at once and everyone uses their own phone as their own remote — no single remote to toss around the room. Each pairs independently and securely." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Several phones can pair independently with one PC. They share the same Windows cursor and active application. Use a trusted local network: controller traffic uses unencrypted HTTP and WebSocket." }
       },
       {
         "@type": "Question",
@@ -75,12 +75,12 @@
       {
         "@type": "Question",
         "name": "Which versions of Windows are supported?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Windows 10 and Windows 11 (64-bit). The installer is about 27 MB and the app idles at roughly 25 to 40 MB of RAM, with no bundled Chromium." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Windows 10 and Windows 11 (64-bit). Install the Windows app on the PC; use an iPhone or Android browser as the controller." }
       },
       {
         "@type": "Question",
         "name": "Does it work in games and full-screen apps?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Input is injected system-wide through Windows SendInput, so it works in any app including games and full-screen windows." }
+        "acceptedAnswer": { "@type": "Answer", "text": "LocalTV Remote sends ordinary Windows input to the active application. Elevated applications and some games may reject injected input; compatibility depends on the application." }
       },
       {
         "@type": "Question",
@@ -245,7 +245,8 @@
 
     <h1>Control your Windows&nbsp;PC <span class="mark d1">from your phone.<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span></h1>
 
-    <p class="lead">Your phone can control the cursor, type, and change volume on your Windows PC. It is especially handy when the PC is connected to a TV and the keyboard is across the room.</p>
+    <p class="lead">Use your phone as a free mouse, keyboard and volume remote for your Windows PC, with no app to install on the phone. It is especially handy when the PC is connected to a TV and the keyboard is across the room.</p>
+    <p>Connect over a trusted local Wi-Fi network, or use a PC connected by Ethernet. LocalTV Remote controls input; it does not stream the PC screen to your phone or connect over the internet.</p>
 
     <div class="cta-block">
       <div class="cta-row">
@@ -271,12 +272,18 @@
       <p>Works with iPhone and Android browsers. Your phone and PC need to be on a network where they can reach each other. <a href="control-pc-from-phone/">See the full setup guide</a>.</p>
     </section>
 
+    <figure class="product-figure phone">
+      <img src="assets/readme-remote.png" width="390" height="844" loading="lazy" decoding="async" alt="Phone controller with trackpad, mouse buttons, volume slider and text input" />
+      <figcaption>The phone controller opens in your browser. Production UI shown with demonstration state.</figcaption>
+    </figure>
+
     <section class="use-cases" aria-labelledby="use-title">
       <h2 id="use-title">What it is useful for</h2>
       <div class="use-grid">
-        <article><h3>PC connected to a TV</h3><p>Pause, navigate and type from the sofa without finding the keyboard.</p></article>
+        <article><h3>PC connected to a TV</h3><p>Navigate, type and <a href="how-do-i-control-pc-volume-from-my-phone/">adjust PC volume</a> from the sofa without finding the keyboard.</p></article>
         <article><h3>Phone as a trackpad</h3><p>Move, click, right-click, scroll and <a href="how-do-i-drag-and-drop-on-my-pc-from-my-phone/">drag windows</a>.</p></article>
         <article><h3>Shared screen</h3><p><a href="how-do-i-control-one-pc-with-multiple-phones/">Pair multiple phones</a> to one PC, each with its own controller.</p></article>
+        <article><h3>Presentations</h3><p><a href="how-do-i-control-powerpoint-slides-from-my-phone/">Advance PowerPoint slides</a> while the slideshow is focused on the PC.</p></article>
       </div>
     </section>
 
@@ -299,7 +306,7 @@
       </details>
       <details>
         <summary>Can multiple people control one PC at the same time?</summary>
-        <p>Yes. Several phones connect at once and everyone uses their own phone as their own remote — no single remote to toss around the room. Each pairs independently and securely.</p>
+        <p>Yes. Several phones can pair independently with one PC. They share the same Windows cursor and active application. Use a trusted local network: controller traffic uses unencrypted HTTP and WebSocket.</p>
       </details>
       <details>
         <summary>Is there a free, open-source alternative to Unified Remote or Remote Mouse?</summary>
@@ -307,11 +314,11 @@
       </details>
       <details>
         <summary>Which versions of Windows are supported?</summary>
-        <p>Windows 10 and Windows 11 (64-bit). The installer is about 27 MB and the app idles at roughly 25 to 40 MB of RAM, with no bundled Chromium.</p>
+        <p>Windows 10 and Windows 11 (64-bit). Install the Windows app on the PC; use an iPhone or Android browser as the controller.</p>
       </details>
       <details>
         <summary>Does it work in games and full-screen apps?</summary>
-        <p>Yes. Input is injected system-wide through Windows SendInput, so it works in any app including games and full-screen windows.</p>
+        <p>LocalTV Remote sends ordinary Windows input to the active application. Elevated applications and some games may reject injected input; compatibility depends on the application.</p>
       </details>
       <details>
         <summary>Does my data leave my network?</summary>

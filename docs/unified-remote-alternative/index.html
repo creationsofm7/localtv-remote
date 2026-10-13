@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
 
-  <!-- ── Structured data: breadcrumb + FAQ ─────────────────────── -->
+  <!-- ── Structured data: breadcrumb + page ─────────────────────── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,24 +44,11 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is LocalTV Remote a free alternative to Unified Remote?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. LocalTV Remote is free and Apache-2.0 open-source with no paid tier. Unified Remote has a free version, but unlocking its full set of remotes and features needs the one-time paid upgrade." }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need to install an app on my phone like Unified Remote requires?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Unified Remote needs a server on the PC and a client app on the phone. LocalTV Remote installs only on the PC; your phone opens a web page (PWA) after scanning a QR code, so there is nothing to install on the phone." }
-      },
-      {
-        "@type": "Question",
-        "name": "When is Unified Remote the better choice?",
-        "acceptedAnswer": { "@type": "Answer", "text": "If you need macOS or Linux support, Bluetooth as well as Wi-Fi, or its large library of app-specific remotes and integrations, Unified Remote is the more mature, cross-platform option. LocalTV Remote is Windows-only and focused on mouse, keyboard and volume." }
-      }
-    ]
+    "@type": "WebPage",
+    "name": "Unified Remote alternative for Windows",
+    "url": "https://creationsofm7.github.io/localtv-remote/unified-remote-alternative/",
+    "dateModified": "2026-10-13",
+    "description": "Compare LocalTV Remote and Unified Remote setup, supported systems, media controls and power actions."
   }
   </script>
 
@@ -177,26 +164,27 @@
           <tr><th scope="col"></th><th scope="col">LocalTV&nbsp;Remote</th><th scope="col">Unified&nbsp;Remote</th></tr>
         </thead>
         <tbody>
-          <tr><th scope="row">Price</th><td class="us">Free &amp; open-source (Apache&nbsp;2.0)</td><td>Free tier; one-time paid upgrade for full features</td></tr>
+          <tr><th scope="row">Price</th><td class="us">Free &amp; open-source (Apache&nbsp;2.0)</td><td>Free version; Full is a one-time purchase per platform</td></tr>
           <tr><th scope="row">App to install on your phone</th><td class="us">None (opens in the browser as a PWA)</td><td>Client app required (iOS / Android)</td></tr>
-          <tr><th scope="row">Install on the PC</th><td class="us">One installer, ~27&nbsp;MB</td><td>Server install required</td></tr>
-          <tr><th scope="row">Control one PC from several phones</th><td class="us">Yes, each phone pairs separately</td><td>Check the current client and server behavior</td></tr>
-          <tr><th scope="row">Cloud / account</th><td class="us">No (LAN-only and private)</td><td>No account needed; LAN-based</td></tr>
-          <tr><th scope="row">Source code you can audit</th><td class="us">Yes, fully open-source</td><td>Closed-source</td></tr>
+          <tr><th scope="row">Install on the PC</th><td class="us">Windows installer</td><td>Server install required</td></tr>
           <tr><th scope="row">Operating systems (server)</th><td>Windows&nbsp;10&nbsp;/&nbsp;11 only</td><td class="win">Windows, macOS, Linux, Raspberry&nbsp;Pi</td></tr>
-          <tr><th scope="row">Connection types</th><td>Wi-Fi (LAN)</td><td class="win">Wi-Fi and Bluetooth</td></tr>
-          <tr><th scope="row">App-specific remotes &amp; integrations</th><td>Mouse, keyboard, volume</td><td class="win">Large library of remotes &amp; macros</td></tr>
+          <tr><th scope="row">Connection types</th><td>Local network, including Wi-Fi phone and Ethernet PC; no cloud relay or account</td><td class="win">Wi-Fi; Bluetooth on Windows only</td></tr>
+          <tr><th scope="row">Media and application controls</th><td>Mouse, keyboard, volume, playback and browser keys; key actions depend on the focused app</td><td class="win">App-specific remotes; custom remotes in Full</td></tr>
+          <tr><th scope="row">Power controls</th><td>Sleep and Shutdown after confirmation; no remote wake</td><td class="win">Power control and Wake On LAN</td></tr>
+          <tr><th scope="row">PC screen on the phone</th><td>No screen streaming</td><td class="win">Screen Viewer in Full</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="note">Unified Remote's features reflect its public free tier and may change, so compare for yourself. Green marks show where Unified Remote is the stronger pick.</p>
+      <p class="note">Reviewed 2026-10-13 against official Unified Remote <a href="https://www.unifiedremote.com/features">features</a>, <a href="https://www.unifiedremote.com/download">downloads</a> and <a href="https://www.unifiedremote.com/remotes">remotes</a>. Free and Full features differ; check the current options for your platform.</p>
     </section>
 
     <h2>When LocalTV Remote is the better pick</h2>
-    <p>You're on Windows, you want a <strong>free and open-source</strong> tool, and you don't want to install anything on the phones doing the controlling. Friends and family just scan a QR code and get their own remote. You also care that input stays on your own network, with nothing routed through a cloud or tied to an account.</p>
+    <p>You're on Windows, you want a <strong>free and open-source</strong> tool, and you don't want to install anything on the phones doing the controlling. Pair each phone separately to use the same Windows cursor, keyboard, volume and media-key controls. Input stays on your local network, with no cloud relay or account.</p>
 
     <h2>When Unified Remote is the better pick</h2>
-    <p>You need to control a <strong>Mac or Linux</strong> machine, you want <strong>Bluetooth</strong> as well as Wi-Fi, or you rely on its deep library of app-specific remotes, media controls and custom macros. Unified Remote is older and broader; LocalTV Remote is deliberately narrow and Windows-only. If breadth matters more than openness, it's the safer bet.</p>
+    <p>You need <strong>macOS, Linux or Raspberry Pi</strong> support, Bluetooth on Windows, Wake On LAN, or app-specific remotes. Unified Remote also offers custom remotes and a Screen Viewer in Full. LocalTV Remote sends ordinary playback and browser keys to the focused application and can request Sleep or Shutdown after confirmation; it does not provide those application integrations, screen streaming or remote wake.</p>
+
+    <p>LocalTV Remote controls Windows input over a trusted local network and does not provide internet remote access. Read <a href="../how-do-i-put-my-pc-to-sleep-from-my-phone/">how Sleep and Shutdown work</a>.</p>
 
     <p>For setup, read <a href="../control-pc-from-phone/">how to control a PC from your phone</a>, or see the <a href="../how-do-i-use-my-phone-as-a-mouse/">phone-as-mouse gestures</a>.</p>
 

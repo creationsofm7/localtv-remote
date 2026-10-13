@@ -34,4 +34,8 @@ pre{max-width:100%;overflow:auto;padding:18px;background:#111;color:#fff}
 .guide-list a{font-family:Georgia,"Times New Roman",serif;font-size:23px;line-height:1.3}
 .guide-list p{font-size:14px;margin:8px 0 0;color:var(--muted)}
 img{max-width:100%;height:auto}
+.product-figure{margin:24px 0;max-width:100%}
+.product-figure.phone{max-width:320px}
+.product-figure img{display:block;width:100%;height:auto;border:1px solid var(--line)}
+.product-figure figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--muted)}
 @media(max-width:520px){body{padding:22px 18px 48px}h1{font-size:32px}h2{font-size:25px}.lead{font-size:17px}th,td{padding:10px 7px}}

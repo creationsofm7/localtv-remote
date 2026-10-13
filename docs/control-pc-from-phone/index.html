@@ -50,7 +50,7 @@
       { "@type": "HowToTool", "name": "A local network where the phone can reach the PC" }
     ],
     "step": [
-      { "@type": "HowToStep", "name": "Install on the PC", "text": "Download LocalTV Remote and run the installer. It is about 27 MB and finishes in under a minute. You only install it on the PC." },
+      { "@type": "HowToStep", "name": "Install on the PC", "text": "Download LocalTV Remote and run the installer. This is the only device you install anything on." },
       { "@type": "HowToStep", "name": "Launch it", "text": "Open LocalTV Remote. A pairing window appears with a QR code and a 6-digit PIN." },
       { "@type": "HowToStep", "name": "Scan with your phone", "text": "Point your phone camera at the QR code and tap the link. Your browser opens the controller page. Nothing to install on the phone." },
       { "@type": "HowToStep", "name": "Take control", "text": "Swipe to move the cursor, tap to click, and switch to the keyboard or volume panel whenever you need it." }
@@ -196,24 +196,37 @@
 
     <p class="lead">Your phone can be the mouse, keyboard, and volume knob for your Windows PC. You install one small app on the PC, scan a QR code, and start swiping. There's <span class="mark d2">nothing to install on the phone<svg viewBox="0 0 320 44" preserveAspectRatio="none" aria-hidden="true"><path d="M5,26 C70,15 150,12 210,14 C265,16 300,17 315,21 C319,30 312,38 292,39 C200,44 95,42 36,38 C12,36 1,33 5,26 Z" fill="#ccff00"/></svg></span>, no account, and no cloud. Your phone and PC must be able to reach each other on the local network.</p>
 
+    <p>LocalTV Remote controls Windows input over a trusted local network. It does not stream the PC screen to your phone or connect over the internet. Controller traffic uses unencrypted HTTP and WebSocket.</p>
+
     <section aria-label="Requirements">
       <h2>What you need</h2>
       <ul class="req">
         <li>A Windows 10 or 11 PC</li>
         <li>A phone with a camera and a browser (any iPhone or Android)</li>
-        <li>Both devices on the same local network (the PC may use Ethernet)</li>
+        <li>Both devices on the same local network (see <a href="../how-do-i-control-an-ethernet-pc-from-my-phone/">how to connect a Wi-Fi phone to an Ethernet PC</a>)</li>
       </ul>
     </section>
 
     <section aria-label="Steps">
       <h2>Set up your phone as a Windows remote</h2>
       <ol class="steps">
-        <li><b>Install on the PC.</b> Download LocalTV Remote and run the installer. It's about 27&nbsp;MB and finishes in under a minute. This is the only device you install anything on.</li>
+        <li><b>Install on the PC.</b> Download LocalTV Remote and run the installer. This is the only device you install anything on.</li>
         <li><b>Launch it.</b> Open the app. A pairing window shows a QR code and a 6-digit PIN.</li>
         <li><b>Scan with your phone.</b> Point your camera at the QR code and tap the link. Your browser opens the controller page.</li>
         <li><b>Take control.</b> Swipe to move the cursor, tap to click, and switch to the keyboard or volume panel when you need it. Your phone remembers the pairing, so next time it reconnects on its own.</li>
       </ol>
     </section>
+
+    <div class="capture-pair">
+      <figure class="product-figure">
+        <img src="../assets/readme-host.png" width="960" height="680" loading="lazy" decoding="async" alt="PC pairing window with a QR code, controller address, pairing code and network settings" />
+        <figcaption>Find the controller address and pairing code on your PC. Demonstration values shown; use the values from your own app.</figcaption>
+      </figure>
+      <figure class="product-figure phone">
+        <img src="../assets/readme-connect.png" width="390" height="844" loading="lazy" decoding="async" alt="Phone pairing screen with six-digit code fields and a Connect button" />
+        <figcaption>The phone pairing screen. Production UI shown with a demonstration code.</figcaption>
+      </figure>
+    </div>
 
     <section aria-label="Capabilities">
       <h2>What your phone can do</h2>
@@ -221,6 +234,9 @@
         <li><b>Trackpad:</b> move the cursor, left-click, right-click, and scroll</li>
         <li><b>Keyboard:</b> type text and send key combinations to the PC</li>
         <li><b>Volume:</b> turn the system volume up or down</li>
+        <li><b>Media:</b> send playback and shortcut keys to applications that support them</li>
+        <li><b>Presentations:</b> <a href="../how-do-i-control-powerpoint-slides-from-my-phone/">advance a focused PowerPoint slideshow</a> with navigation keys</li>
+        <li><b>Power:</b> <a href="../how-do-i-put-my-pc-to-sleep-from-my-phone/">request sleep or shutdown</a> and confirm the action</li>
       </ul>
     </section>
 
@@ -229,9 +245,10 @@
     <section aria-label="Troubleshooting">
       <h2>If your phone can't connect</h2>
       <ul class="req">
-        <li><b>Same network:</b> check that the phone and PC are on the same Wi-Fi, not a guest network that isolates devices.</li>
-        <li><b>Firewall:</b> the installer adds a Windows Firewall rule for you. If you blocked it by mistake, allow LocalTV Remote through.</li>
-        <li><b>Current address:</b> if the PC's network address changed, quit LocalTV Remote from the tray and launch it again before scanning. You can also <a href="../how-do-i-connect-without-scanning-qr-code/">connect without scanning the QR code</a>.</li>
+        <li><b>Same network:</b> check that the phone and PC are on the same LAN, not a guest network that isolates devices. Follow the <a href="../how-do-i-fix-phone-to-pc-wifi-connection/">Wi-Fi connection checks</a>.</li>
+        <li><b>Firewall:</b> if a rule is missing or blocked, follow the <a href="../how-do-i-allow-localtv-through-windows-firewall/">Windows Firewall guide</a>.</li>
+        <li><b>Current address:</b> if the PC's network address changed, quit LocalTV Remote from the tray and launch it again before scanning. See the <a href="../how-do-i-fix-the-wrong-ip-address-in-my-remote-qr-code/">wrong-IP guide</a> or <a href="../how-do-i-connect-without-scanning-qr-code/">connect without scanning the QR code</a>.</li>
+        <li><b>Pairing code:</b> if the controller opens but rejects your code, follow the <a href="../how-do-i-fix-a-rejected-localtv-pairing-code/">pairing-code checks</a>.</li>
       </ul>
     </section>
 
@@ -264,6 +281,8 @@
         <p>Yes. LocalTV Remote is free and open-source under the Apache 2.0 license, with no ads and no paid tier.</p>
       </details>
     </section>
+
+    <p class="note">Reviewed 2026-10-13. Screenshots show the running product UI with simulated input, volume and power backends; they are interface examples, not recordings of a physical PC being controlled.</p>
 
     <nav class="links">
       <a href="../guides/">How-to guides and connection fixes</a>

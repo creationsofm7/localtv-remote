@@ -5,8 +5,25 @@ const http = require('node:http');
 const os = require('node:os');
 const path = require('node:path');
 const { once } = require('node:events');
-const playwrightModulePath = process.env.PLAYWRIGHT_MODULE_PATH || 'playwright';
+const bundledPlaywrightPath = path.join(os.homedir(), '.cache', 'codex-runtimes', 'codex-primary-runtime', 'dependencies', 'node', 'node_modules', 'playwright');
+const playwrightModulePath = process.env.PLAYWRIGHT_MODULE_PATH
+  || (() => {
+    try { return require.resolve('playwright'); } catch (error) {
+      if (error.code !== 'MODULE_NOT_FOUND' || !fs.existsSync(bundledPlaywrightPath)) throw error;
+      return bundledPlaywrightPath;
+    }
+  })();
 const { chromium } = require(playwrightModulePath);
+const browserCandidates = [
+  process.env.PLAYWRIGHT_EXECUTABLE_PATH,
+  chromium.executablePath(),
+  ...(process.platform === 'win32' ? [
+    path.join(process.env.ProgramFiles || 'C:\\Program Files', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    path.join(process.env['ProgramFiles(x86)'] || 'C:\\Program Files (x86)', 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+    path.join(os.homedir(), 'AppData', 'Local', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+  ] : []),
+];
+const browserExecutablePath = browserCandidates.find((candidate) => candidate && fs.existsSync(candidate));
 
 const repositoryRoot = path.resolve(__dirname, '..');
 const docsRoot = path.join(repositoryRoot, 'docs');
@@ -14,28 +31,23 @@ const screenshotRoot = path.join(os.tmpdir(), 'localtv-seo-qa');
 const productionOrigin = 'https://creationsofm7.github.io';
 const sitePrefix = '/localtv-remote/';
 
-const existingPaths = [
-  sitePrefix,
-  `${sitePrefix}unified-remote-alternative/`,
-  `${sitePrefix}remote-mouse-alternative/`,
-  `${sitePrefix}control-pc-from-phone/`,
-];
-const guidePaths = [
-  `${sitePrefix}how-do-i-use-my-phone-as-a-mouse/`,
-  `${sitePrefix}how-do-i-type-on-my-pc-from-my-phone/`,
-  `${sitePrefix}how-do-i-control-pc-volume-from-my-phone/`,
-  `${sitePrefix}how-do-i-control-one-pc-with-multiple-phones/`,
-  `${sitePrefix}how-do-i-control-an-ethernet-pc-from-my-phone/`,
-  `${sitePrefix}how-do-i-fix-phone-to-pc-wifi-connection/`,
-  `${sitePrefix}how-do-i-allow-localtv-through-windows-firewall/`,
-  `${sitePrefix}how-do-i-connect-without-scanning-qr-code/`,
-  `${sitePrefix}how-do-i-stop-phone-remote-disconnecting/`,
-  `${sitePrefix}how-do-i-fix-connected-remote-not-working/`,
-];
+// Derive coverage from deployable index pages, independently of sitemap contents.
+function discoverPagePaths(directory = docsRoot) {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const filePath = path.join(directory, entry.name);
+    if (entry.isDirectory()) return discoverPagePaths(filePath);
+    if (!entry.isFile() || entry.name !== 'index.html') return [];
+    const relativeDirectory = path.relative(docsRoot, directory).split(path.sep).join('/');
+    return [`${sitePrefix}${relativeDirectory ? `${relativeDirectory}/` : ''}`];
+  }).sort();
+}
+const requiredPaths = discoverPagePaths();
+const guidePaths = requiredPaths.filter((urlPath) => urlPath.startsWith(`${sitePrefix}how-do-i-`));
 const hubPath = `${sitePrefix}guides/`;
-const newPaths = [hubPath, ...guidePaths];
-const requiredPaths = [...existingPaths, ...newPaths];
 const screenshotPaths = [
+  sitePrefix,
+  `${sitePrefix}control-pc-from-phone/`,
+  `${sitePrefix}how-do-i-control-powerpoint-slides-from-my-phone/`,
   hubPath,
   `${sitePrefix}how-do-i-use-my-phone-as-a-mouse/`,
   `${sitePrefix}how-do-i-allow-localtv-through-windows-firewall/`,
@@ -94,6 +106,12 @@ function requestPathToFile(requestUrl) {
 
 function createStaticServer() {
   return http.createServer((request, response) => {
+    // Chromium probes the host favicon when a guide has no explicit icon.
+    // This server represents one project, so suppress that unrelated host request.
+    if (request.url === '/favicon.ico') {
+      response.writeHead(204).end();
+      return;
+    }
     let filePath;
     try {
       filePath = requestPathToFile(request.url);
@@ -135,16 +153,21 @@ async function inspectPage(page) {
       }
     });
     const breadcrumb = jsonLd.find(({ value }) => value?.['@type'] === 'BreadcrumbList');
-    const internalTargets = [...document.querySelectorAll('a[href], link[rel~="stylesheet"][href]')]
-      .map((node) => node.href)
+    const internalTargets = [...document.querySelectorAll('a[href], link[rel~="stylesheet"][href], script[src]')]
+      .map((node) => node.href || node.src)
       .filter((href) => {
         const url = new URL(href);
-        return url.origin === location.origin && url.pathname.startsWith('/localtv-remote/');
+        return url.origin === location.origin || url.origin === 'https://creationsofm7.github.io';
+      })
+      .map((href) => {
+        const url = new URL(href);
+        return new URL(`${url.pathname}${url.search}`, location.origin).href;
       });
     const images = [...document.images].map((image) => ({
       src: image.currentSrc || image.src,
       complete: image.complete,
       naturalWidth: image.naturalWidth,
+      renderedWidth: image.getBoundingClientRect().width,
     }));
 
     return {
@@ -152,6 +175,7 @@ async function inspectPage(page) {
       description: document.querySelector('meta[name="description"]')?.content.trim() || '',
       h1: [...document.querySelectorAll('h1')].map((node) => node.textContent.trim()),
       canonical,
+      canonicalCount: document.querySelectorAll('link[rel~="canonical"]').length,
       noindex: robots.some((content) => /(?:^|[,\s])noindex(?:[,\s]|$)/.test(content)),
       jsonErrors: jsonLd.filter(({ error }) => error).map(({ error }) => error),
       breadcrumb: breadcrumb?.value || null,
@@ -194,7 +218,7 @@ async function main() {
 
   let browser;
   try {
-    browser = await chromium.launch({ headless: true });
+    browser = await chromium.launch({ headless: true, executablePath: browserExecutablePath });
     const context = await browser.newContext();
     const page = await context.newPage();
 
@@ -208,7 +232,9 @@ async function main() {
       return { parserError, locations };
     }, rawSitemap);
     record(!sitemap.parserError, 'sitemap XML parses', sitemap.parserError);
-    record(sitemap.locations.length === requiredPaths.length, 'sitemap has exactly 15 URLs', `count=${sitemap.locations.length}`);
+    record(requiredPaths.length > 0, 'deployable pages discovered', `pages=${requiredPaths.length} guides=${guidePaths.length}`);
+    record(sitemap.locations.length === requiredPaths.length, 'sitemap count matches deployable pages', `actual=${sitemap.locations.length} expected=${requiredPaths.length}`);
+    record(new Set(sitemap.locations).size === sitemap.locations.length, 'sitemap has no duplicate URLs');
     const requiredCanonicals = requiredPaths.map(productionUrl);
     record(
       requiredCanonicals.every((url) => sitemap.locations.includes(url))
@@ -231,7 +257,7 @@ async function main() {
     }
 
     const metadata = [];
-    for (const urlPath of newPaths) {
+    for (const urlPath of requiredPaths) {
       const pageErrors = [];
       const consoleErrors = [];
       const onPageError = (error) => pageErrors.push(error.message);
@@ -250,12 +276,18 @@ async function main() {
       record(response?.status() === 200, `browser served 200 ${urlPath}`, `status=${response?.status()}`);
       record(data.h1.length === 1, `one H1 ${urlPath}`, `count=${data.h1.length}`);
       record(data.canonical === expectedCanonical, `canonical matches ${urlPath}`, `actual=${data.canonical}`);
+      record(data.canonicalCount === 1, `one canonical ${urlPath}`, `count=${data.canonicalCount}`);
       record(Boolean(data.title), `non-empty title ${urlPath}`);
       record(Boolean(data.description), `non-empty description ${urlPath}`);
       record(!data.noindex, `no noindex ${urlPath}`);
       record(data.jsonErrors.length === 0, `JSON-LD parses ${urlPath}`, data.jsonErrors.join(' | '));
-      const breadcrumbError = validateBreadcrumb(data.breadcrumb, expectedCanonical);
-      record(!breadcrumbError, `valid BreadcrumbList ${urlPath}`, breadcrumbError || '');
+      if (urlPath !== sitePrefix) {
+        const breadcrumbError = validateBreadcrumb(data.breadcrumb, expectedCanonical);
+        record(!breadcrumbError, `valid BreadcrumbList ${urlPath}`, breadcrumbError || '');
+      }
+      if (guidePaths.includes(urlPath)) {
+        record(data.h1[0]?.startsWith('How do I'), `guide H1 starts "How do I" ${urlPath}`, `h1=${JSON.stringify(data.h1[0])}`);
+      }
       record(pageErrors.length === 0, `no page errors ${urlPath}`, pageErrors.join(' | '));
       record(consoleErrors.length === 0, `no console errors ${urlPath}`, consoleErrors.join(' | '));
 
@@ -266,12 +298,6 @@ async function main() {
       }
     }
 
-    for (const urlPath of guidePaths) {
-      await page.goto(localUrl(origin, urlPath), { waitUntil: 'networkidle' });
-      const h1 = await page.locator('h1').textContent();
-      record(h1?.trim().startsWith('How do I'), `guide H1 starts "How do I" ${urlPath}`, `h1=${JSON.stringify(h1?.trim())}`);
-    }
-
     const duplicateValues = (key) => {
       const counts = new Map();
       for (const item of metadata) counts.set(item[key], (counts.get(item[key]) || 0) + 1);
@@ -279,8 +305,8 @@ async function main() {
     };
     const duplicateTitles = duplicateValues('title');
     const duplicateDescriptions = duplicateValues('description');
-    record(duplicateTitles.length === 0, 'new pages have unique titles', JSON.stringify(duplicateTitles));
-    record(duplicateDescriptions.length === 0, 'new pages have unique descriptions', JSON.stringify(duplicateDescriptions));
+    record(duplicateTitles.length === 0, 'all pages have unique titles', JSON.stringify(duplicateTitles));
+    record(duplicateDescriptions.length === 0, 'all pages have unique descriptions', JSON.stringify(duplicateDescriptions));
 
     const viewports = [
       { name: 'mobile', width: 390, height: 844 },
@@ -288,11 +314,12 @@ async function main() {
     ];
     for (const viewport of viewports) {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
-      for (const urlPath of newPaths) {
+      for (const urlPath of requiredPaths) {
         await page.goto(localUrl(origin, urlPath), { waitUntil: 'networkidle' });
         const data = await inspectPage(page);
         record(data.overflow <= 0, `no horizontal overflow ${viewport.name} ${urlPath}`, `overflow=${data.overflow}px`);
         for (const image of data.images) {
+          record(image.renderedWidth <= viewport.width, `image fits viewport ${viewport.name} ${urlPath}`, `width=${image.renderedWidth}px src=${image.src}`);
           const loaded = image.complete && image.naturalWidth > 0;
           const imageUrl = new URL(image.src);
           if (!loaded && imageUrl.origin !== origin) {
@@ -303,7 +330,7 @@ async function main() {
         }
 
         if (screenshotPaths.includes(urlPath)) {
-          const slug = urlPath === hubPath ? 'hub' : urlPath.includes('mouse') ? 'mouse' : 'firewall';
+          const slug = urlPath === sitePrefix ? 'home' : urlPath.slice(sitePrefix.length).replace(/\/$/, '').replaceAll('/', '-');
           const screenshotPath = path.join(screenshotRoot, `${slug}-${viewport.name}.png`);
           await page.screenshot({ path: screenshotPath, fullPage: true });
           console.log(`INFO screenshot ${screenshotPath}`);
