@@ -1,3 +1,17 @@
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6366f1,100:a855f7&height=200&section=header&text=LocalTV%20Remote&fontSize=60&fontColor=ffffff&fontAlignY=38&animation=fadeIn&desc=Phone%20%E2%86%92%20Windows%20Remote%20Control&descSize=20&descAlignY=58&descColor=e2e8f0" width="100%" alt="LocalTV Remote animated header: phone to Windows remote control" />
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=6366F1&center=true&vCenter=true&width=620&lines=Control+your+Windows+PC+from+your+phone;Open+the+controller+in+your+phone+browser;Mouse%2C+keyboard%2C+scroll%2C+and+volume;Use+a+trusted+local+network.+No+account+required." alt="Animated product summary: control your Windows PC from your phone browser on a trusted local network" />
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-6366f1?style=for-the-badge)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11-0078d4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/creationsofm7/localtv-remote/releases)
+[![Release](https://img.shields.io/github/v/release/creationsofm7/localtv-remote?style=for-the-badge&color=a855f7&label=Release)](https://github.com/creationsofm7/localtv-remote/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/creationsofm7/localtv-remote/total?style=for-the-badge&color=22c55e&label=Downloads)](https://github.com/creationsofm7/localtv-remote/releases/latest)
+[![Stars](https://img.shields.io/github/stars/creationsofm7/localtv-remote?style=for-the-badge&color=f59e0b)](https://github.com/creationsofm7/localtv-remote/stargazers)
+
+</div>
+
 # LocalTV Remote
 
 Control a Windows PC from your phone. Use the phone screen as a mouse, keyboard, and volume control.
@@ -309,3 +323,5 @@ See the [media guide](docs/media/README.md) for asset sources, capture instructi
 Apache 2.0. See [LICENSE](LICENSE).
 
 Copyright 2026 Mudit Pandey.
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:a855f7,100:6366f1&height=100&section=footer" width="100%" alt="LocalTV Remote wave footer" />
