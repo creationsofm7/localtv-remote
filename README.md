@@ -1,267 +1,311 @@
-<div align="center">
+# LocalTV Remote
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6366f1,100:a855f7&height=200&section=header&text=LocalTV%20Remote&fontSize=60&fontColor=ffffff&fontAlignY=38&animation=fadeIn&desc=Phone%20→%20Windows%20Remote%20Control&descSize=20&descAlignY=58&descColor=e2e8f0" width="100%" />
+Control a Windows PC from your phone. Use the phone screen as a mouse, keyboard, and volume control.
 
-<a href="https://readme-typing-svg.demolab.com">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=6366F1&center=true&vCenter=true&width=620&lines=Turn+your+phone+into+a+Windows+remote;Scan+a+QR+code+%E2%80%94+no+app+install+needed;Mouse+%E2%80%A2+Keyboard+%E2%80%A2+Scroll+%E2%80%A2+Volume;LAN-only+%E2%80%94+no+cloud%2C+no+accounts%2C+no+Chromium" alt="Typing animation" />
-</a>
+Install LocalTV Remote on the PC. Open the controller in your phone browser. No phone app or account is required.
 
-<br/>
-<br/>
+[Download for Windows](https://github.com/creationsofm7/localtv-remote/releases/latest) · [User guides](https://creationsofm7.github.io/localtv-remote/) · [Report a problem](https://github.com/creationsofm7/localtv-remote/issues) · [Apache 2.0 license](LICENSE)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-6366f1?style=for-the-badge)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11-0078d4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/creationsofm7/localtv-remote/releases)
-[![Release](https://img.shields.io/github/v/release/creationsofm7/localtv-remote?style=for-the-badge&color=a855f7&label=Release)](https://github.com/creationsofm7/localtv-remote/releases/latest)
-[![Download](https://img.shields.io/github/downloads/creationsofm7/localtv-remote/total?style=for-the-badge&color=22c55e&label=Downloads)](https://github.com/creationsofm7/localtv-remote/releases/latest)
-[![Stars](https://img.shields.io/github/stars/creationsofm7/localtv-remote?style=for-the-badge&color=f59e0b)](https://github.com/creationsofm7/localtv-remote/stargazers)
+![LocalTV Remote on a phone beside a Windows PC](docs/assets/readme-product.png)
 
-</div>
+*Illustrative product photo generated with AI. The controller screenshots below show the running application.*
 
----
+## See the controls
 
-# Control your Windows PC from your phone — LocalTV Remote
+![Animated guide showing one-finger pointer movement and two-finger scrolling](docs/assets/readme-demo.gif)
 
-**LocalTV Remote** is a **free, open-source** app that turns your phone into a **wireless mouse, keyboard, and volume remote** for any **Windows 10/11 PC or laptop** — over your local Wi-Fi.
-
-**You only install it on the PC.** Your phone just opens a web page (a PWA in the browser), so there's **nothing to install on the phone — or on any other device** you use to control the PC. No app store, no second download.
-
-**Multiple people can control one PC at the same time** — everyone uses their **own phone as their own remote**, so there's no single remote to pass around the room. It's **LAN-only**: no cloud relay, no accounts, and your data never leaves your network. The PC runs a single Node process at ~25–40 MB RAM with **no bundled Chromium**.
-
-> LocalTV Remote is the **open-source, remote-only** companion to **LocalTV**. It contains no Chromium, no DRM, and no TV/streaming mode — just the remote-control daemon.
-
-<!-- TODO: add a real demo at docs/demo.gif (phone moving the PC cursor over Wi-Fi) and uncomment below -->
-<!-- ![Controlling a Windows PC from a phone over Wi-Fi, with no app to install on the phone](docs/demo.gif) -->
-
-## From pairing to a permanent home-screen remote
+*Simulated gesture demonstration recorded from the local controller. The hands are AI-generated. This is not a recording of PC input.*
 
 <table>
+  <tr><th>Remote</th><th>Media</th><th>Keyboard</th></tr>
   <tr>
-    <th width="33%">1. Connect</th>
-    <th width="33%">2. Open Help</th>
-    <th width="33%">3. Save as a PWA</th>
-  </tr>
-  <tr>
-    <td><img src="docs/assets/readme-connect.png" alt="LocalTV Remote pairing screen with a six-digit code field and Connect button" /></td>
-    <td><img src="docs/assets/readme-help.png" alt="LocalTV Remote Help card illustrating one-finger pointer movement" /></td>
-    <td><img src="docs/assets/readme-install-pwa.png" alt="LocalTV Remote install guide with iPhone selected and an Android option" /></td>
-  </tr>
-  <tr>
-    <td align="center">Enter the six-digit pairing code.</td>
-    <td align="center">Tap <strong>Help</strong> for visual gesture guides.</td>
-    <td align="center">Choose iPhone or Android and add it to your Home Screen.</td>
+    <td><img src="docs/assets/readme-remote.png" width="260" alt="Connected Remote panel with trackpad, mouse buttons, volume slider, and text field" /></td>
+    <td><img src="docs/assets/readme-media.png" width="260" alt="Media panel with playback and browser shortcut buttons" /></td>
+    <td><img src="docs/assets/readme-keyboard.png" width="260" alt="Keyboard panel with navigation keys and directional controls" /></td>
   </tr>
 </table>
 
----
+| Control | Function |
+| --- | --- |
+| Trackpad | Move the pointer. Click, drag, and scroll. |
+| Text field | Send text to the active PC application. |
+| Keyboard panel | Send navigation keys, Enter, Space, Tab, Esc, and Backspace. |
+| Media panel | Send playback and browser shortcuts. |
+| Volume slider | Change the Windows volume. |
+| Mute button | Turn mute on or off. |
+| Settings | Change pointer speed, cursor visibility, and the power action. |
+| Power button | Request Sleep or Shutdown after confirmation. |
 
-## Why LocalTV Remote?
+Several phones can control the same PC. Each phone must pair with the PC. Their commands affect the same desktop.
 
-Looking for a **free, open-source alternative to Unified Remote or Remote Mouse**? Most phone-as-remote apps make you install a companion app on *both* your phone and your PC, lock features behind a paid tier, or route input through their cloud. LocalTV Remote doesn't.
+LocalTV Remote does not stream the PC screen. It does not include TV playback, DRM, or a bundled Chromium browser.
 
-| | **LocalTV Remote** | Typical alternatives* |
-|---|---|---|
-| Price | ✅ Free & open-source (Apache 2.0) | 💰 Freemium / paid Pro |
-| App to install on your phone | ✅ None — opens in the browser (PWA) | 📲 Companion app required |
-| Control one PC from several phones at once | ✅ Yes | ⚠️ Usually one device / limited |
-| Secure pairing built in (QR + PIN) | ✅ Yes | ⚠️ Varies |
-| Cloud / account required | ✅ No — LAN-only, private | ☁️ Often cloud-assisted |
-| Footprint on the PC | ✅ ~27 MB, no Chromium | 📦 Often heavier |
-| Source code you can audit | ✅ Yes | ❌ Closed-source |
+## Requirements
 
-<sub>*Reflects common free tiers of popular alternatives; their features may change. Compare for yourself.</sub>
+- A Windows 10 or Windows 11 PC. The installer requires Windows 10 build 17134 or later.
+- A phone with a current browser and touch input.
+- A local network that lets the phone connect to the PC.
 
----
+Use a trusted local network. The control connection uses unencrypted HTTP and WebSocket traffic.
 
-## Features
+## Install on the PC
 
-| | |
-|---|---|
-| 🖱️ **Phone as a wireless mouse** | Move, click, right-click, scroll — a phone trackpad with DPI-aware scaling |
-| ⌨️ **Phone as a keyboard** | Type text and send key combos to your PC from your phone |
-| 🔊 **Volume remote** | Control Windows system volume from your phone via Core Audio (COM) |
-| 📱 **No app to install** | Phone opens a web page (PWA), installs as a home-screen app — no app store |
-| 👥 **Multi-user control** | Several phones can control one PC at once, each paired separately |
-| 🔗 **QR + PIN pairing** | Scan once, token is remembered for future sessions |
-| 🔒 **LAN-only & private** | No cloud relay, no accounts, no data leaves your network |
-| 🪶 **Tiny footprint** | ~27 MB installer, ~25–40 MB RAM at idle, no Chromium |
-| 🖥️ **System tray** | Sits in the tray; optional start-on-login toggle |
-| 🔌 **Auto port** | Free-port fallback if 6776 is occupied — QR auto-updates |
+1. Open the [latest release](https://github.com/creationsofm7/localtv-remote/releases/latest).
+2. Download the `LocalTVRemote-Setup-*.exe` installer.
+3. Run the installer.
+4. Select the installation options.
+5. Start **LocalTV Remote** from the Start menu.
 
----
+The installer offers a desktop shortcut and start-on-login option. It also attempts to add a Windows Firewall rule.
+Firewall permissions depend on the installation mode and Windows settings.
 
-## Install
+Windows Package Manager is an alternative:
 
-
-
-### Option 1 — winget (recommended)
-
-Now available on the Windows Package Manager — installs without the SmartScreen prompt:
-
-Open Terminal/PowerShell and Paste:
-```
-winget install LocalTV.Remote
+```powershell
+winget install --id LocalTV.Remote --exact
 ```
 
-### Option 2 — Installer 
+If the package is unavailable, use the release installer.
 
-### ⬇️ [Download LocalTV Remote for Windows — Free](https://github.com/creationsofm7/localtv-remote/releases/download/v1.1.4/LocalTVRemote-Setup-1.1.4.exe)
+## Connect your phone
 
-Latest release: **[v1.1.4](https://github.com/creationsofm7/localtv-remote/releases/latest)** · Windows 10/11 · ~27 MB. Download the installer, run it, and you're paired in under a minute. Already installed? Grab the link above to **update to the latest version**.
+![PC pairing page with QR code, pairing code, controller address, and network settings](docs/assets/readme-host.png)
 
-The setup wizard will:
-- Install to `%ProgramFiles%\LocalTV Remote`
-- Create a Start Menu shortcut
-- Add a Windows Firewall inbound rule (so your phone can reach the daemon without a popup)
-- Optionally create a desktop shortcut and enable start-on-login
+*Demonstration code and address. Use the values shown on your PC.*
 
-> First run shows a Windows SmartScreen "unknown publisher" notice (the installer isn't code-signed yet). Click **More info → Run anyway** to continue.
+1. Connect the phone and PC to the same local network.
+2. Start LocalTV Remote on the PC.
+3. Open the PC pairing window.
+4. Scan its QR code with the phone camera.
+5. Open the controller link.
 
----
+The QR link includes the pairing code. The controller connects automatically when the code is accepted.
 
-## How to use
+If you cannot scan the QR code:
 
-1. **Launch** — double-click the tray icon or start from the Start Menu
-2. **Pair** — a pairing window opens with a QR code and a 6-digit PIN
-3. **Scan** — open your phone camera, scan the QR code
-4. **Control** — the phone browser opens the controller UI; swipe to move, tap to click
+1. Enter the controller address in the phone browser.
+2. Enter the six-digit code shown on the PC.
+3. Tap **Connect**.
 
-Your phone remembers the pairing token — next time it reconnects automatically.
+<table>
+  <tr><th>Enter the code</th><th>Use the remote</th><th>Adjust settings</th></tr>
+  <tr>
+    <td><img src="docs/assets/readme-connect.png" width="260" alt="Phone pairing screen with a demonstration code and Connect button" /></td>
+    <td><img src="docs/assets/readme-remote.png" width="260" alt="Phone controller after successful pairing" /></td>
+    <td><img src="docs/assets/readme-settings.png" width="260" alt="Pointer speed, cursor visibility, and power settings" /></td>
+  </tr>
+</table>
 
----
+The browser saves a session token and the last pairing code. Later connections can use these saved values.
+Clear the browser site data to remove them from that phone.
+
+## Use the trackpad
+
+The **trackpad** is the large area above the **Hold**, **Right**, **Middle**, and **Capture** buttons.
+Keep touch gestures inside this area.
+
+<table>
+  <tr><th>Move the pointer</th><th>Click and drag</th><th>Right-click and scroll</th></tr>
+  <tr>
+    <td><img src="docs/assets/readme-help.png" width="260" alt="Help guide showing a realistic hand moving one finger to move the pointer" /></td>
+    <td><img src="docs/assets/readme-drag.png" width="260" alt="Help guide explaining Hold and one-finger dragging" /></td>
+    <td><img src="docs/assets/readme-scroll.png" width="260" alt="Help guide showing two fingers for right-clicking and scrolling" /></td>
+  </tr>
+</table>
+
+### Move and click
+
+1. Slide one finger on the trackpad to move the PC pointer.
+2. Lift your finger to stop movement.
+3. Tap once with one finger to click.
+
+For a double-click, tap twice in quick succession. The result depends on the PC double-click settings.
+
+### Drag an item
+
+1. Move the pointer onto the item.
+2. Tap **Hold** to keep the left mouse button pressed.
+3. Slide one finger to move the item.
+4. Tap **Hold** again to release the item.
+
+**Hold** is a toggle. A long press on the trackpad does not start this drag mode.
+
+### Right-click and scroll
+
+- Tap the trackpad with two fingers to right-click.
+- Slide two fingers up or down together to scroll.
+- Tap **Right** for a separate right-click button.
+- Tap **Middle** for a middle click.
+
+Pinch zoom and three-finger gestures are not supported.
+
+Tap **Help** to open these guides. Swipe between the cards, or use **Back** and **Next**.
+
+## Enter text and use media controls
+
+1. Select the destination text field on the PC.
+2. Tap **Type here…** on the phone.
+3. Enter the text.
+
+Text goes to the active PC application. Open the **Input** tab for additional keyboard keys.
+The button labeled **Delete** sends Backspace.
+
+Use the **Media** panel for playback and browser controls. These buttons send keyboard commands to the active application.
+
+| Button | Command |
+| --- | --- |
+| Play / Pause | Windows media play/pause key |
+| -10s / +10s | `J` / `L` |
+| Fullscreen | `F` |
+| Captions | `C` |
+| Speed down / up | `Shift+,` / `Shift+.` |
+| Browser navigation | Windows browser navigation keys |
+
+The application must support the command. The URL navigation field is disabled in this remote edition.
+
+## Add a Home Screen shortcut
+
+<table>
+  <tr><th>iPhone</th><th>Android</th></tr>
+  <tr>
+    <td><img src="docs/assets/readme-install-pwa.png" width="260" alt="Controller Help card with iPhone Home Screen instructions" /></td>
+    <td><img src="docs/assets/readme-install-android.png" width="260" alt="Controller Help card with Android Home Screen instructions" /></td>
+  </tr>
+</table>
+
+On iPhone:
+
+1. Open the controller in Safari.
+2. Open the browser Share menu.
+3. Select **Add to Home Screen**.
+4. Tap **Add**.
+
+On Android:
+
+1. Open the controller in Chrome.
+2. Open the browser menu.
+3. Select **Add to Home screen** or **Install app**, if available.
+4. Complete the browser instructions.
+
+The available options depend on the browser. The controller uses a local HTTP address.
+Some browsers do not permit full PWA installation at this address. You can continue to use the browser page.
+
+## Troubleshooting
+
+| Problem | Action |
+| --- | --- |
+| The phone cannot open the controller. | Check the network connection. Use the address shown on the PC. |
+| Guest Wi-Fi blocks the connection. | Use a network without client isolation. |
+| The wrong network address is shown. | Select the correct adapter in the PC pairing window. |
+| Windows Firewall blocks the connection. | Allow LocalTV Remote on the trusted network profile. |
+| The pairing code is rejected. | Enter the current code shown on the PC. |
+| The controller opens but input has no effect. | Select a PC application. Check whether it runs with elevated permissions. |
+| A media button has no effect. | Check whether the application supports that shortcut. |
+| The pointer moves too fast. | Open **Settings** and reduce **Pointer speed**. |
+| An item remains attached to the pointer. | Tap **Hold** again to release it. |
+| The pairing window does not open. | Check the default browser. The app can use it if WebView2 fails. |
+
+See the [user guides](https://creationsofm7.github.io/localtv-remote/) for detailed connection, input, and firewall procedures.
+
+## Network and security
+
+LocalTV Remote is intended for a trusted local network. It requires no cloud relay or account.
+The server listens on all IPv4 interfaces. The default control port is `6776`.
+If that port is occupied, the app searches for another port.
+
+- Pairing requires a six-digit code. The QR link contains that code.
+- The code is derived from the PC name and Windows user name. It is not a temporary one-time code.
+- `/host`, `/api/state`, `/api/network`, and `/api/quit` accept local loopback connections only.
+- Each paired phone can send PC input, volume commands, and power requests.
+- The server limits message rates and closes inactive connections.
+
+HTTP and WebSocket traffic are not encrypted. Do not forward the control port to the internet.
+Keep the pairing code and QR link private.
+
+The controller requests a font from Google Fonts. It can make an external request when the page opens.
+
+See [SECURITY.md](SECURITY.md) to report a security issue.
 
 ## How it works
 
+```text
+Phone browser
+    |
+    | HTTP + WebSocket
+    v
+LocalTV Remote on Windows
+    |-- Mouse and keyboard: Win32 SendInput through koffi
+    |-- Volume: Windows Core Audio through PowerShell
+    |-- Pairing window: system WebView2, or the default browser
+    `-- Tray menu and start-on-login settings
 ```
-Phone browser (PWA)
-      │  WebSocket + HTTP  (LAN)
-      ▼
-LocalTVRemote.exe  ←── Express + ws server on 0.0.0.0:6776
-      │
-      ├── Mouse / Keyboard → koffi → Win32 SendInput
-      ├── Volume           → PowerShell COM → IAudioEndpointVolume
-      └── Pairing window   → WebView2 (system runtime, not bundled Chromium)
-```
 
-- Input is injected OS-wide via `SendInput` — works in any app including games and full-screen windows
-- Volume uses a persistent PowerShell STA process talking to Windows Core Audio COM directly — accurate to the system tray to within ±1%
-- The pairing window uses the **system WebView2 runtime** (pre-installed on Windows 11, auto-installed on Windows 10) — no bundled browser
-
----
-
-## Security
-
-- **LAN-only** — binds `0.0.0.0` for control but restricts pairing routes (`/host`, `/api/state`) to loopback, so the PIN is never served to other devices on the network
-- **6-digit pairing PIN** derived from machine identity; trusted sessions resume via a stored token
-- **WebSocket origin checks** on every upgrade
-- **Rate limiting** — 500 messages/sec/client; idle clients are disconnected after inactivity
-- **Single-instance lock** — second launch exits cleanly instead of conflicting
-
----
+The app sends input to the Windows desktop. Elevated applications and some games can reject injected input.
+The phone does not receive a screen stream.
 
 ## Build from source
 
-**Requirements:** Node.js 22+, Windows 10/11
+Use Windows and Node.js 22 or later.
 
-```bash
-git clone https://github.com/creationsofm7/localtv-remote
+```powershell
+git clone https://github.com/creationsofm7/localtv-remote.git
 cd localtv-remote
 npm install
-```
-
-**Dev mode** (TypeScript, no build step):
-```bash
 npm run dev
 ```
 
-**Full production build** (SEA exe + payload):
-```bash
-npm run dist        # typecheck + bundle + branded exe + payload
-npm run installer   # compile Inno Setup → release/LocalTVRemote-Setup-x.y.z.exe
+Check the source and run the tests:
+
+```powershell
+npm run typecheck
+npm test
 ```
 
-**Environment variables:**
+Create the Windows executable and installer:
 
-| Variable | Default | Description |
-|---|---|---|
-| `LOCALTV_REMOTE_PORT` | `6776` | Preferred server port (auto-increments if occupied) |
-| `LOCALTV_REMOTE_STATIC_DIR` | `public/control` | Override the controller PWA directory |
-
----
-
-## Project layout
-
-```
-src/
-├── core/
-│   ├── server/          # Express + WebSocket control server
-│   ├── main/
-│   │   ├── audio/       # Persistent PowerShell Core Audio host
-│   │   ├── input/       # SystemInputRouter + Win32 SendInput backend
-│   │   └── native/      # koffi FFI bindings, native-require loader
-│   └── shared/          # Protocol types, pairing logic
-└── daemon/
-    ├── index.ts         # Entry: daemon mode or --webview child mode
-    ├── tray.ts          # systray2 tray icon + menu
-    └── startup.ts       # Run-at-login registry toggle
-
-public/control/          # Phone controller PWA (HTML/CSS/JS + SW + manifest)
-scripts/
-├── bundle.mjs           # esbuild → build/localtv-remote.cjs
-├── build-sea.mjs        # Node SEA blob + rcedit + PE subsystem flip
-├── assemble-payload.mjs # release/app/ with koffi stripped to win32_x64
-└── build-installer.mjs  # Inno Setup compile → release/LocalTVRemote-Setup-*.exe
-installer/
-└── localtv-remote.iss   # Inno Setup script
+```powershell
+npm run dist
+npm run installer
 ```
 
----
+The executable build requires Windows x64 Node.js. The installer build uses Inno Setup.
+The installer is written to `release/`.
 
-## Cross-platform
+| Environment variable | Default | Function |
+| --- | --- | --- |
+| `LOCALTV_REMOTE_PORT` | `6776` | Set the preferred control port. |
+| `LOCALTV_REMOTE_STATIC_DIR` | `public/control` | Set the controller asset directory. |
 
-Windows is the only supported target today. The input layer is abstracted behind `SystemInputBackend` (`src/core/main/input/backends/input-backend.ts`). Adding macOS/Linux means implementing that interface — contributions welcome.
+### Source layout
 
----
+```text
+src/daemon/                Entry point, tray, pairing page, and startup settings
+src/core/main/control/     HTTP server, WebSocket server, and network selection
+src/core/main/input/       Input parser, router, shortcuts, and backend interface
+src/core/main/native/      Windows input bindings
+src/core/main/audio/       Windows volume control
+src/core/shared/           Protocol types
+public/control/           Phone controller and Help guides
+scripts/                  Build and documentation capture tools
+installer/                Inno Setup definition
+tests/                    Automated tests
+docs/                     User guides and README media
+```
 
-## Contributing
+Windows is the supported PC platform. A new platform requires an implementation of `SystemInputBackend`.
 
-1. Fork and clone
-2. `npm install && npm run dev`
-3. Make changes, run `npm run typecheck` to verify
-4. Open a PR — CI will typecheck on push
+## Contribute
 
----
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md).
+2. Create a branch for the change.
+3. Make the change.
+4. Run the relevant checks.
+5. Open a pull request.
 
-## FAQ
-
-### How do I control my laptop from my phone without installing an app?
-
-Install LocalTV Remote on your **Windows PC** (it's the only device that needs anything installed). Launch it, scan the QR code with your phone's camera, and your phone's browser opens a controller page — a trackpad, keyboard, and volume remote. Nothing to install on the phone, no app store, no account.
-
-### Can multiple people control one PC at the same time?
-
-Yes. Several phones can connect at once, and everyone uses their own phone as their own remote — so there's no single remote to toss around the room. Each phone pairs independently and securely. Handy for a shared screen, a meeting room, or a media PC.
-
-### Is there a free, open-source alternative to Unified Remote or Remote Mouse?
-
-LocalTV Remote is exactly that: free, Apache-2.0 open-source, with no companion app required on the phone and no paid tier. See the [comparison above](#why-localtv-remote).
-
-### Is controlling my PC from my phone over Wi-Fi safe?
-
-It's **LAN-only** — input never leaves your local network and there's no cloud relay or account. Pairing requires a 6-digit PIN derived from machine identity, WebSocket connections are origin-checked, traffic is rate-limited, and the pairing PIN is only served to the PC itself, never to other devices. See [Security](#security).
-
-### Does it work in games and full-screen apps?
-
-Yes. Input is injected OS-wide via Win32 `SendInput`, so it works in any app, including games and full-screen windows.
-
----
+See the [media guide](docs/media/README.md) for asset sources, capture instructions, and the publishing strategy.
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).  
+Apache 2.0. See [LICENSE](LICENSE).
+
 Copyright 2026 Mudit Pandey.
-
-<div align="center">
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:a855f7,100:6366f1&height=100&section=footer" width="100%" />
-
-</div>

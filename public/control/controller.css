@@ -434,9 +434,6 @@ button, input { font: inherit; color: inherit; touch-action: manipulation; }
 .gesture-stage--install { background: radial-gradient(circle at 50% 45%, rgba(48, 209, 88, 0.1), transparent 50%), rgba(255, 255, 255, 0.035); }
 .gesture-svg { display: block; width: min(100%, 350px); height: 100%; overflow: visible; }
 .gesture-hand { translate: 0 0; }
-.gesture-hand__body { fill: #d5ad90; stroke: #f2ccb0; stroke-width: 2.2; stroke-linejoin: round; }
-.gesture-hand__line { fill: none; stroke: rgba(111, 70, 50, 0.45); stroke-width: 2; stroke-linecap: round; }
-.gesture-hand__nail { fill: rgba(255, 236, 224, 0.62); stroke: rgba(111, 70, 50, 0.34); stroke-width: 1.5; }
 .gesture-trail { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 7 9; opacity: 0.44; }
 .gesture-cursor { fill: var(--text); stroke: rgba(17, 19, 24, 0.72); stroke-width: 5; }
 .gesture-contact { fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0; transform-box: fill-box; transform-origin: center; }

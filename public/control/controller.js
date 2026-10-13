@@ -126,7 +126,6 @@ renderHugeIcons();
 const pairScreen = document.getElementById('pair-screen');
 const remoteScreen = document.getElementById('remote-screen');
 const pairInput = document.getElementById('pair-code');
-const connectBtn = document.getElementById('connect-btn');
 const pairStatus = document.getElementById('pair-status');
 const connDot = document.getElementById('conn-dot');
 const connLabel = document.getElementById('conn-label');
@@ -1235,8 +1234,6 @@ urlInput?.addEventListener('keydown', (e) => {
 
 const pairForm = document.getElementById('pair-form');
 pairForm?.addEventListener('submit', (e) => { e.preventDefault(); clearReconnect(); connect(false); });
-
-connectBtn?.addEventListener('click', () => { clearReconnect(); connect(false); });
 
 pairInput?.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); clearReconnect(); connect(false); }

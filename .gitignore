@@ -6,6 +6,9 @@ release/
 .DS_Store
 .env
 
+# Intermediate frames from the README media capture.
+tmp/readme-media/
+
 # Agent skills (installed locally via `skills add`)
 .agents/
 skills-lock.json
